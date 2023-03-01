@@ -15,18 +15,24 @@ class _VocabularyPracticeContainerState extends ConsumerState<VocabularyPractice
   @override
   Widget build(BuildContext context) {
     final dictionaryCtrl = ref.read(dictionaryControllerProvider);
-    return Column(
-      children: [
-        Text('test'),
-        SizedBox(height: 50.r),
-        Expanded(child: DictionaryListComponent(dictionaryCtrl.fetchDictionaries())),
-        SizedBox(height: 20.r),
-        MaterialButton(
-          color: Colors.blue,
-          child: Text('단어장으로 돌아가기'),
-          onPressed: () => dictionaryCtrl.goToDictionary(context),
-        ),
-      ],
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 20.r),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text('<단어 게임장>'),
+          SizedBox(height: 50.r),
+          Expanded(child: DictionaryListComponent(dictionaryCtrl.fetchDictionaries())),
+          SizedBox(height: 20.r),
+          MaterialButton(
+            color: Colors.blue,
+            child: Text('단어장으로 돌아가기'),
+            onPressed: () => dictionaryCtrl.goToDictionary(context),
+          ),
+        ],
+      ),
     );
   }
 }

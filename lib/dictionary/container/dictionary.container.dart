@@ -15,9 +15,13 @@ class _DictionaryContainerState extends ConsumerState<DictionaryContainer> {
   Widget build(BuildContext context) {
     final dictionaryCtrl = ref.read(dictionaryControllerProvider);
     return Container(
+      width: double.infinity,
+      height: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 20.r),
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('test'),
+          Text('<단어장>'),
           SizedBox(height: 50.r),
           MaterialButton(
             color: Colors.blue,

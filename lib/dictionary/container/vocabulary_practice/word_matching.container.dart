@@ -9,6 +9,7 @@ import 'package:snowflake_client/dictionary/provider/word_matching.provider.dart
 import 'package:snowflake_client/title/title.const.dart';
 import 'package:snowflake_client/utils/asset_loader.dart';
 import 'package:snowflake_client/utils/func.util.dart';
+import 'package:snowflake_client/utils/russian_alphabet.util.dart';
 
 class WordMatchingContainer extends ConsumerStatefulWidget {
   const WordMatchingContainer({Key? key}) : super(key: key);
@@ -28,16 +29,22 @@ class _WordMatchingContainerState extends ConsumerState<WordMatchingContainer> {
             return () => wordMatchingCtrl.clear();
           }, [wordMatchingCtrl]);
           if (!wordMatchingCtrl.isRunning) {
-            return Column(
-              children: [
-                const CircularProgressIndicator(),
-                SizedBox(height: 50.r),
-                MaterialButton(
-                  color: Colors.blue,
-                  child: const Text('단어 게임으로 돌아가기'),
-                  onPressed: () => wordMatchingCtrl.goToVocabularyPractice(context),
-                ),
-              ],
+            return Container(
+              width: double.infinity,
+              height: double.infinity,
+              padding: EdgeInsets.symmetric(horizontal: 20.r),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const CircularProgressIndicator(),
+                  SizedBox(height: 20.r),
+                  MaterialButton(
+                    color: Colors.blue,
+                    child: const Text('단어 게임으로 돌아가기'),
+                    onPressed: () => wordMatchingCtrl.goToVocabularyPractice(context),
+                  ),
+                ],
+              ),
             );
           }
           if (!wordMatchingCtrl.hasQuestions) {
@@ -123,12 +130,16 @@ class _WordMatchingContainerState extends ConsumerState<WordMatchingContainer> {
                           ],
                         ),
                         Column(
+                          crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: <Widget>[
                             ...mapIndexed(
                               wordMatchingState.candidates,
                               (index, e) => MaterialButton(
                                 color: Colors.yellow,
-                                child: Text('${index + 1}) ${e.meaning}'),
+                                child: Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text('${russianAlphabet[index]}) ${e.meaning}'),
+                                ),
                                 onPressed: () => wordMatchingCtrl.judgment(e),
                               ),
                             ),

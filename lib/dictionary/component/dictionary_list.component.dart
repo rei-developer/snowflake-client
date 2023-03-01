@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:snowflake_client/dictionary/entity/dictionary.entity.dart';
 import 'package:snowflake_client/dictionary/provider/word_matching.provider.dart';
 
@@ -82,28 +83,27 @@ class _DictionaryListComponentState extends ConsumerState<DictionaryListComponen
           final dictionary = _dictionaries[index];
           return GestureDetector(
             onTap: () => wordMatchingCtrl.setup(context, dictionary),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 20.0,
-                ),
-                Text(
-                  dictionary.name,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                ),
-                SizedBox(
-                  height: 10.0,
-                ),
-                Text(
-                  '등록된 단어 개수 : ${dictionary.words.length}개',
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 2,
-                ),
-                SizedBox(
-                  height: 20.0,
-                ),
-              ],
+            child: Container(
+              width: double.infinity,
+              height: 60.r,
+              decoration: BoxDecoration(
+                color: Colors.deepPurpleAccent,
+                borderRadius: BorderRadius.circular(6.r),
+              ),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    dictionary.name,
+                    style: TextStyle(
+                      fontSize: 20.r,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                  SizedBox(height: 5.r),
+                  Text('단어 개수 : ${dictionary.words.length}개'),
+                ],
+              ),
             ),
           );
         },
