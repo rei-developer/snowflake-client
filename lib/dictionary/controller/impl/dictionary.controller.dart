@@ -29,9 +29,4 @@ class DictionaryController extends IDictionaryController {
   @override
   Future<void> goToVocabularyPractice(BuildContext context) =>
       Go(context, DictionaryRoute.VOCABULARY_PRACTICE.name).to();
-
-  @override
-  Future<void> goToWordMatching(BuildContext context, int index) async {
-    await Go(context, DictionaryRoute.WORD_MATCHING.name).to();
-  }
 }

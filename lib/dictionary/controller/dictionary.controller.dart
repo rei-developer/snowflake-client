@@ -9,6 +9,4 @@ abstract class IDictionaryController {
   Future<void> goToDictionary(BuildContext context);
 
   Future<void> goToVocabularyPractice(BuildContext context);
-
-  Future<void> goToWordMatching(BuildContext context, int index);
 }

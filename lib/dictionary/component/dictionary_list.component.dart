@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:snowflake_client/dictionary/entity/dictionary.entity.dart';
+import 'package:snowflake_client/dictionary/provider/word_matching.provider.dart';
 
-class DictionaryListComponent extends StatefulWidget {
+class DictionaryListComponent extends ConsumerStatefulWidget {
   const DictionaryListComponent(this.fetchDictionaries, {Key? key}) : super(key: key);
 
   final Future<List<DictionaryEntity>> fetchDictionaries;
 
   @override
-  State<DictionaryListComponent> createState() => _DictionaryListComponentState();
+  ConsumerState<DictionaryListComponent> createState() => _DictionaryListComponentState();
 }
 
-class _DictionaryListComponentState extends State<DictionaryListComponent> {
+class _DictionaryListComponentState extends ConsumerState<DictionaryListComponent> {
   final List<DictionaryEntity> _dictionaries = [];
   bool _isLoading = false;
   int _currentPage = 0;
@@ -48,11 +49,11 @@ class _DictionaryListComponentState extends State<DictionaryListComponent> {
       final dictionaries = await widget.fetchDictionaries
           .then((list) => list.skip(_currentPage * _pageSize).take(_pageSize).toList());
 
-      final newDictionaries = List.generate(99, (index) => dictionaries[0]);
+      // final newDictionaries = List.generate(99, (index) => dictionaries[0]);
 
       setState(() {
-        // _dictionaries.addAll(dictionaries);
-        _dictionaries.addAll(newDictionaries);
+        _dictionaries.addAll(dictionaries);
+        // _dictionaries.addAll(newDictionaries);
         _isLoading = false;
         _currentPage++;
       });
@@ -66,6 +67,7 @@ class _DictionaryListComponentState extends State<DictionaryListComponent> {
 
   @override
   Widget build(BuildContext context) {
+    final wordMatchingCtrl = ref.read(wordMatchingControllerProvider.notifier);
     return SizedBox(
       height: MediaQuery.of(context).size.height,
       child: ListView.builder(
@@ -79,7 +81,7 @@ class _DictionaryListComponentState extends State<DictionaryListComponent> {
           }
           final dictionary = _dictionaries[index];
           return GestureDetector(
-            onTap: () {},
+            onTap: () => wordMatchingCtrl.setup(context, dictionary),
             child: Column(
               children: [
                 SizedBox(

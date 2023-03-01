@@ -30,9 +30,9 @@ class WordEntityAdapter extends TypeAdapter<WordEntity> {
       ..writeByte(0)
       ..write(obj.word)
       ..writeByte(1)
-      ..write(obj.definition)
+      ..write(obj.meaning)
       ..writeByte(2)
-      ..write(obj.partOfSpeech);
+      ..write(obj.remarks);
   }
 
   @override
