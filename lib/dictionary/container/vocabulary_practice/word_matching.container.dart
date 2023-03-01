@@ -71,8 +71,17 @@ class _WordMatchingContainerState extends ConsumerState<WordMatchingContainer> {
                                   wordMatchingCtrl.question?.word ?? '',
                                   style: TextStyle(
                                     color: Colors.white,
-                                    fontSize: 36.r,
-                                    fontWeight: FontWeight.w900,
+                                    fontSize: 40.r,
+                                    fontWeight: FontWeight.w500,
+                                    fontFamily: 'AnastasiaScript',
+                                  ),
+                                ),
+                                Text(
+                                  wordMatchingCtrl.question?.word ?? '',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 32.r,
+                                    fontWeight: FontWeight.w500,
                                   ),
                                 ),
                               ],
