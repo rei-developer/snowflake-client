@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:snowflake_client/common/component/image_indicator.component.dart';
 import 'package:snowflake_client/dictionary/const/word_matching.const.dart';
 import 'package:snowflake_client/dictionary/controller/word_matching.controller.dart';
 import 'package:snowflake_client/dictionary/dictionary.route.dart';
@@ -47,12 +48,12 @@ class WordMatchingController extends IWordMatchingController {
   }
 
   @override
-  void judgment(WordEntity candidate) {
+  void judgment(BuildContext context, WordEntity candidate) {
     if (question == candidate) {
-      print('정답입니다');
+      showImageIndicator(context, message: '정답입니다!');
       _addScore();
     } else {
-      print('오답입니다');
+      showImageIndicator(context, message: '오답입니다...');
       _subLife();
       if (state.life < 1) {
         print('목숨 없네용!!!');

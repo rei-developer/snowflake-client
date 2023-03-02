@@ -21,7 +21,7 @@ class _DefaultLayoutState extends State<DefaultLayout> {
           elevation: 0,
         ),
         backgroundColor: Colors.white,
-        body: SafeArea(child: widget.body),
+        body: SafeArea(bottom: false, child: widget.body),
         resizeToAvoidBottomInset: false,
       );
 }

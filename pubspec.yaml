@@ -35,6 +35,7 @@ flutter:
     - assets/dictionary/
     - assets/image/
     - assets/image/background/
+    - assets/image/common/
 
   fonts:
     - family: AnastasiaScript

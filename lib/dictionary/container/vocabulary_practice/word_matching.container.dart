@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:snowflake_client/dictionary/provider/dictionary.provider.dart';
 import 'package:snowflake_client/dictionary/provider/word_matching.provider.dart';
 import 'package:snowflake_client/title/title.const.dart';
 import 'package:snowflake_client/utils/asset_loader.dart';
@@ -122,7 +121,7 @@ class _WordMatchingContainerState extends ConsumerState<WordMatchingContainer> {
                               children: List.generate(
                                 wordMatchingState.maxLife,
                                 (index) => Text(
-                                  wordMatchingState.life > index ? '❤' : '💔',
+                                  wordMatchingState.life > index ? '❤' : '🤍',
                                   style: TextStyle(fontSize: 24.r),
                                 ),
                               ),
@@ -140,7 +139,7 @@ class _WordMatchingContainerState extends ConsumerState<WordMatchingContainer> {
                                   alignment: Alignment.centerLeft,
                                   child: Text('${russianAlphabet[index]}) ${e.meaning}'),
                                 ),
-                                onPressed: () => wordMatchingCtrl.judgment(e),
+                                onPressed: () => wordMatchingCtrl.judgment(context, e),
                               ),
                             ),
                           ].superJoin(SizedBox(height: 10.r)).toList(),
