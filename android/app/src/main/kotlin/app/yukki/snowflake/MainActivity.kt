@@ -1,4 +1,4 @@
-package com.sandspoon.snowflake.snowflake_client
+package app.yukki.snowflake
 
 import io.flutter.embedding.android.FlutterActivity
 

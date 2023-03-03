@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sandspoon.snowflake.snowflake_client">
+    package="app.yukki.snowflake">
    <application
         android:label="snowflake_client"
         android:name="${applicationName}"
