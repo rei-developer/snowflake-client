@@ -5,5 +5,5 @@ abstract class IDictionaryService {
 
   Future<List<DictionaryEntity>> fetchDictionaries();
 
-  Future<DictionaryEntity> fetchDummyDictionary();
+  Future<List<DictionaryEntity>> fetchDummyDictionaries();
 }

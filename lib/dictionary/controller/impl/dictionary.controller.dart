@@ -15,8 +15,10 @@ class DictionaryController extends IDictionaryController {
 
   @override
   Future<void> setup() async {
-    final dummyDictionary = await _dictionaryService.fetchDummyDictionary();
-    await _dictionaryService.setup(dummyDictionary);
+    final dummyDictionaries = await _dictionaryService.fetchDummyDictionaries();
+    for (final item in dummyDictionaries) {
+      await _dictionaryService.setup(item);
+    }
   }
 
   @override

@@ -71,14 +71,13 @@ class _DictionaryListComponentState extends ConsumerState<DictionaryListComponen
     final wordMatchingCtrl = ref.read(wordMatchingControllerProvider.notifier);
     return SizedBox(
       height: MediaQuery.of(context).size.height,
-      child: ListView.builder(
+      child: ListView.separated(
         controller: _scrollController,
         itemCount: _dictionaries.length + (_isLoading ? 1 : 0),
-        itemBuilder: (context, index) {
+        separatorBuilder: (_, __) => SizedBox(height: 10.r),
+        itemBuilder: (_, index) {
           if (index == _dictionaries.length) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
+            return const Center(child: CircularProgressIndicator());
           }
           final dictionary = _dictionaries[index];
           return GestureDetector(
@@ -95,12 +94,12 @@ class _DictionaryListComponentState extends ConsumerState<DictionaryListComponen
                 children: [
                   Text(
                     dictionary.name,
-                    style: TextStyle(
-                      fontSize: 20.r,
+                    style: const TextStyle(
+                      fontSize: 20,
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  SizedBox(height: 5.r),
+                  const SizedBox(height: 5),
                   Text('단어 개수 : ${dictionary.words.length}개'),
                 ],
               ),

@@ -21,8 +21,19 @@ class DictionaryService extends IDictionaryService {
   Future<List<DictionaryEntity>> fetchDictionaries() async => _dictionaryLocalRepo.dictionaries;
 
   @override
-  Future<DictionaryEntity> fetchDummyDictionary() async {
-    final words = await _dictionaryDummyRepo.fetchWords('russian-1');
-    return DictionaryEntity(0, 'Russian words - 1', words);
+  Future<List<DictionaryEntity>> fetchDummyDictionaries() async {
+    final words = [
+      'russian-basic-noun-words',
+      'russian-basic-verb-words',
+    ];
+    return await Future.wait<DictionaryEntity>(
+      words.map(
+        (word) async => DictionaryEntity(
+          words.indexOf(word),
+          word,
+          await _dictionaryDummyRepo.fetchWords(word),
+        ),
+      ),
+    );
   }
 }
