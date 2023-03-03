@@ -27,19 +27,14 @@ class WordMatchingController extends IWordMatchingController {
   Future<void> setup(BuildContext context, DictionaryEntity dictionary) async {
     print('setup');
     state = WordMatchingModel.initial(dictionary: dictionary);
-    if (context.mounted) {
-      await goToWordMatching(context);
-    }
+    await goToWordMatching(context);
   }
 
   @override
   void init() {
     print('init');
     Future.delayed(Duration.zero, () {
-      print('dictionary.words.length => ${state.dictionary?.words.length}');
-
       final questions = _wordMatchingService.setup(state);
-      print('questions.=>${questions.length}');
       state = state.copyWith(
         maxScore: questions.length * 10,
         questions: questions,

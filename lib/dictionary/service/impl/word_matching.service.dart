@@ -15,8 +15,6 @@ class WordMatchingService extends IWordMatchingService {
 
   @override
   List<WordEntity> setup(WordMatchingModel wordMatching) {
-    print('wordMatching.dictionary?.name => ${wordMatching.dictionary?.name}');
-    print('wordMatching.dictionary?.words => ${wordMatching.dictionary?.words}');
     final questions = _extractRandomQuestions(
       wordMatching.dictionary?.words ?? [],
       wordMatching.maxRound,
@@ -29,10 +27,7 @@ class WordMatchingService extends IWordMatchingService {
   List<WordEntity> generateCandidates(WordMatchingModel wordMatching) {
     try {
       final round = wordMatching.round;
-      print('round=>$round');
       final words = wordMatching.dictionary?.words ?? [];
-      print('words=>$words');
-
       final question = wordMatching.questions[round - 1];
       final candidates = [
         question,

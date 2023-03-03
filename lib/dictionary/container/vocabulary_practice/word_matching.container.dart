@@ -21,7 +21,7 @@ class _WordMatchingContainerState extends ConsumerState<WordMatchingContainer> {
   @override
   Widget build(BuildContext context) => HookBuilder(
         builder: (context) {
-          final wordMatchingCtrl = ref.watch(wordMatchingControllerProvider.notifier);
+          final wordMatchingCtrl = ref.read(wordMatchingControllerProvider.notifier);
           final wordMatchingState = ref.watch(wordMatchingControllerProvider);
           useEffect(() {
             wordMatchingCtrl.init();

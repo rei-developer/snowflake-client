@@ -33,10 +33,8 @@ class SignInController extends ISignInController {
           return;
       }
       // TODO: setup account
-      if (context.mounted) {
-        print('go to dictionary screen');
-        await goToTitle();
-      }
+      print('go to dictionary screen');
+      await goToTitle();
     } catch (err) {
       print('SignInController signIn error => $err');
       await _authCtrl.signOut();
