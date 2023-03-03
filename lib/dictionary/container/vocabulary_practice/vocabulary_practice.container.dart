@@ -14,7 +14,7 @@ class VocabularyPracticeContainer extends ConsumerStatefulWidget {
 class _VocabularyPracticeContainerState extends ConsumerState<VocabularyPracticeContainer> {
   @override
   Widget build(BuildContext context) {
-    final dictionaryCtrl = ref.read(dictionaryControllerProvider);
+    final dictionaryCtrl = ref.read(dictionaryControllerProvider(context));
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -29,7 +29,7 @@ class _VocabularyPracticeContainerState extends ConsumerState<VocabularyPractice
           MaterialButton(
             color: Colors.blue,
             child: Text('단어장으로 돌아가기'),
-            onPressed: () => dictionaryCtrl.goToDictionary(context),
+            onPressed: () => dictionaryCtrl.goToDictionary(),
           ),
         ],
       ),

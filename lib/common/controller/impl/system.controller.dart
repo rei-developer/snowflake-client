@@ -5,7 +5,7 @@ import 'package:snowflake_client/dictionary/repository/dictionary-local.reposito
 
 class SystemController extends ISystemController {
   SystemController(this.ref)
-      : _dictionaryLocalRepo = ref.watch(dictionaryLocalRepositoryProvider.notifier),
+      : _dictionaryLocalRepo = ref.read(dictionaryLocalRepositoryProvider.notifier),
         super('');
 
   final Ref ref;

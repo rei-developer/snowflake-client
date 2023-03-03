@@ -3,7 +3,7 @@ description: Snowflake client project.
 
 publish_to: 'none'
 
-version: 1.0.0+1
+version: 0.0.1+1
 
 environment:
   sdk: '>=2.19.2 <3.0.0'
@@ -15,11 +15,16 @@ dependencies:
   flutter_riverpod: ^2.1.0
   flutter_screenutil: ^5.5.4
   flutter_svg: ^2.0.2
-  csv: ^5.0.1
   cupertino_icons: ^1.0.2
+  fast_csv: ^0.1.44
+  firebase_auth: ^4.2.9
+  firebase_core: ^2.7.0
+  google_sign_in: ^6.0.2
   hive: ^2.2.3
   hive_flutter: ^1.1.0
   path_provider: ^2.0.12
+  sign_in_with_apple: ^4.3.0
+  tuple: ^2.0.1
 
 dev_dependencies:
   flutter_test:

@@ -16,7 +16,7 @@ class TitleContainer extends ConsumerStatefulWidget {
 class _TitleContainerState extends ConsumerState<TitleContainer> {
   @override
   Widget build(BuildContext context) {
-    final dictionaryCtrl = ref.watch(dictionaryControllerProvider);
+    final dictionaryCtrl = ref.read(dictionaryControllerProvider(context));
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -38,7 +38,7 @@ class _TitleContainerState extends ConsumerState<TitleContainer> {
             MaterialButton(
               color: Colors.amberAccent,
               child: Text('사전으로 이동'),
-              onPressed: () => dictionaryCtrl.goToDictionary(context),
+              onPressed: () => dictionaryCtrl.goToDictionary(),
             ),
             SizedBox(height: 20.r),
             MaterialButton(

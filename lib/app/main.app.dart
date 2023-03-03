@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:snowflake_client/auth/auth.route.dart';
 import 'package:snowflake_client/route_manager.dart';
-import 'package:snowflake_client/title/title.route.dart';
 
 class MainApp extends ConsumerStatefulWidget {
   const MainApp({Key? key}) : super(key: key);
@@ -85,7 +85,7 @@ class _MainAppState extends ConsumerState<MainApp> with WidgetsBindingObserver {
           ),
           debugShowCheckedModeBanner: false,
           onGenerateInitialRoutes: (_) => RouteManager.onGenerateInitialRoutes(
-            TitleRoute.TITLE.name,
+            AuthRoute.SIGN_IN.name,
           ),
           onGenerateRoute: RouteManager.onGenerateRoute,
         ),

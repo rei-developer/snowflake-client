@@ -13,7 +13,7 @@ class DictionaryContainer extends ConsumerStatefulWidget {
 class _DictionaryContainerState extends ConsumerState<DictionaryContainer> {
   @override
   Widget build(BuildContext context) {
-    final dictionaryCtrl = ref.read(dictionaryControllerProvider);
+    final dictionaryCtrl = ref.read(dictionaryControllerProvider(context));
     return Container(
       width: double.infinity,
       height: double.infinity,
@@ -26,7 +26,7 @@ class _DictionaryContainerState extends ConsumerState<DictionaryContainer> {
           MaterialButton(
             color: Colors.blue,
             child: Text('단어 게임으로 이동'),
-            onPressed: () => dictionaryCtrl.goToVocabularyPractice(context),
+            onPressed: () => dictionaryCtrl.goToVocabularyPractice(),
           ),
         ],
       ),

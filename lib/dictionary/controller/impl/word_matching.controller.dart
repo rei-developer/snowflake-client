@@ -36,7 +36,10 @@ class WordMatchingController extends IWordMatchingController {
   void init() {
     print('init');
     Future.delayed(Duration.zero, () {
+      print('dictionary.words.length => ${state.dictionary?.words.length}');
+
       final questions = _wordMatchingService.setup(state);
+      print('questions.=>${questions.length}');
       state = state.copyWith(
         maxScore: questions.length * 10,
         questions: questions,
@@ -68,8 +71,7 @@ class WordMatchingController extends IWordMatchingController {
   }
 
   @override
-  Future<void> goToWordMatching(BuildContext context) =>
-      Go(context, DictionaryRoute.WORD_MATCHING.name).to();
+  Future<void> goToWordMatching(BuildContext context) => Go(context, DictionaryRoute.WORD_MATCHING.name).to();
 
   @override
   Future<void> goToVocabularyPractice(BuildContext context) =>
@@ -85,8 +87,7 @@ class WordMatchingController extends IWordMatchingController {
   }
 
   @override
-  WordEntity? get question =>
-      hasQuestions && state.round <= state.maxRound ? state.questions[state.round - 1] : null;
+  WordEntity? get question => hasQuestions && state.round <= state.maxRound ? state.questions[state.round - 1] : null;
 
   @override
   bool get isRunning => state.gameState == WordMatchingGameState.RUNNING;
@@ -110,15 +111,13 @@ class WordMatchingController extends IWordMatchingController {
     _startGameTimer();
   }
 
-  void _generateCandidates() =>
-      state = state.copyWith(candidates: _wordMatchingService.generateCandidates(state));
+  void _generateCandidates() => state = state.copyWith(candidates: _wordMatchingService.generateCandidates(state));
 
   void _subLife([int value = -1]) => state = state.copyWith(life: state.life + value);
 
   void _addScore([int value = 10]) => state = state.copyWith(score: state.score + value);
 
-  void _setGameState(WordMatchingGameState gameState) =>
-      state = state.copyWith(gameState: gameState);
+  void _setGameState(WordMatchingGameState gameState) => state = state.copyWith(gameState: gameState);
 
   void _startGameTimer() {
     print('set game timer');

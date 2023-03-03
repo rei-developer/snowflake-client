@@ -8,9 +8,10 @@ import 'package:snowflake_client/dictionary/service/dictionary.service.dart';
 import 'package:snowflake_client/utils/go.util.dart';
 
 class DictionaryController extends IDictionaryController {
-  DictionaryController(this.ref) : _dictionaryService = ref.read(dictionaryServiceProvider);
+  DictionaryController(this.ref, this.context) : _dictionaryService = ref.read(dictionaryServiceProvider);
 
   final Ref ref;
+  final BuildContext context;
   final IDictionaryService _dictionaryService;
 
   @override
@@ -25,10 +26,8 @@ class DictionaryController extends IDictionaryController {
   Future<List<DictionaryEntity>> fetchDictionaries() => _dictionaryService.fetchDictionaries();
 
   @override
-  Future<void> goToDictionary(BuildContext context) =>
-      Go(context, DictionaryRoute.DICTIONARY.name).replace();
+  Future<void> goToDictionary() => Go(context, DictionaryRoute.DICTIONARY.name).replace();
 
   @override
-  Future<void> goToVocabularyPractice(BuildContext context) =>
-      Go(context, DictionaryRoute.VOCABULARY_PRACTICE.name).to();
+  Future<void> goToVocabularyPractice() => Go(context, DictionaryRoute.VOCABULARY_PRACTICE.name).to();
 }

@@ -1,4 +1,5 @@
 enum HiveBox {
+  AUTH('auth'),
   DICTIONARY('dictionary');
 
   const HiveBox(this.name);
@@ -7,6 +8,7 @@ enum HiveBox {
 }
 
 enum HiveStorageKey {
+  AUTH('auth'),
   DICTIONARY('dictionary');
 
   const HiveStorageKey(this.name);

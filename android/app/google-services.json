@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1017383049659",
+    "project_id": "yukki-snowflake",
+    "storage_bucket": "yukki-snowflake.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1017383049659:android:f5f0693f92c8d38a44cc9e",
+        "android_client_info": {
+          "package_name": "app.yukki.snowflake"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1017383049659-oc3hho81dsgmbvh3f8b7umughqso5dai.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBr6qXgceB7-TGHYvUvjkhv7Ok4WssyQGc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1017383049659-oc3hho81dsgmbvh3f8b7umughqso5dai.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

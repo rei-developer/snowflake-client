@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:snowflake_client/dictionary/entity/dictionary.entity.dart';
+import 'package:snowflake_client/dictionary/entity/word.entity.dart';
 import 'package:snowflake_client/dictionary/provider/dictionary.provider.dart';
 import 'package:snowflake_client/dictionary/repository/dictionary-dummy.repository.dart';
 import 'package:snowflake_client/dictionary/repository/dictionary-local.repository.dart';
