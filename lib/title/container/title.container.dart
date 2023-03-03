@@ -32,13 +32,13 @@ class _TitleContainerState extends ConsumerState<TitleContainer> {
             MaterialButton(
               color: Colors.amberAccent,
               child: Text('셋업'),
-              onPressed: () => dictionaryCtrl.setup(),
+              onPressed: dictionaryCtrl.setup,
             ),
             SizedBox(height: 20.r),
             MaterialButton(
               color: Colors.amberAccent,
               child: Text('사전으로 이동'),
-              onPressed: () => dictionaryCtrl.goToDictionary(),
+              onPressed: dictionaryCtrl.goToDictionary,
             ),
             SizedBox(height: 20.r),
             MaterialButton(

@@ -47,8 +47,8 @@ class _DictionaryListComponentState extends ConsumerState<DictionaryListComponen
       _isLoading = true;
     });
     try {
-      final dictionaries = await widget.fetchDictionaries
-          .then((list) => list.skip(_currentPage * _pageSize).take(_pageSize).toList());
+      final dictionaries =
+          await widget.fetchDictionaries.then((list) => list.skip(_currentPage * _pageSize).take(_pageSize).toList());
 
       // final newDictionaries = List.generate(99, (index) => dictionaries[0]);
 

@@ -29,7 +29,7 @@ class _VocabularyPracticeContainerState extends ConsumerState<VocabularyPractice
           MaterialButton(
             color: Colors.blue,
             child: Text('단어장으로 돌아가기'),
-            onPressed: () => dictionaryCtrl.goToDictionary(),
+            onPressed: dictionaryCtrl.goToDictionary,
           ),
         ],
       ),

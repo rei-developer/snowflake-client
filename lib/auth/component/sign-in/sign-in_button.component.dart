@@ -11,6 +11,6 @@ class SignInButtonComponent extends StatelessWidget {
   Widget build(BuildContext context) => MaterialButton(
         color: Colors.purple,
         child: Text('${authType.name} Sign-in'),
-        onPressed: () => callback?.call(),
+        onPressed: callback?.call,
       );
 }

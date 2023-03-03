@@ -38,7 +38,7 @@ class WordMatchingModel {
         maxLife ?? 10,
         score ?? 0,
         maxScore ?? 20,
-        timeLimit ?? 10,
+        timeLimit ?? 5,
         candidates ?? [],
         questions ?? [],
         gameState ?? WordMatchingGameState.NONE,
