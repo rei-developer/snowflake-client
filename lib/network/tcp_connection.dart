@@ -19,6 +19,7 @@ class TcpConnection {
       print('Connected to: ${_socket?.remoteAddress.address}:${_socket?.remotePort}');
       _socket?.listen(
         (data) {
+          print('data => $data');
           print('Received: ${String.fromCharCodes(data)}');
           // _socket?.destroy();
         },

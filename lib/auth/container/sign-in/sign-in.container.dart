@@ -7,7 +7,9 @@ import 'package:snowflake_client/auth/controller/sign-in.controller.dart';
 import 'package:snowflake_client/auth/entity/auth_type.entity.dart';
 import 'package:snowflake_client/auth/provider/auth.provider.dart';
 import 'package:snowflake_client/auth/provider/sign-in.provider.dart';
+import 'package:snowflake_client/network/tcp_connection.dart';
 import 'package:snowflake_client/utils/func.util.dart';
+import 'package:snowflake_client/utils/json_to_binary.util.dart';
 import 'package:tuple/tuple.dart';
 
 class SignInContainer extends ConsumerStatefulWidget {
@@ -18,6 +20,18 @@ class SignInContainer extends ConsumerStatefulWidget {
 }
 
 class _SignInContainerState extends ConsumerState<SignInContainer> {
+  TcpConnection? _connection;
+
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration.zero, () async {
+      final connection = TcpConnection('127.0.0.1', 10000);
+      await connection.connect();
+      setState(() => _connection = connection);
+    });
+  }
+
   @override
   Widget build(BuildContext context) => Container(
         width: double.infinity,
@@ -34,6 +48,28 @@ class _SignInContainerState extends ConsumerState<SignInContainer> {
               color: Colors.lightBlue,
               child: Text('테스트'),
               onPressed: _signInCtrl().goToTitle,
+            ),
+            SizedBox(height: 20.r),
+            MaterialButton(
+              color: Colors.pink,
+              child: Text('send'),
+              onPressed: () {
+                _connection?.sendMessage(
+                  1,
+                  jsonToBinary({"test": 'hi'}),
+                );
+              },
+            ),
+            SizedBox(height: 20.r),
+            MaterialButton(
+              color: Colors.blue,
+              child: Text('send'),
+              onPressed: () {
+                _connection?.sendMessage(
+                  2,
+                  jsonToBinary({"bye": 23423}),
+                );
+              },
             ),
           ],
         ),
