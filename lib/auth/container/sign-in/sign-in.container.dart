@@ -26,7 +26,7 @@ class _SignInContainerState extends ConsumerState<SignInContainer> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
-      final connection = TcpConnection('127.0.0.1', 10000);
+      final connection = TcpConnection('127.0.0.1', 10004);
       await connection.connect();
       setState(() => _connection = connection);
     });
