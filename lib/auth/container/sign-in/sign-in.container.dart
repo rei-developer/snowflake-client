@@ -52,11 +52,11 @@ class _SignInContainerState extends ConsumerState<SignInContainer> {
             SizedBox(height: 20.r),
             MaterialButton(
               color: Colors.pink,
-              child: Text('send'),
+              child: Text('verify'),
               onPressed: () {
                 _connection?.sendMessage(
-                  1,
-                  jsonToBinary({"test": 'hi'}),
+                  0,
+                  jsonToBinary({'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxIn0.LTF9jRPVB8H7K4XJDrjU4sIyZNyevzFLe_H_ZSGk1_s'}),
                 );
               },
             ),
