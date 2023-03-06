@@ -21,12 +21,12 @@ class _DictionaryContainerState extends ConsumerState<DictionaryContainer> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('<단어장>'),
+          const Text('<Word Book>'),
           SizedBox(height: 50.r),
           MaterialButton(
             color: Colors.blue,
-            child: Text('단어 게임으로 이동'),
             onPressed: dictionaryCtrl.goToVocabularyPractice,
+            child: const Text('Play Word Matching Game'),
           ),
         ],
       ),

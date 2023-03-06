@@ -48,13 +48,12 @@ class WordMatchingController extends IWordMatchingController {
   @override
   void judgment(BuildContext context, WordEntity candidate) {
     if (question == candidate) {
-      showImageIndicator(context, message: '정답입니다!');
+      showImageIndicator(context, message: 'Good!');
       _addScore();
     } else {
-      showImageIndicator(context, message: '오답입니다...');
+      showImageIndicator(context, message: 'Bad...');
       _subLife();
       if (state.life < 1) {
-        print('목숨 없네용!!!');
         print('state.life => ${state.life}');
         print('state.maxLife => ${state.maxLife}');
         _stopGameTimer();
@@ -66,7 +65,8 @@ class WordMatchingController extends IWordMatchingController {
   }
 
   @override
-  Future<void> goToWordMatching(BuildContext context) => Go(context, DictionaryRoute.WORD_MATCHING.name).to();
+  Future<void> goToWordMatching(BuildContext context) =>
+      Go(context, DictionaryRoute.WORD_MATCHING.name).to();
 
   @override
   Future<void> goToVocabularyPractice(BuildContext context) =>
@@ -82,7 +82,8 @@ class WordMatchingController extends IWordMatchingController {
   }
 
   @override
-  WordEntity? get question => hasQuestions && state.round <= state.maxRound ? state.questions[state.round - 1] : null;
+  WordEntity? get question =>
+      hasQuestions && state.round <= state.maxRound ? state.questions[state.round - 1] : null;
 
   @override
   bool get isRunning => state.gameState == WordMatchingGameState.RUNNING;
@@ -106,13 +107,15 @@ class WordMatchingController extends IWordMatchingController {
     _startGameTimer();
   }
 
-  void _generateCandidates() => state = state.copyWith(candidates: _wordMatchingService.generateCandidates(state));
+  void _generateCandidates() =>
+      state = state.copyWith(candidates: _wordMatchingService.generateCandidates(state));
 
   void _subLife([int value = -1]) => state = state.copyWith(life: state.life + value);
 
   void _addScore([int value = 10]) => state = state.copyWith(score: state.score + value);
 
-  void _setGameState(WordMatchingGameState gameState) => state = state.copyWith(gameState: gameState);
+  void _setGameState(WordMatchingGameState gameState) =>
+      state = state.copyWith(gameState: gameState);
 
   void _startGameTimer() {
     print('set game timer');

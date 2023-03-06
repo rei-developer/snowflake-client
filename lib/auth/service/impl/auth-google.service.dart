@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:snowflake_client/auth/dto/sign-in.dto.dart';
@@ -6,6 +7,7 @@ import 'package:snowflake_client/auth/entity/auth_type.entity.dart';
 import 'package:snowflake_client/auth/provider/auth.provider.dart';
 import 'package:snowflake_client/auth/repository/auth-local.repository.dart';
 import 'package:snowflake_client/auth/service/auth.service.dart';
+import 'package:snowflake_client/firebase_options.dart';
 
 class AuthGoogleService extends IAuthService {
   AuthGoogleService(this.ref) : _authLocalRepo = ref.read(authLocalRepositoryProvider.notifier);
@@ -17,17 +19,24 @@ class AuthGoogleService extends IAuthService {
   Future<SignInDto?> signIn([bool isEntry = false]) async {
     try {
       if (_authLocalRepo.idToken != null) {
-        return _verify();
+        // return _verify();
       }
       if (isEntry) {
         return null;
       }
-      final account = await GoogleSignIn().signIn();
+      final account = await GoogleSignIn(
+        clientId: defaultTargetPlatform == TargetPlatform.iOS
+            ? DefaultFirebaseOptions.currentPlatform.iosClientId
+            : null,
+      ).signIn();
       if (account == null) {
         return null;
       }
       final auth = await account.authentication;
-      final credential = GoogleAuthProvider.credential(accessToken: auth.accessToken, idToken: auth.idToken);
+      final credential = GoogleAuthProvider.credential(
+        idToken: auth.idToken,
+        accessToken: auth.accessToken,
+      );
       final firebaseAuth = FirebaseAuth.instance;
       await firebaseAuth.signInWithCredential(credential);
       final user = firebaseAuth.currentUser;
@@ -38,6 +47,8 @@ class AuthGoogleService extends IAuthService {
       _authLocalRepo
         ..setAuthType(AuthType.GOOGLE)
         ..setIdToken(idToken);
+      print('idToken => $idToken');
+      print(user.email);
       return _verify();
     } catch (err) {
       print('AuthGoogleService signIn error => $err');

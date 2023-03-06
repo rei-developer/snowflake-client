@@ -22,14 +22,14 @@ class _VocabularyPracticeContainerState extends ConsumerState<VocabularyPractice
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Text('<단어 게임장>'),
+          const Text('<Word Matching Game>'),
           SizedBox(height: 50.r),
           Expanded(child: DictionaryListComponent(dictionaryCtrl.fetchDictionaries())),
           SizedBox(height: 20.r),
           MaterialButton(
             color: Colors.blue,
-            child: Text('단어장으로 돌아가기'),
             onPressed: dictionaryCtrl.goToDictionary,
+            child: const Text('Go back'),
           ),
         ],
       ),

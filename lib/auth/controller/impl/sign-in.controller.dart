@@ -26,6 +26,7 @@ class SignInController extends ISignInController {
         case SignInResult.succeed:
           final uid = _authCtrl.uid;
           print('uid => $uid');
+          await goToTitle();
           break;
         case SignInResult.failed:
           print('sign in failed');

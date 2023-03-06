@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:snowflake_client/common/component/image_indicator.component.dart';
 import 'package:snowflake_client/dictionary/provider/dictionary.provider.dart';
 import 'package:snowflake_client/title/title.const.dart';
 import 'package:snowflake_client/utils/asset_loader.dart';
@@ -27,24 +26,18 @@ class _TitleContainerState extends ConsumerState<TitleContainer> {
       child: SafeArea(
         child: Column(
           children: [
-            const Text('안녕하세요'),
+            const Text('Hello, world!'),
             SizedBox(height: 20.r),
             MaterialButton(
               color: Colors.amberAccent,
-              child: Text('셋업'),
               onPressed: dictionaryCtrl.setup,
+              child: const Text('Set up'),
             ),
             SizedBox(height: 20.r),
             MaterialButton(
               color: Colors.amberAccent,
-              child: Text('사전으로 이동'),
               onPressed: dictionaryCtrl.goToDictionary,
-            ),
-            SizedBox(height: 20.r),
-            MaterialButton(
-              color: Colors.amberAccent,
-              child: Text('텍스트 표시'),
-              onPressed: () => showImageIndicator(context, message: "아주 좋아", duration: 3),
+              child: const Text('Go to Dictionary'),
             ),
           ],
         ),

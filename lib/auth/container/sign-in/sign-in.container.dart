@@ -33,51 +33,48 @@ class _SignInContainerState extends ConsumerState<SignInContainer> {
   }
 
   @override
-  Widget build(BuildContext context) => Container(
-        width: double.infinity,
-        height: double.infinity,
-        padding: EdgeInsets.symmetric(horizontal: 20.r),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ...<Widget>[..._authTypes.map((e) => SignInButtonComponent(e, callback: _authCtrl(e).signIn))]
-                .superJoin(SizedBox(height: 10.r))
-                .toList(),
-            SizedBox(height: 20.r),
-            MaterialButton(
-              color: Colors.lightBlue,
-              child: Text('테스트'),
-              onPressed: _signInCtrl().goToTitle,
-            ),
-            SizedBox(height: 20.r),
-            MaterialButton(
-              color: Colors.pink,
-              child: Text('verify'),
-              onPressed: () {
-                _connection?.sendMessage(
-                  0,
-                  jsonToBinary({'token': 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxIn0.LTF9jRPVB8H7K4XJDrjU4sIyZNyevzFLe_H_ZSGk1_s'}),
-                );
-              },
-            ),
-            SizedBox(height: 20.r),
-            MaterialButton(
-              color: Colors.blue,
-              child: Text('send'),
-              onPressed: () {
-                _connection?.sendMessage(
-                  2,
-                  jsonToBinary({"bye": 23423}),
-                );
-              },
-            ),
-          ],
-        ),
-      );
+  Widget build(BuildContext context) {
+    ISignInController authCtrl(authType) =>
+        ref.read(signInControllerProvider(Tuple2(context, authType)));
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      padding: EdgeInsets.symmetric(horizontal: 20.r),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          ...<Widget>[
+            ..._authTypes.map((e) => SignInButtonComponent(e, callback: authCtrl(e).signIn))
+          ].superJoin(SizedBox(height: 10.r)).toList(),
+          SizedBox(height: 20.r),
+          MaterialButton(
+            color: Colors.pink,
+            child: const Text('Verify idToken'),
+            onPressed: () {
+              _connection?.sendMessage(
+                0,
+                jsonToBinary({
+                  'token':
+                      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxIn0.LTF9jRPVB8H7K4XJDrjU4sIyZNyevzFLe_H_ZSGk1_s'
+                }),
+              );
+            },
+          ),
+          SizedBox(height: 20.r),
+          MaterialButton(
+            color: Colors.blue,
+            child: const Text('Send tcp message'),
+            onPressed: () {
+              _connection?.sendMessage(
+                2,
+                jsonToBinary({"bye": 23423}),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
 
-  IAuthController _authCtrl(AuthType authType) => ref.read(authControllerProvider(authType).notifier);
-
-  ISignInController _signInCtrl() => ref.read(signInControllerProvider(Tuple2(context, null)));
-
-  List<AuthType> get _authTypes => [AuthType.GOOGLE];
+  List<AuthType> get _authTypes => [AuthType.GOOGLE, AuthType.APPLE];
 }

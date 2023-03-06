@@ -39,7 +39,7 @@ class _WordMatchingContainerState extends ConsumerState<WordMatchingContainer> {
                   SizedBox(height: 20.r),
                   MaterialButton(
                     color: Colors.blue,
-                    child: const Text('단어 게임으로 돌아가기'),
+                    child: const Text('Go back'),
                     onPressed: () => wordMatchingCtrl.goToVocabularyPractice(context),
                   ),
                 ],
@@ -47,7 +47,7 @@ class _WordMatchingContainerState extends ConsumerState<WordMatchingContainer> {
             );
           }
           if (!wordMatchingCtrl.hasQuestions) {
-            return const Text('문제 없음');
+            return const Text('No questions...');
           }
           return Container(
             width: double.infinity,
@@ -97,7 +97,7 @@ class _WordMatchingContainerState extends ConsumerState<WordMatchingContainer> {
                               crossAxisAlignment: CrossAxisAlignment.end,
                               children: [
                                 Text(
-                                  '라운드 : ${wordMatchingState.round} / ${wordMatchingState.maxRound}',
+                                  'Round : ${wordMatchingState.round} / ${wordMatchingState.maxRound}',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16.r,
@@ -106,7 +106,7 @@ class _WordMatchingContainerState extends ConsumerState<WordMatchingContainer> {
                                 ),
                                 SizedBox(height: 10.r),
                                 Text(
-                                  '점수 : ${wordMatchingState.score} / ${wordMatchingState.maxScore}',
+                                  'Score : ${wordMatchingState.score} / ${wordMatchingState.maxScore}',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 16.r,
@@ -146,7 +146,7 @@ class _WordMatchingContainerState extends ConsumerState<WordMatchingContainer> {
                         ),
                         MaterialButton(
                           color: Colors.black,
-                          child: const Text('돌아가기'),
+                          child: const Text('Go back'),
                           onPressed: () => wordMatchingCtrl.goToVocabularyPractice(context),
                         ),
                       ],

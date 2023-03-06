@@ -47,8 +47,8 @@ class _DictionaryListComponentState extends ConsumerState<DictionaryListComponen
       _isLoading = true;
     });
     try {
-      final dictionaries =
-          await widget.fetchDictionaries.then((list) => list.skip(_currentPage * _pageSize).take(_pageSize).toList());
+      final dictionaries = await widget.fetchDictionaries
+          .then((list) => list.skip(_currentPage * _pageSize).take(_pageSize).toList());
 
       // final newDictionaries = List.generate(99, (index) => dictionaries[0]);
 
@@ -99,8 +99,8 @@ class _DictionaryListComponentState extends ConsumerState<DictionaryListComponen
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  const SizedBox(height: 5),
-                  Text('단어 개수 : ${dictionary.words.length}개'),
+                  SizedBox(height: 5.r),
+                  Text('Words length : ${dictionary.words.length}'),
                 ],
               ),
             ),
