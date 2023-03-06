@@ -30,9 +30,21 @@
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.1017383049659-af8n40srap5qhebk8ud88a4assafi0dk</string>
+				<string>fb5860521444060409</string>
 			</array>
 		</dict>
 	</array>
+    <key>FacebookAppID</key>
+    <string>5860521444060409</string>
+    <key>FacebookClientToken</key>
+    <string>b0ad57450b0aa117f0edcee866f82883</string>
+    <key>FacebookDisplayName</key>
+    <string>Snowflake</string>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <string>fbapi</string>
+        <string>fb-messenger-share-api</string>
+    </array>
 	<key>CFBundleVersion</key>
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>

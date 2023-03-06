@@ -76,5 +76,5 @@ class _SignInContainerState extends ConsumerState<SignInContainer> {
     );
   }
 
-  List<AuthType> get _authTypes => [AuthType.GOOGLE, AuthType.APPLE];
+  List<AuthType> get _authTypes => [AuthType.APPLE, AuthType.GOOGLE, AuthType.FACEBOOK];
 }

@@ -8,9 +8,12 @@ import 'package:snowflake_client/auth/repository/auth-local.repository.dart';
 import 'package:snowflake_client/auth/service/auth.service.dart';
 
 class AuthAppleService extends IAuthService {
-  AuthAppleService(this.ref) : _authLocalRepo = ref.read(authLocalRepositoryProvider.notifier);
+  AuthAppleService(this.ref)
+      : _firebaseAuth = FirebaseAuth.instance,
+        _authLocalRepo = ref.read(authLocalRepositoryProvider.notifier);
 
   final Ref ref;
+  final FirebaseAuth _firebaseAuth;
   final IAuthLocalRepository _authLocalRepo;
 
   @override
@@ -28,13 +31,13 @@ class AuthAppleService extends IAuthService {
           AppleIDAuthorizationScopes.fullName,
         ],
       );
-      final credential = OAuthProvider('apple.com').credential(
-        idToken: auth.identityToken,
-        accessToken: auth.authorizationCode,
+      await _firebaseAuth.signInWithCredential(
+        OAuthProvider('apple.com').credential(
+          idToken: auth.identityToken,
+          accessToken: auth.authorizationCode,
+        ),
       );
-      final firebaseAuth = FirebaseAuth.instance;
-      await firebaseAuth.signInWithCredential(credential);
-      final user = firebaseAuth.currentUser;
+      final user = _firebaseAuth.currentUser;
       if (user == null) {
         return null;
       }

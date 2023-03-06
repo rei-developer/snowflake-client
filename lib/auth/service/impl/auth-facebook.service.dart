@@ -1,26 +1,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter_facebook_auth/flutter_facebook_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:google_sign_in/google_sign_in.dart';
 import 'package:snowflake_client/auth/dto/sign-in.dto.dart';
 import 'package:snowflake_client/auth/entity/auth_type.entity.dart';
 import 'package:snowflake_client/auth/provider/auth.provider.dart';
 import 'package:snowflake_client/auth/repository/auth-local.repository.dart';
 import 'package:snowflake_client/auth/service/auth.service.dart';
-import 'package:snowflake_client/firebase_options.dart';
 
-class AuthGoogleService extends IAuthService {
-  AuthGoogleService(this.ref)
-      : _googleAuth = GoogleSignIn(
-          clientId: defaultTargetPlatform == TargetPlatform.iOS
-              ? DefaultFirebaseOptions.currentPlatform.iosClientId
-              : DefaultFirebaseOptions.currentPlatform.androidClientId,
-        ),
+class AuthFacebookService extends IAuthService {
+  AuthFacebookService(this.ref)
+      : _facebookAuth = FacebookAuth.instance,
         _firebaseAuth = FirebaseAuth.instance,
         _authLocalRepo = ref.read(authLocalRepositoryProvider.notifier);
 
   final Ref ref;
-  final GoogleSignIn _googleAuth;
+  final FacebookAuth _facebookAuth;
   final FirebaseAuth _firebaseAuth;
   final IAuthLocalRepository _authLocalRepo;
 
@@ -33,26 +27,24 @@ class AuthGoogleService extends IAuthService {
       if (isEntry) {
         return null;
       }
-      final auth = await (await _googleAuth.signIn())?.authentication;
-      if (auth == null) {
+      final accessToken = (await _facebookAuth.login()).accessToken?.token;
+      if (accessToken == null) {
         return null;
       }
-      await _firebaseAuth.signInWithCredential(
-        GoogleAuthProvider.credential(idToken: auth.idToken, accessToken: auth.accessToken),
-      );
+      await _firebaseAuth.signInWithCredential(FacebookAuthProvider.credential(accessToken));
       final user = _firebaseAuth.currentUser;
       if (user == null) {
         return null;
       }
       final idToken = await user.getIdToken();
       _authLocalRepo
-        ..setAuthType(AuthType.GOOGLE)
+        ..setAuthType(AuthType.FACEBOOK)
         ..setIdToken(idToken);
       print('idToken => $idToken');
       print(user.email);
       return _verify();
     } catch (err) {
-      print('AuthGoogleService signIn error => $err');
+      print('AuthFacebookService signIn error => $err');
       return null;
     }
   }
@@ -68,10 +60,8 @@ class AuthGoogleService extends IAuthService {
 
   @override
   Future<void> signOut() async {
-    if (await _googleAuth.isSignedIn()) {
-      await _googleAuth.disconnect();
-    }
-    await _authLocalRepo.delete();
+    _facebookAuth.logOut();
+    _authLocalRepo.delete();
   }
 
   Future<SignInDto?> _verify() async {
@@ -85,9 +75,18 @@ class AuthGoogleService extends IAuthService {
       //   ..setCustomToken(customToken);
       // await Hive.openBox(uid);
       // return data;
+
+      // final data = await ref.read(authRestRepositoryProvider).verify();
+      // final uid = data['uid'] as String;
+      // final customToken = data['customToken'] as String;
+      // ref.read(authControllerProvider.notifier).setUId(uid);
+      // ref.read(authLocalRepositoryProvider.notifier).setCustomToken(customToken);
+      // await Hive.openBox(uid);
+      // return data;
+
       return SignInDto.fromJson({});
     } catch (err) {
-      print('AuthGoogleService verify error => $err');
+      print('AuthFacebookService verify error => $err');
       return null;
     }
   }
