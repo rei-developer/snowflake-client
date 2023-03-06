@@ -14,6 +14,30 @@
       },
       "oauth_client": [
         {
+          "client_id": "1017383049659-8efu9cpo44bobcifgblk0keph9p1t196.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.yukki.snowflake",
+            "certificate_hash": "0aa92cc8f50cfa22907203d2df078d1595851514"
+          }
+        },
+        {
+          "client_id": "1017383049659-m6v3ikbo4q3peo5ln6si86e5tr2ra62j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.yukki.snowflake",
+            "certificate_hash": "5167f2d733f167c1eee92010286ad89c13b0fd9f"
+          }
+        },
+        {
+          "client_id": "1017383049659-nuhmd61fek4cs1h0pqm32f34lp3kj0l2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.yukki.snowflake",
+            "certificate_hash": "c365d0a2d0fbdf992febab3604d02d87a00e4f4d"
+          }
+        },
+        {
           "client_id": "1017383049659-oc3hho81dsgmbvh3f8b7umughqso5dai.apps.googleusercontent.com",
           "client_type": 3
         }
@@ -29,6 +53,13 @@
             {
               "client_id": "1017383049659-oc3hho81dsgmbvh3f8b7umughqso5dai.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "1017383049659-af8n40srap5qhebk8ud88a4assafi0dk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "app.yukki.snowflake"
+              }
             }
           ]
         }
