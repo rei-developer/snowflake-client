@@ -7,9 +7,9 @@ abstract class IAuthController extends StateNotifier<AuthModel> {
 
   Future<SignInResult> signIn();
 
-  Future<void> signOut();
-
   void setUid([String? uid = '']);
+
+  Future<void> signOut();
 
   String get uid;
 }

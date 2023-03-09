@@ -16,13 +16,18 @@ dependencies:
   flutter_riverpod: ^2.1.0
   flutter_screenutil: ^5.5.4
   flutter_svg: ^2.0.2
+  animated_text_kit: ^4.2.2
+  connectivity_plus: ^3.0.3
   cupertino_icons: ^1.0.2
+  dio: ^5.0.1
+  fade_out_particle: ^1.2.1
   fast_csv: ^0.1.44
   firebase_auth: ^4.2.9
   firebase_core: ^2.7.0
   google_sign_in: ^6.0.2
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  package_info_plus: ^3.0.3
   path_provider: ^2.0.12
   sign_in_with_apple: ^4.3.0
   tuple: ^2.0.1
@@ -40,6 +45,8 @@ flutter:
   assets:
     - assets/dictionary/
     - assets/image/
+    - assets/image/icon/
+    - assets/image/icon/auth/
     - assets/image/background/
     - assets/image/common/
 

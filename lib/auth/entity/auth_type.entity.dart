@@ -5,7 +5,7 @@ part 'auth_type.entity.g.dart';
 @HiveType(typeId: 3)
 enum AuthType {
   @HiveField(0)
-  MTIX('local'),
+  LOCAL('local'),
   @HiveField(1)
   GOOGLE('google'),
   @HiveField(2)

@@ -5,9 +5,12 @@ import 'package:snowflake_client/auth/controller/impl/auth.controller.dart';
 import 'package:snowflake_client/auth/entity/auth_type.entity.dart';
 import 'package:snowflake_client/auth/model/auth.model.dart';
 import 'package:snowflake_client/auth/repository/auth-local.repository.dart';
+import 'package:snowflake_client/auth/repository/auth-rest.repository.dart';
 import 'package:snowflake_client/auth/repository/impl/auth-local.repository.dart';
+import 'package:snowflake_client/auth/repository/impl/auth-rest.repository.dart';
 import 'package:snowflake_client/auth/service/auth.service.dart';
 import 'package:snowflake_client/auth/service/impl/auth-apple.service.dart';
+import 'package:snowflake_client/auth/service/impl/auth-custom.service.dart';
 import 'package:snowflake_client/auth/service/impl/auth-facebook.service.dart';
 import 'package:snowflake_client/auth/service/impl/auth-google.service.dart';
 
@@ -17,6 +20,10 @@ final authControllerProvider = StateNotifierProvider.family<IAuthController, Aut
 
 final authLocalRepositoryProvider = StateNotifierProvider<IAuthLocalRepository, Box>(
   (_) => AuthLocalRepository(),
+);
+
+final authRestRepositoryProvider = Provider<IAuthRestRepository>(
+  (ref) => AuthRestRepository(ref.watch(authLocalRepositoryProvider.notifier)),
 );
 
 final authServiceProvider = Provider.family.autoDispose<IAuthService, AuthType?>(
@@ -29,8 +36,7 @@ final authServiceProvider = Provider.family.autoDispose<IAuthService, AuthType?>
       case AuthType.FACEBOOK:
         return AuthFacebookService(ref);
       default:
-        // TODO: custom auth service
-        return AuthGoogleService(ref);
+        return AuthCustomService(ref);
     }
   },
 );

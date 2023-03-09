@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:snowflake_client/auth/auth.route.dart';
 import 'package:snowflake_client/dictionary/dictionary.route.dart';
+import 'package:snowflake_client/entry/entry.route.dart';
 import 'package:snowflake_client/title/title.route.dart';
 
 class RouteManager {
@@ -16,6 +17,7 @@ class RouteManager {
       );
 
   static Map<String, WidgetBuilder> get _getRoutes => {
+        ...getCommonRoutes(),
         ...getAuthRoutes(),
         ...getTitleRoutes(),
         ...getDictionaryRoutes(),

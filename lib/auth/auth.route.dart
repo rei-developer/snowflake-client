@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:snowflake_client/auth/screen/sign-in/sign-in.screen.dart';
 
 enum AuthRoute {
-  SIGN_IN('/');
+  SIGN_IN('/sign-in');
 
   const AuthRoute(this.name);
 

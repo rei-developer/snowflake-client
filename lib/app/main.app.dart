@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:snowflake_client/auth/auth.route.dart';
+import 'package:snowflake_client/entry/entry.route.dart';
 import 'package:snowflake_client/route_manager.dart';
 
 class MainApp extends ConsumerStatefulWidget {
@@ -71,9 +71,9 @@ class _MainAppState extends ConsumerState<MainApp> with WidgetsBindingObserver {
               bodyColor: Colors.black,
               fontSizeFactor: 1.sp,
             ),
-            scaffoldBackgroundColor: Colors.white,
+            scaffoldBackgroundColor: Colors.black,
             appBarTheme: const AppBarTheme(
-              color: Colors.white,
+              color: Colors.black,
               elevation: 0,
               centerTitle: false,
             ),
@@ -85,7 +85,7 @@ class _MainAppState extends ConsumerState<MainApp> with WidgetsBindingObserver {
           ),
           debugShowCheckedModeBanner: false,
           onGenerateInitialRoutes: (_) => RouteManager.onGenerateInitialRoutes(
-            AuthRoute.SIGN_IN.name,
+            CommonRoute.ENTRY.name,
           ),
           onGenerateRoute: RouteManager.onGenerateRoute,
         ),

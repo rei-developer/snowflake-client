@@ -5,6 +5,7 @@ import 'package:snowflake_client/auth/controller/auth.controller.dart';
 import 'package:snowflake_client/auth/controller/sign-in.controller.dart';
 import 'package:snowflake_client/auth/entity/auth_type.entity.dart';
 import 'package:snowflake_client/auth/provider/auth.provider.dart';
+import 'package:snowflake_client/common/component/dialog/confirm.dialog.dart';
 import 'package:snowflake_client/common/component/loading_indicator.component.dart';
 import 'package:snowflake_client/title/title.route.dart';
 import 'package:snowflake_client/utils/go.util.dart';
@@ -29,8 +30,11 @@ class SignInController extends ISignInController {
           await goToTitle();
           break;
         case SignInResult.failed:
-          print('sign in failed');
           await _authCtrl.signOut();
+          if (context.mounted) {
+            return;
+          }
+          await showConfirmDialog(context, title: '알림', message: '로그인을 취소했습니다.');
           return;
       }
       // TODO: setup account

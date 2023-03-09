@@ -24,6 +24,7 @@ class AuthController extends IAuthController {
         await signOut();
         return SignInResult.failed;
       }
+      setUid(signInDto.uid);
       return SignInResult.succeed;
     } catch (err) {
       print('AuthController signIn error => $err');
@@ -33,13 +34,13 @@ class AuthController extends IAuthController {
   }
 
   @override
+  void setUid([String? uid = '']) => state = state.copyWith(uid: uid);
+
+  @override
   Future<void> signOut() async {
     await _authService.signOut();
     state = AuthModel.initial();
   }
-
-  @override
-  void setUid([String? uid = '']) => state = state.copyWith(uid: uid);
 
   @override
   String get uid => state.uid;
