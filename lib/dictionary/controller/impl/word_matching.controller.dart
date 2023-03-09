@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:snowflake_client/common/component/image_indicator.component.dart';
+import 'package:snowflake_client/common/controller/tts.controller.dart';
+import 'package:snowflake_client/common/provider/common.provider.dart';
 import 'package:snowflake_client/dictionary/const/word_matching.const.dart';
 import 'package:snowflake_client/dictionary/controller/word_matching.controller.dart';
 import 'package:snowflake_client/dictionary/dictionary.route.dart';
@@ -15,10 +17,12 @@ import 'package:snowflake_client/utils/go.util.dart';
 
 class WordMatchingController extends IWordMatchingController {
   WordMatchingController(this.ref)
-      : _wordMatchingService = ref.read(wordMatchingServiceProvider),
+      : _ttsCtrl = ref.read(ttsControllerProvider.notifier),
+        _wordMatchingService = ref.read(wordMatchingServiceProvider),
         super(WordMatchingModel.initial());
 
   final Ref ref;
+  final ITtsController _ttsCtrl;
   final IWordMatchingService _wordMatchingService;
 
   Timer? _gameTimer;
@@ -33,7 +37,7 @@ class WordMatchingController extends IWordMatchingController {
   @override
   void init() {
     print('init');
-    Future.delayed(Duration.zero, () {
+    Future.delayed(Duration.zero, () async {
       final questions = _wordMatchingService.setup(state);
       state = state.copyWith(
         maxScore: questions.length * 10,
@@ -41,12 +45,13 @@ class WordMatchingController extends IWordMatchingController {
         gameState: WordMatchingGameState.RUNNING,
       );
       _generateCandidates();
-      _startGameTimer();
+      await _ttsCtrl.setLanguage('ru-RU');
+      await _start();
     });
   }
 
   @override
-  void judgment(BuildContext context, WordEntity candidate) {
+  Future<void> judgment(BuildContext context, WordEntity candidate) async {
     if (question == candidate) {
       showImageIndicator(context, message: 'Good!');
       _addScore();
@@ -56,12 +61,12 @@ class WordMatchingController extends IWordMatchingController {
       if (state.life < 1) {
         print('state.life => ${state.life}');
         print('state.maxLife => ${state.maxLife}');
-        _stopGameTimer();
+        _stop();
         _setGameState(WordMatchingGameState.RESULT);
         return;
       }
     }
-    _next(false);
+    await _next(false);
   }
 
   @override
@@ -77,7 +82,7 @@ class WordMatchingController extends IWordMatchingController {
     print('clear');
     Future.delayed(Duration.zero, () {
       state = WordMatchingModel.initial();
-      _stopGameTimer();
+      _stop();
     });
   }
 
@@ -86,25 +91,31 @@ class WordMatchingController extends IWordMatchingController {
       hasQuestions && state.round <= state.maxRound ? state.questions[state.round - 1] : null;
 
   @override
-  bool get isRunning => state.gameState == WordMatchingGameState.RUNNING;
+  bool get isRunning => state.gameState == WordMatchingGameState.RUNNING || isPending;
+
+  @override
+  bool get isPending => state.gameState == WordMatchingGameState.PENDING;
 
   @override
   bool get hasQuestions => state.questions.isNotEmpty;
 
-  void _next([bool isTimedOut = true]) {
+  Future<void> _next([bool isTimedOut = true]) async {
+    _setGameState(WordMatchingGameState.PENDING);
+    await _ttsCtrl.speak(question?.word);
+    await Future.delayed(const Duration(seconds: 1));
     print('next');
-    _stopGameTimer();
-    if (state.round >= state.maxRound) {
+    _stop();
+    if (isTimedOut) {
+      _subLife();
+    }
+    if (state.round >= state.maxRound || state.life < 1) {
       print('end game');
       _setGameState(WordMatchingGameState.RESULT);
       return;
     }
-    if (isTimedOut) {
-      print('시간 초과입니다');
-    }
     state = state.copyWith(round: state.round + 1);
     _generateCandidates();
-    _startGameTimer();
+    _start();
   }
 
   void _generateCandidates() =>
@@ -117,18 +128,23 @@ class WordMatchingController extends IWordMatchingController {
   void _setGameState(WordMatchingGameState gameState) =>
       state = state.copyWith(gameState: gameState);
 
-  void _startGameTimer() {
+  Future<void> _start() async {
     print('set game timer');
+    _setGameState(WordMatchingGameState.RUNNING);
+    if (question?.word != null) {
+      print('question?.word => ${question?.word} start tts');
+      await _ttsCtrl.speak(question?.word);
+    }
     _gameTimer = Timer.periodic(
       Duration(seconds: state.timeLimit),
-      (_) {
+      (_) async {
         print('fetched game timer');
-        _next();
+        await _next();
       },
     );
   }
 
-  void _stopGameTimer() {
+  void _stop() {
     print('stoped game timer');
     _gameTimer?.cancel();
     _gameTimer = null;

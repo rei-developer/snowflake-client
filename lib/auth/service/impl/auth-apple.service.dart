@@ -49,6 +49,7 @@ class AuthAppleService extends IAuthService {
       this
         ..setAuthType(AuthType.APPLE)
         ..setIdToken(idToken)
+        ..setUid(user.uid)
         ..setEmail(user.email ?? '');
       return _verify();
     } catch (err) {

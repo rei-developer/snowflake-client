@@ -44,6 +44,7 @@ class AuthFacebookService extends IAuthService {
       this
         ..setAuthType(AuthType.FACEBOOK)
         ..setIdToken(idToken)
+        ..setUid(user.uid)
         ..setEmail(user.email ?? '');
       return _verify();
     } catch (err) {

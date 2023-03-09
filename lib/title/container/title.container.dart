@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:snowflake_client/common/provider/common.provider.dart';
 import 'package:snowflake_client/dictionary/provider/dictionary.provider.dart';
 import 'package:snowflake_client/title/title.const.dart';
 import 'package:snowflake_client/utils/asset_loader.dart';
@@ -13,6 +14,15 @@ class TitleContainer extends ConsumerStatefulWidget {
 }
 
 class _TitleContainerState extends ConsumerState<TitleContainer> {
+  @override
+  void initState() {
+    super.initState();
+    Future.delayed(
+      Duration.zero,
+      () => ref.read(audioControllerProvider.notifier).play('audio/bgm/tohikioku.mp3'),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     final dictionaryCtrl = ref.read(dictionaryControllerProvider(context));

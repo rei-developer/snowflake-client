@@ -13,7 +13,7 @@ abstract class IWordMatchingController extends StateNotifier<WordMatchingModel> 
 
   void clear();
 
-  void judgment(BuildContext context, WordEntity candidate);
+  Future<void> judgment(BuildContext context, WordEntity candidate);
 
   Future<void> goToWordMatching(BuildContext context);
 
@@ -22,6 +22,8 @@ abstract class IWordMatchingController extends StateNotifier<WordMatchingModel> 
   WordEntity? get question;
 
   bool get isRunning;
+
+  bool get isPending;
 
   bool get hasQuestions;
 }

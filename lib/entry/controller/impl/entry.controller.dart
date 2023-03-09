@@ -50,18 +50,18 @@ class EntryController extends IEntryController {
       if (authType == null) {
         return false;
       }
-      SignInDto? signInDto = await _authCustomService.signIn();
-      if (signInDto == null) {
-        signInDto = await _authService.signIn(true);
-        if (signInDto == null) {
-          await _authCtrl.signOut();
-          return false;
-        }
-      }
-      final user = _firebaseAuth.currentUser;
-      if (user == null) {
-        return false;
-      }
+      // SignInDto? signInDto = await _authCustomService.signIn();
+      // if (signInDto == null) {
+      //   signInDto = await _authService.signIn(true);
+      //   if (signInDto == null) {
+      //     await _authCtrl.signOut();
+      //     return false;
+      //   }
+      // }
+      // final user = _firebaseAuth.currentUser;
+      // if (user == null) {
+      //   return false;
+      // }
       return Future(() => true);
     } catch (err) {
       print('EntryController init error => $err');

@@ -52,6 +52,7 @@ class AuthGoogleService extends IAuthService {
       this
         ..setAuthType(AuthType.GOOGLE)
         ..setIdToken(idToken)
+        ..setUid(user.uid)
         ..setEmail(user.email ?? '');
       return _verify();
     } catch (err) {

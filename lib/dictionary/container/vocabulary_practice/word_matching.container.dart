@@ -128,22 +128,23 @@ class _WordMatchingContainerState extends ConsumerState<WordMatchingContainer> {
                             ),
                           ],
                         ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.stretch,
-                          children: <Widget>[
-                            ...mapIndexed(
-                              wordMatchingState.candidates,
-                              (index, e) => MaterialButton(
-                                color: Colors.yellow,
-                                child: Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text('${russianAlphabet[index]}) ${e.meaning}'),
+                        if (!wordMatchingCtrl.isPending)
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: <Widget>[
+                              ...mapIndexed(
+                                wordMatchingState.candidates,
+                                (index, e) => MaterialButton(
+                                  color: Colors.yellow,
+                                  child: Align(
+                                    alignment: Alignment.centerLeft,
+                                    child: Text('${russianAlphabet[index]}) ${e.meaning}'),
+                                  ),
+                                  onPressed: () => wordMatchingCtrl.judgment(context, e),
                                 ),
-                                onPressed: () => wordMatchingCtrl.judgment(context, e),
                               ),
-                            ),
-                          ].superJoin(SizedBox(height: 10.r)).toList(),
-                        ),
+                            ].superJoin(SizedBox(height: 10.r)).toList(),
+                          ),
                         MaterialButton(
                           color: Colors.black,
                           child: const Text('Go back'),

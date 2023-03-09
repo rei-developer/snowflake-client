@@ -16,6 +16,8 @@ dependencies:
   flutter_riverpod: ^2.1.0
   flutter_screenutil: ^5.5.4
   flutter_svg: ^2.0.2
+  flutter_tts: ^3.6.3
+  audioplayers: ^3.0.1
   animated_text_kit: ^4.2.2
   connectivity_plus: ^3.0.3
   cupertino_icons: ^1.0.2
@@ -43,6 +45,9 @@ flutter:
   uses-material-design: true
 
   assets:
+    - assets/audio/
+    - assets/audio/bgm/
+    - assets/audio/se/
     - assets/dictionary/
     - assets/image/
     - assets/image/icon/
