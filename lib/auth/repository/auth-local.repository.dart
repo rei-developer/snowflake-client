@@ -11,9 +11,17 @@ abstract class IAuthLocalRepository extends StateNotifier<Box> {
 
   Future<void> setCustomToken(String customToken);
 
+  Future<void> setUid(String uid);
+
   Future<void> setEmail(String email);
 
-  Future<void> save({AuthType? authType, String? idToken, String? customToken, String? email});
+  Future<void> save({
+    AuthType? authType,
+    String? idToken,
+    String? customToken,
+    String? uid,
+    String? email,
+  });
 
   Future<void> delete();
 
@@ -22,6 +30,8 @@ abstract class IAuthLocalRepository extends StateNotifier<Box> {
   String? get idToken;
 
   String? get customToken;
+
+  String? get uid;
 
   String? get email;
 }

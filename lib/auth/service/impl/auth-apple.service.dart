@@ -67,10 +67,16 @@ class AuthAppleService extends IAuthService {
   Future<void> setCustomToken(String customToken) => _authLocalRepo.setCustomToken(customToken);
 
   @override
+  Future<void> setUid(String uid) => _authLocalRepo.setUid(uid);
+
+  @override
   Future<void> setEmail(String email) => _authLocalRepo.setEmail(email);
 
   @override
   Future<void> signOut() => _authLocalRepo.delete();
+
+  @override
+  String? get uid => _authLocalRepo.uid;
 
   Future<SignInDto?> _verify() async {
     try {

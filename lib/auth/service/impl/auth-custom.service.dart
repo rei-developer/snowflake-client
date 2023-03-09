@@ -41,8 +41,14 @@ class AuthCustomService extends IAuthService {
   Future<void> setCustomToken(String customToken) async {}
 
   @override
+  Future<void> setUid(String uid) async {}
+
+  @override
   Future<void> setEmail(String email) async {}
 
   @override
   Future<void> signOut() => _authLocalRepo.delete();
+
+  @override
+  String? get uid => _authLocalRepo.uid;
 }

@@ -3,7 +3,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:snowflake_client/auth/controller/auth.controller.dart';
 import 'package:snowflake_client/auth/controller/impl/auth.controller.dart';
 import 'package:snowflake_client/auth/entity/auth_type.entity.dart';
-import 'package:snowflake_client/auth/model/auth.model.dart';
 import 'package:snowflake_client/auth/repository/auth-local.repository.dart';
 import 'package:snowflake_client/auth/repository/auth-rest.repository.dart';
 import 'package:snowflake_client/auth/repository/impl/auth-local.repository.dart';
@@ -14,7 +13,7 @@ import 'package:snowflake_client/auth/service/impl/auth-custom.service.dart';
 import 'package:snowflake_client/auth/service/impl/auth-facebook.service.dart';
 import 'package:snowflake_client/auth/service/impl/auth-google.service.dart';
 
-final authControllerProvider = StateNotifierProvider.family<IAuthController, AuthModel, AuthType?>(
+final authControllerProvider = Provider.family<IAuthController, AuthType?>(
   (ref, authType) => AuthController(ref, authType),
 );
 

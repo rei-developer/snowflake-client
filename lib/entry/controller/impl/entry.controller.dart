@@ -22,7 +22,7 @@ class EntryController extends IEntryController {
         _authCtrl = ref.read(
           authControllerProvider(
             ref.read(authLocalRepositoryProvider.notifier).authType,
-          ).notifier,
+          ),
         ),
         _authLocalRepo = ref.read(authLocalRepositoryProvider.notifier),
         _authService = ref.read(

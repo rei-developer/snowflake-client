@@ -2,14 +2,11 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:snowflake_client/auth/auth.const.dart';
 import 'package:snowflake_client/auth/controller/auth.controller.dart';
 import 'package:snowflake_client/auth/entity/auth_type.entity.dart';
-import 'package:snowflake_client/auth/model/auth.model.dart';
 import 'package:snowflake_client/auth/provider/auth.provider.dart';
 import 'package:snowflake_client/auth/service/auth.service.dart';
 
 class AuthController extends IAuthController {
-  AuthController(this.ref, this.authType)
-      : _authService = ref.read(authServiceProvider(authType)),
-        super(AuthModel.initial());
+  AuthController(this.ref, this.authType) : _authService = ref.read(authServiceProvider(authType));
 
   final Ref ref;
   final AuthType? authType;
@@ -24,7 +21,6 @@ class AuthController extends IAuthController {
         await signOut();
         return SignInResult.failed;
       }
-      setUid(signInDto.uid);
       return SignInResult.succeed;
     } catch (err) {
       print('AuthController signIn error => $err');
@@ -34,14 +30,5 @@ class AuthController extends IAuthController {
   }
 
   @override
-  void setUid([String? uid = '']) => state = state.copyWith(uid: uid);
-
-  @override
-  Future<void> signOut() async {
-    await _authService.signOut();
-    state = AuthModel.initial();
-  }
-
-  @override
-  String get uid => state.uid;
+  Future<void> signOut() => _authService.signOut();
 }

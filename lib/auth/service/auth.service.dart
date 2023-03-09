@@ -10,7 +10,11 @@ abstract class IAuthService {
 
   Future<void> setCustomToken(String customToken);
 
+  Future<void> setUid(String uid);
+
   Future<void> setEmail(String email);
 
   Future<void> signOut();
+
+  String? get uid;
 }

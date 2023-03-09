@@ -21,16 +21,26 @@ class AuthLocalRepository extends IAuthLocalRepository {
   Future<void> setCustomToken(String customToken) => save(customToken: customToken);
 
   @override
+  Future<void> setUid(String uid) => save(uid: uid);
+
+  @override
   Future<void> setEmail(String email) => save(email: email);
 
   @override
-  Future<void> save({AuthType? authType, String? idToken, String? customToken, String? email}) =>
+  Future<void> save({
+    AuthType? authType,
+    String? idToken,
+    String? customToken,
+    String? uid,
+    String? email,
+  }) =>
       state.put(
         _key,
         _auth.copyWith(
           authType: authType ?? this.authType,
           idToken: idToken ?? this.idToken,
           customToken: customToken ?? this.customToken,
+          uid: uid ?? this.uid,
           email: email ?? this.email,
         ),
       );
@@ -46,6 +56,9 @@ class AuthLocalRepository extends IAuthLocalRepository {
 
   @override
   String? get customToken => _auth.customToken;
+
+  @override
+  String? get uid => _auth.uid;
 
   @override
   String? get email => _auth.email;
