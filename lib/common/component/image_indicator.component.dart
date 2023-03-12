@@ -22,7 +22,7 @@ class _ImageIndicator extends ConsumerStatefulWidget {
 class _ImageIndicatorState extends ConsumerState<_ImageIndicator> with TickerProviderStateMixin {
   @override
   void initState() {
-    Future.delayed(Duration(milliseconds: widget.duration ?? 200), Go(context).pop);
+    Future.delayed(Duration(milliseconds: widget.duration ?? 1000), Go(context).pop);
     super.initState();
   }
 

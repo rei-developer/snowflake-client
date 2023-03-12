@@ -20,6 +20,7 @@ class TtsController extends ITtsController {
           IosTextToSpeechAudioMode.voicePrompt);
     }
     tts.awaitSpeakCompletion(true);
+    tts.setVolume(1.0);
     tts.setVoice({"name": "Karen", "locale": "en-AU"});
     setAwaitOptions();
     if (isAndroid) {

@@ -4,11 +4,11 @@ import 'dart:typed_data';
 import 'package:snowflake_client/utils/packet_builder.util.dart';
 
 class TcpConnection {
+  TcpConnection(this.host, this.port);
+
   late String host;
   late int port;
   Socket? _socket;
-
-  TcpConnection(this.host, this.port);
 
   Future<void> connect() async {
     if (_isConnected) {

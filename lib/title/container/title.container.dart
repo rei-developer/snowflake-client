@@ -19,12 +19,13 @@ class _TitleContainerState extends ConsumerState<TitleContainer> {
     super.initState();
     Future.delayed(
       Duration.zero,
-      () => ref.read(audioControllerProvider.notifier).play('audio/bgm/tohikioku.mp3'),
+      () => ref.read(audioControllerProvider.notifier).playBGM('audio/bgm/tohikioku.mp3'),
     );
   }
 
   @override
   Widget build(BuildContext context) {
+    final audioCtrl = ref.read(audioControllerProvider.notifier);
     final dictionaryCtrl = ref.read(dictionaryControllerProvider(context));
     return Container(
       width: double.infinity,
@@ -46,7 +47,10 @@ class _TitleContainerState extends ConsumerState<TitleContainer> {
             SizedBox(height: 20.r),
             MaterialButton(
               color: Colors.amberAccent,
-              onPressed: dictionaryCtrl.goToDictionary,
+              onPressed: () {
+                audioCtrl.stopBGM();
+                dictionaryCtrl.goToDictionary();
+              },
               child: const Text('Go to Dictionary'),
             ),
           ],

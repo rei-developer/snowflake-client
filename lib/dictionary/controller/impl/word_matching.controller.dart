@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:snowflake_client/common/component/image_indicator.component.dart';
+import 'package:snowflake_client/common/controller/audio.controller.dart';
 import 'package:snowflake_client/common/controller/tts.controller.dart';
 import 'package:snowflake_client/common/provider/common.provider.dart';
 import 'package:snowflake_client/dictionary/const/word_matching.const.dart';
@@ -17,11 +18,13 @@ import 'package:snowflake_client/utils/go.util.dart';
 
 class WordMatchingController extends IWordMatchingController {
   WordMatchingController(this.ref)
-      : _ttsCtrl = ref.read(ttsControllerProvider.notifier),
+      : _audioCtrl = ref.read(audioControllerProvider.notifier),
+        _ttsCtrl = ref.read(ttsControllerProvider.notifier),
         _wordMatchingService = ref.read(wordMatchingServiceProvider),
         super(WordMatchingModel.initial());
 
   final Ref ref;
+  final IAudioController _audioCtrl;
   final ITtsController _ttsCtrl;
   final IWordMatchingService _wordMatchingService;
 
@@ -53,9 +56,11 @@ class WordMatchingController extends IWordMatchingController {
   @override
   Future<void> judgment(BuildContext context, WordEntity candidate) async {
     if (question == candidate) {
+      _audioCtrl.playSE('audio/se/correct.mp3');
       showImageIndicator(context, message: 'Good!');
       _addScore();
     } else {
+      _audioCtrl.playSE('audio/se/wrong.mp3');
       showImageIndicator(context, message: 'Bad...');
       _subLife();
       if (state.life < 1) {
@@ -101,13 +106,14 @@ class WordMatchingController extends IWordMatchingController {
 
   Future<void> _next([bool isTimedOut = true]) async {
     _setGameState(WordMatchingGameState.PENDING);
-    await _ttsCtrl.speak(question?.word);
+    if (isTimedOut) {
+      _audioCtrl.playSE('audio/se/wrong.mp3');
+      _subLife();
+    }
+    // await _ttsCtrl.speak(question?.word);
     await Future.delayed(const Duration(seconds: 1));
     print('next');
     _stop();
-    if (isTimedOut) {
-      _subLife();
-    }
     if (state.round >= state.maxRound || state.life < 1) {
       print('end game');
       _setGameState(WordMatchingGameState.RESULT);

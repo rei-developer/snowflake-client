@@ -4,37 +4,42 @@ import 'package:snowflake_client/common/model/audio_state.model.dart';
 
 class AudioController extends IAudioController {
   AudioController() : super(AudioStateModel.initial()) {
-    _audioPlayer = AudioPlayer();
+    state.player.setReleaseMode(ReleaseMode.loop);
+    state.player.stop();
   }
 
-  AudioPlayer? _audioPlayer;
-
   @override
-  Future<void> play(String path) async {
+  Future<void> playBGM(String path) async {
+    await stopBGM();
     state = state.copyWith(isLoading: true);
-    await stop();
-    await _audioPlayer?.dispose();
-    await _audioPlayer?.setSourceAsset(path);
-    await setVolume(state.volume);
-    await _audioPlayer?.resume();
+    await state.player.setSourceAsset(path);
+    await state.player.resume();
     state = state.copyWith(isLoading: false, isPlaying: true);
   }
 
   @override
-  Future<void> pause() async {
-    await _audioPlayer?.pause();
+  Future<void> playSE(String path) async {
+    final player = AudioPlayer();
+    await player.setSourceAsset(path);
+    await player.setVolume(0.5);
+    await player.resume();
+  }
+
+  @override
+  Future<void> pauseBGM() async {
+    await state.player.pause();
     state = state.copyWith(isPlaying: false);
   }
 
   @override
-  Future<void> stop() async {
-    await _audioPlayer?.stop();
+  Future<void> stopBGM() async {
+    await state.player.stop();
     state = state.copyWith(isPlaying: false);
   }
 
   @override
-  Future<void> setVolume(double volume) async {
-    await _audioPlayer?.setVolume(volume);
+  Future<void> setVolumeBGM(double volume) async {
+    await state.player.setVolume(volume);
     state = state.copyWith(volume: volume);
   }
 }

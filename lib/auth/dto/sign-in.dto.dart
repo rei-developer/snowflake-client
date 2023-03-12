@@ -1,12 +1,12 @@
 class SignInDto {
-  SignInDto(this.uid, this.idToken, this.customToken);
+  SignInDto(this.uid, this.customToken, this.hasUser);
 
   SignInDto.fromJson(json)
       : uid = (json['uid'] ?? '') as String,
-        idToken = (json['idToken'] ?? '') as String,
-        customToken = (json['customToken'] ?? '') as String;
+        customToken = (json['customToken'] ?? '') as String,
+        hasUser = (json['hasUser'] ?? false) as bool;
 
   final String uid;
-  final String idToken;
   final String customToken;
+  final bool hasUser;
 }

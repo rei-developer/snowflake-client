@@ -9,6 +9,7 @@ import 'package:snowflake_client/auth/entity/auth_type.entity.dart';
 import 'package:snowflake_client/auth/provider/sign-in.provider.dart';
 import 'package:snowflake_client/common/container/moving_background.container.dart';
 import 'package:snowflake_client/common/provider/common.provider.dart';
+import 'package:snowflake_client/config/environment.config.dart';
 import 'package:snowflake_client/network/tcp_connection.dart';
 import 'package:snowflake_client/title/title.const.dart';
 import 'package:snowflake_client/utils/func.util.dart';
@@ -30,8 +31,11 @@ class _SignInContainerState extends ConsumerState<SignInContainer> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
-      await ref.read(audioControllerProvider.notifier).play('audio/bgm/fjordnosundakaze.mp3');
-      final connection = TcpConnection('127.0.0.1', 10004);
+      await ref.read(audioControllerProvider.notifier).playBGM('audio/bgm/fjordnosundakaze.mp3');
+      final connection = TcpConnection(
+        Environment.instance.serviceServer.host,
+        Environment.instance.serviceServer.port,
+      );
       await connection.connect();
       _connection = connection;
       _packageInfo = await PackageInfo.fromPlatform();

@@ -1,4 +1,3 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,6 +12,7 @@ import 'package:snowflake_client/common/component/dialog/confirm.dialog.dart';
 import 'package:snowflake_client/common/provider/common.provider.dart';
 import 'package:snowflake_client/common/service/system.service.dart';
 import 'package:snowflake_client/entry/controller/entry.controller.dart';
+import 'package:snowflake_client/entry/entry.const.dart';
 import 'package:snowflake_client/title/title.route.dart';
 import 'package:snowflake_client/utils/go.util.dart';
 
@@ -44,39 +44,12 @@ class EntryController extends IEntryController {
   final ISystemService _systemService;
 
   @override
-  Future<bool> init() async {
-    try {
-      final authType = _authLocalRepo.authType;
-      if (authType == null) {
-        return false;
-      }
-      // SignInDto? signInDto = await _authCustomService.signIn();
-      // if (signInDto == null) {
-      //   signInDto = await _authService.signIn(true);
-      //   if (signInDto == null) {
-      //     await _authCtrl.signOut();
-      //     return false;
-      //   }
-      // }
-      // final user = _firebaseAuth.currentUser;
-      // if (user == null) {
-      //   return false;
-      // }
-      return Future(() => true);
-    } catch (err) {
-      print('EntryController init error => $err');
-      return false;
-    }
-  }
-
-  @override
-  Future<void> next() async =>
-      Go(context, await init() ? TitleRoute.TITLE.name : AuthRoute.SIGN_IN.name).replace();
-
-  @override
   Future<void> checkConnection() async {
     if (await _systemService.isConnected) {
-      await next();
+      await _next();
+      return;
+    }
+    if (!mounted) {
       return;
     }
     if (await showConfirmDialog(
@@ -91,5 +64,45 @@ class EntryController extends IEntryController {
       return;
     }
     await _systemService.shutdown(true);
+  }
+
+  Future<SignInResult> _signIn() async {
+    try {
+      final authType = _authLocalRepo.authType;
+      if (authType == null) {
+        return SignInResult.unauthorized;
+      }
+      SignInDto? signInDto = await _authCustomService.signIn();
+      if (signInDto == null) {
+        signInDto = await _authService.signIn(true);
+        if (signInDto == null) {
+          await _authCtrl.signOut();
+          return SignInResult.unauthorized;
+        }
+      }
+      final user = _firebaseAuth.currentUser;
+      if (user == null) {
+        return SignInResult.unauthorized;
+      }
+      return signInDto.hasUser ? SignInResult.registered : SignInResult.unregistered;
+    } catch (err) {
+      print('EntryController init error => $err');
+      return SignInResult.unauthorized;
+    }
+  }
+
+  Future<void> _next() async {
+    final signInResult = await _signIn();
+    if (!mounted) {
+      return;
+    }
+    await Go(
+      context,
+      signInResult == SignInResult.registered
+          ? TitleRoute.TITLE.name
+          : signInResult == SignInResult.unregistered
+              ? AuthRoute.SIGN_UP.name
+              : AuthRoute.SIGN_IN.name,
+    ).replace();
   }
 }
