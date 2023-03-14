@@ -17,14 +17,8 @@ class AuthRestRepository extends IAuthRestRepository {
   Future<dynamic> verifyCustom() async => (await _customAuthApi.get('$_route/verify/custom')).data;
 
   @override
-  Future<dynamic> register(String name) async => (await _authApi.post(
-        '$_route/register',
-        data: {'name': name},
-      ))
-          .data;
-
-  @override
-  Future<dynamic> withdraw() async => (await _authApi.delete('$_route/withdraw')).data;
+  Future<dynamic> register(String name) async =>
+      (await _customAuthApi.post('$_route/register', data: {'name': name})).data;
 
   Dio get _authApi => Api.createAuthDio(authLocalRepo.authType, authLocalRepo.idToken);
 

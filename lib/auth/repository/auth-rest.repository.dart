@@ -4,6 +4,4 @@ abstract class IAuthRestRepository {
   Future<dynamic> verifyCustom();
 
   Future<dynamic> register(String name);
-
-  Future<dynamic> withdraw();
 }

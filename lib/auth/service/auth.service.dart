@@ -14,6 +14,8 @@ abstract class IAuthService {
 
   Future<void> setEmail(String email);
 
+  Future<bool> register(String name);
+
   Future<void> signOut();
 
   String? get uid;

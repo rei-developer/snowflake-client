@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:snowflake_client/common/provider/common.provider.dart';
@@ -15,47 +16,41 @@ class TitleContainer extends ConsumerStatefulWidget {
 
 class _TitleContainerState extends ConsumerState<TitleContainer> {
   @override
-  void initState() {
-    super.initState();
-    Future.delayed(
-      Duration.zero,
-      () => ref.read(audioControllerProvider.notifier).playBGM('audio/bgm/tohikioku.mp3'),
-    );
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    final audioCtrl = ref.read(audioControllerProvider.notifier);
-    final dictionaryCtrl = ref.read(dictionaryControllerProvider(context));
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      padding: EdgeInsets.symmetric(vertical: 80.r, horizontal: 20.r),
-      decoration: BoxDecoration(
-        image: AssetLoader(TitleBackgroundImage.TOWN.path).cover,
-      ),
-      child: SafeArea(
-        child: Column(
-          children: [
-            const Text('Hello, world!'),
-            SizedBox(height: 20.r),
-            MaterialButton(
-              color: Colors.amberAccent,
-              onPressed: dictionaryCtrl.setup,
-              child: const Text('Set up'),
+  Widget build(BuildContext context) => HookBuilder(
+        builder: (_) {
+          final dictionaryCtrl = ref.read(dictionaryControllerProvider(context));
+          final audioCtrl = ref.read(audioControllerProvider.notifier);
+          useEffect(() {
+            audioCtrl.playBGM('audio/bgm/tohikioku.mp3');
+            return audioCtrl.stopBGM;
+          }, [audioCtrl]);
+          return Container(
+            width: double.infinity,
+            height: double.infinity,
+            padding: EdgeInsets.symmetric(vertical: 80.r, horizontal: 20.r),
+            decoration: BoxDecoration(
+              image: AssetLoader(TitleBackgroundImage.TOWN.path).cover,
             ),
-            SizedBox(height: 20.r),
-            MaterialButton(
-              color: Colors.amberAccent,
-              onPressed: () {
-                audioCtrl.stopBGM();
-                dictionaryCtrl.goToDictionary();
-              },
-              child: const Text('Go to Dictionary'),
+            child: SafeArea(
+              child: Column(
+                children: [
+                  const Text('Hello, world!'),
+                  SizedBox(height: 20.r),
+                  MaterialButton(
+                    color: Colors.amberAccent,
+                    onPressed: dictionaryCtrl.setup,
+                    child: const Text('Set up'),
+                  ),
+                  SizedBox(height: 20.r),
+                  MaterialButton(
+                    color: Colors.amberAccent,
+                    onPressed: dictionaryCtrl.goToDictionary,
+                    child: const Text('Go to Dictionary'),
+                  ),
+                ],
+              ),
             ),
-          ],
-        ),
-      ),
-    );
-  }
+          );
+        },
+      );
 }

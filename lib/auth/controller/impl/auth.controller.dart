@@ -30,5 +30,12 @@ class AuthController extends IAuthController {
   }
 
   @override
+  Future<bool> register(String name) async {
+    final succeed = await _authService.register(name);
+    print('succeed => $succeed');
+    return succeed;
+  }
+
+  @override
   Future<void> signOut() => _authService.signOut();
 }

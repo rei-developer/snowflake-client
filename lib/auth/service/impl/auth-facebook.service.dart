@@ -69,6 +69,9 @@ class AuthFacebookService extends IAuthService {
   Future<void> setEmail(String email) => _authLocalRepo.setEmail(email);
 
   @override
+  Future<bool> register(String name) async => false;
+
+  @override
   Future<void> signOut() async {
     _facebookAuth.logOut();
     _authLocalRepo.delete();

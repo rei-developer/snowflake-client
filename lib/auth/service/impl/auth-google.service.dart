@@ -77,6 +77,9 @@ class AuthGoogleService extends IAuthService {
   Future<void> setEmail(String email) => _authLocalRepo.setEmail(email);
 
   @override
+  Future<bool> register(String name) async => false;
+
+  @override
   Future<void> signOut() async {
     if (await _googleAuth.isSignedIn()) {
       await _googleAuth.disconnect();

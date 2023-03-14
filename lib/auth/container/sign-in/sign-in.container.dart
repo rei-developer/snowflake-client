@@ -1,5 +1,6 @@
 import 'package:animated_text_kit/animated_text_kit.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
@@ -31,7 +32,6 @@ class _SignInContainerState extends ConsumerState<SignInContainer> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
-      await ref.read(audioControllerProvider.notifier).playBGM('audio/bgm/fjordnosundakaze.mp3');
       final connection = TcpConnection(
         Environment.instance.serviceServer.host,
         Environment.instance.serviceServer.port,
@@ -43,90 +43,95 @@ class _SignInContainerState extends ConsumerState<SignInContainer> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    ISignInController authCtrl(authType) =>
-        ref.read(signInControllerProvider(Tuple2(context, authType)));
-    return WallpaperCarouselContainer(
-      TitleBackgroundImage.values.map((e) => e.path).toList(),
-      Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Padding(
-            padding: EdgeInsets.all(20.r),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Text(
-                  _packageInfo?.version ?? '',
-                  style: const TextStyle(
-                    color: Colors.black,
-                    decoration: TextDecoration.underline,
-                  ),
-                ),
-              ],
-            ),
-          ),
+  Widget build(BuildContext context) => HookBuilder(builder: (_) {
+        ISignInController authCtrl(authType) =>
+            ref.read(signInControllerProvider(Tuple2(context, authType)));
+        final audioCtrl = ref.read(audioControllerProvider.notifier);
+        useEffect(() {
+          audioCtrl.playBGM('audio/bgm/fjordnosundakaze.mp3');
+          return audioCtrl.stopBGM;
+        }, [audioCtrl]);
+        return WallpaperCarouselContainer(
+          TitleBackgroundImage.values.map((e) => e.path).toList(),
           Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              AnimatedTextKit(
-                animatedTexts: [
-                  ColorizeAnimatedText(
-                    'Snowflake',
-                    colors: [Colors.blue, Colors.black, Colors.white],
-                    textStyle: TextStyle(
-                      fontSize: 60.r,
-                      fontFamily: 'AnastasiaScript',
+              Padding(
+                padding: EdgeInsets.all(20.r),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      _packageInfo?.version ?? '',
+                      style: const TextStyle(
+                        color: Colors.black,
+                        decoration: TextDecoration.underline,
+                      ),
                     ),
+                  ],
+                ),
+              ),
+              Column(
+                children: [
+                  AnimatedTextKit(
+                    animatedTexts: [
+                      ColorizeAnimatedText(
+                        'Snowflake',
+                        colors: [Colors.blue, Colors.black, Colors.white],
+                        textStyle: TextStyle(
+                          fontSize: 60.r,
+                          fontFamily: 'AnastasiaScript',
+                        ),
+                      ),
+                    ],
+                    repeatForever: true,
+                    isRepeatingAnimation: true,
                   ),
                 ],
-                repeatForever: true,
-                isRepeatingAnimation: true,
               ),
-            ],
-          ),
-          Column(
-            children: [
               Column(
-                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  MaterialButton(
-                    color: Colors.amber,
-                    child: const Text('Verify idToken'),
-                    onPressed: () {
-                      _connection?.sendMessage(
-                        0,
-                        jsonToBinary({
-                          'token':
-                              'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxIn0.LTF9jRPVB8H7K4XJDrjU4sIyZNyevzFLe_H_ZSGk1_s'
-                        }),
-                      );
-                    },
-                  ),
-                  SizedBox(height: 20.r),
-                  Row(
+                  Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      ...<Widget>[
-                        ..._authTypes
-                            .map((e) => SignInButtonComponent(e, callback: authCtrl(e).signIn))
-                      ].superJoin(SizedBox(width: 20.r)).toList(),
+                      MaterialButton(
+                        color: Colors.amber,
+                        child: const Text('Verify idToken'),
+                        onPressed: () {
+                          _connection?.sendMessage(
+                            0,
+                            jsonToBinary({
+                              'token':
+                                  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiIxIn0.LTF9jRPVB8H7K4XJDrjU4sIyZNyevzFLe_H_ZSGk1_s'
+                            }),
+                          );
+                        },
+                      ),
+                      SizedBox(height: 20.r),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          ...<Widget>[
+                            ..._authTypes
+                                .map((e) => SignInButtonComponent(e, callback: authCtrl(e).signIn))
+                          ].superJoin(SizedBox(width: 20.r)).toList(),
+                        ],
+                      ),
                     ],
+                  ),
+                  SizedBox(height: 80.r),
+                  Text(
+                    'ⓒ Yukki Studio 2023 - All rights reserved.',
+                    style: TextStyle(color: Colors.black, fontSize: 14.r),
+                    textAlign: TextAlign.center,
                   ),
                 ],
               ),
-              SizedBox(height: 80.r),
-              Text(
-                'ⓒ Yukki Studio 2023 - All rights reserved.',
-                style: TextStyle(color: Colors.black, fontSize: 14.r),
-                textAlign: TextAlign.center,
-              ),
             ],
           ),
-        ],
-      ),
-    );
-  }
+        );
+      });
 
   List<AuthType> get _authTypes => [AuthType.APPLE, AuthType.GOOGLE, AuthType.FACEBOOK];
 }

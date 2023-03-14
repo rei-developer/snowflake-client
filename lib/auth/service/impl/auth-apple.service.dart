@@ -74,6 +74,9 @@ class AuthAppleService extends IAuthService {
   Future<void> setEmail(String email) => _authLocalRepo.setEmail(email);
 
   @override
+  Future<bool> register(String name) async => false;
+
+  @override
   Future<void> signOut() => _authLocalRepo.delete();
 
   @override
