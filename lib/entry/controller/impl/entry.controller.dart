@@ -1,55 +1,27 @@
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:snowflake_client/auth/auth.route.dart';
-import 'package:snowflake_client/auth/controller/auth.controller.dart';
-import 'package:snowflake_client/auth/dto/sign-in.dto.dart';
-import 'package:snowflake_client/auth/entity/auth_type.entity.dart';
-import 'package:snowflake_client/auth/provider/auth.provider.dart';
-import 'package:snowflake_client/auth/repository/auth-local.repository.dart';
-import 'package:snowflake_client/auth/service/auth.service.dart';
+import 'package:snowflake_client/auth/provider/sign-in.provider.dart';
+import 'package:snowflake_client/auth/service/sign-in.service.dart';
 import 'package:snowflake_client/common/component/dialog/confirm.dialog.dart';
 import 'package:snowflake_client/common/provider/common.provider.dart';
 import 'package:snowflake_client/common/service/system.service.dart';
 import 'package:snowflake_client/entry/controller/entry.controller.dart';
-import 'package:snowflake_client/entry/entry.const.dart';
-import 'package:snowflake_client/title/title.route.dart';
 import 'package:snowflake_client/utils/go.util.dart';
 
 class EntryController extends IEntryController {
   EntryController(this.ref, this.context)
-      : _firebaseAuth = FirebaseAuth.instance,
-        _authCtrl = ref.read(
-          authControllerProvider(
-            ref.read(authLocalRepositoryProvider.notifier).authType,
-          ),
-        ),
-        _authLocalRepo = ref.read(authLocalRepositoryProvider.notifier),
-        _authService = ref.read(
-          authServiceProvider(
-            ref.read(authLocalRepositoryProvider.notifier).authType,
-          ),
-        ),
-        _authCustomService = ref.read(authServiceProvider(AuthType.LOCAL)),
-        _systemService = ref.read(systemServiceProvider.notifier),
-        super(true);
+      : _signInService = ref.read(signInServiceProvider),
+        _systemService = ref.read(systemServiceProvider.notifier);
 
   final Ref ref;
   final BuildContext context;
-  final FirebaseAuth _firebaseAuth;
-  final IAuthController _authCtrl;
-  final IAuthLocalRepository _authLocalRepo;
-  final IAuthService _authService;
-  final IAuthService _authCustomService;
+  final ISignInService _signInService;
   final ISystemService _systemService;
 
   @override
-  Future<void> checkConnection() async {
+  Future<void> entry() async {
     if (await _systemService.isConnected) {
-      await _next();
-      return;
-    }
-    if (!mounted) {
+      await _entry();
       return;
     }
     if (await showConfirmDialog(
@@ -60,49 +32,17 @@ class EntryController extends IEntryController {
       confirmButtonLabel: '재연결',
     )) {
       await Future.delayed(const Duration(seconds: 5));
-      await checkConnection();
+      await entry();
       return;
     }
     await _systemService.shutdown(true);
   }
 
-  Future<SignInResult> _signIn() async {
-    try {
-      final authType = _authLocalRepo.authType;
-      if (authType == null) {
-        return SignInResult.unauthorized;
-      }
-      SignInDto? signInDto = await _authCustomService.signIn();
-      if (signInDto == null) {
-        signInDto = await _authService.signIn(true);
-        if (signInDto == null) {
-          await _authCtrl.signOut();
-          return SignInResult.unauthorized;
-        }
-      }
-      final user = _firebaseAuth.currentUser;
-      if (user == null) {
-        return SignInResult.unauthorized;
-      }
-      return signInDto.hasUser ? SignInResult.registered : SignInResult.unregistered;
-    } catch (err) {
-      print('EntryController init error => $err');
-      return SignInResult.unauthorized;
-    }
-  }
-
-  Future<void> _next() async {
-    final signInResult = await _signIn();
-    if (!mounted) {
+  Future<void> _entry() async {
+    final routeName = await _signInService.signIn(true);
+    if (!context.mounted) {
       return;
     }
-    await Go(
-      context,
-      signInResult == SignInResult.registered
-          ? TitleRoute.TITLE.name
-          : signInResult == SignInResult.unregistered
-              ? AuthRoute.SIGN_UP.name
-              : AuthRoute.SIGN_IN.name,
-    ).replace();
+    await Go(context, routeName).replace();
   }
 }

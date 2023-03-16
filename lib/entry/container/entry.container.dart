@@ -24,7 +24,7 @@ class _EntryContainerState extends ConsumerState<EntryContainer> with TickerProv
   void initState() {
     Future.delayed(
       Duration.zero,
-      () => ref.read(entryControllerProvider(context)).checkConnection(),
+      () => ref.read(entryControllerProvider(context)).entry(),
     );
     super.initState();
   }

@@ -3,7 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:snowflake_client/auth/dto/sign-in.dto.dart';
+import 'package:snowflake_client/auth/dto/response/verify.response.dto.dart';
 import 'package:snowflake_client/auth/entity/auth_type.entity.dart';
 import 'package:snowflake_client/auth/provider/auth.provider.dart';
 import 'package:snowflake_client/auth/repository/auth-local.repository.dart';
@@ -18,24 +18,21 @@ class AuthGoogleService extends IAuthService {
               ? DefaultFirebaseOptions.currentPlatform.iosClientId
               : DefaultFirebaseOptions.currentPlatform.androidClientId,
         ),
-        _firebaseAuth = FirebaseAuth.instance,
-        _authRestRepo = ref.read(authRestRepositoryProvider),
-        _authLocalRepo = ref.read(authLocalRepositoryProvider.notifier);
+        _firebaseAuth = FirebaseAuth.instance;
 
   final Ref ref;
   final GoogleSignIn _googleAuth;
   final FirebaseAuth _firebaseAuth;
-  final IAuthRestRepository _authRestRepo;
-  final IAuthLocalRepository _authLocalRepo;
+
+  IAuthRestRepository get _authRestRepo => ref.read(authRestRepositoryProvider);
+
+  IAuthLocalRepository get _authLocalRepo => ref.read(authLocalRepositoryProvider.notifier);
 
   @override
-  Future<SignInDto?> signIn([bool isEntry = false]) async {
+  Future<VerifyResponseDto?> signIn() async {
     try {
       if (_authLocalRepo.idToken != null) {
         return _verify();
-      }
-      if (isEntry) {
-        return null;
       }
       final auth = await (await _googleAuth.signIn())?.authentication;
       if (auth == null) {
@@ -77,9 +74,6 @@ class AuthGoogleService extends IAuthService {
   Future<void> setEmail(String email) => _authLocalRepo.setEmail(email);
 
   @override
-  Future<bool> register(String name) async => false;
-
-  @override
   Future<void> signOut() async {
     if (await _googleAuth.isSignedIn()) {
       await _googleAuth.disconnect();
@@ -90,12 +84,12 @@ class AuthGoogleService extends IAuthService {
   @override
   String? get uid => _authLocalRepo.uid;
 
-  Future<SignInDto?> _verify() async {
+  Future<VerifyResponseDto?> _verify() async {
     try {
-      final signInDto = SignInDto.fromJson(await _authRestRepo.verify());
-      await setCustomToken(signInDto.customToken);
-      await Hive.openBox(signInDto.uid);
-      return signInDto;
+      final verifyDto = VerifyResponseDto.fromJson(await _authRestRepo.verify());
+      await setCustomToken(verifyDto.customToken);
+      await Hive.openBox(verifyDto.uid);
+      return verifyDto;
     } catch (err) {
       print('AuthGoogleService verify error => $err');
       return null;

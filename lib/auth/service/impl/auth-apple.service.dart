@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:snowflake_client/auth/dto/sign-in.dto.dart';
+import 'package:snowflake_client/auth/dto/response/verify.response.dto.dart';
 import 'package:snowflake_client/auth/entity/auth_type.entity.dart';
 import 'package:snowflake_client/auth/provider/auth.provider.dart';
 import 'package:snowflake_client/auth/repository/auth-local.repository.dart';
@@ -10,24 +10,20 @@ import 'package:snowflake_client/auth/repository/auth-rest.repository.dart';
 import 'package:snowflake_client/auth/service/auth.service.dart';
 
 class AuthAppleService extends IAuthService {
-  AuthAppleService(this.ref)
-      : _firebaseAuth = FirebaseAuth.instance,
-        _authRestRepo = ref.read(authRestRepositoryProvider),
-        _authLocalRepo = ref.read(authLocalRepositoryProvider.notifier);
+  AuthAppleService(this.ref) : _firebaseAuth = FirebaseAuth.instance;
 
   final Ref ref;
   final FirebaseAuth _firebaseAuth;
-  final IAuthRestRepository _authRestRepo;
-  final IAuthLocalRepository _authLocalRepo;
+
+  IAuthRestRepository get _authRestRepo => ref.read(authRestRepositoryProvider);
+
+  IAuthLocalRepository get _authLocalRepo => ref.read(authLocalRepositoryProvider.notifier);
 
   @override
-  Future<SignInDto?> signIn([bool isEntry = false]) async {
+  Future<VerifyResponseDto?> signIn() async {
     try {
       if (_authLocalRepo.idToken != null) {
         return _verify();
-      }
-      if (isEntry) {
-        return null;
       }
       final auth = await SignInWithApple.getAppleIDCredential(
         scopes: [
@@ -74,20 +70,17 @@ class AuthAppleService extends IAuthService {
   Future<void> setEmail(String email) => _authLocalRepo.setEmail(email);
 
   @override
-  Future<bool> register(String name) async => false;
-
-  @override
   Future<void> signOut() => _authLocalRepo.delete();
 
   @override
   String? get uid => _authLocalRepo.uid;
 
-  Future<SignInDto?> _verify() async {
+  Future<VerifyResponseDto?> _verify() async {
     try {
-      final signInDto = SignInDto.fromJson(await _authRestRepo.verify());
-      await setCustomToken(signInDto.customToken);
-      await Hive.openBox(signInDto.uid);
-      return signInDto;
+      final verifyDto = VerifyResponseDto.fromJson(await _authRestRepo.verify());
+      await setCustomToken(verifyDto.customToken);
+      await Hive.openBox(verifyDto.uid);
+      return verifyDto;
     } catch (err) {
       print('AuthAppleService verify error => $err');
       return null;

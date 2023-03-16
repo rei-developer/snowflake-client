@@ -1,5 +1,6 @@
 enum SignInResult {
   unauthorized,
   unregistered,
-  registered,
+  uncreated,
+  completed,
 }

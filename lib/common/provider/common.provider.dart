@@ -1,4 +1,5 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:snowflake_client/common/controller/audio.controller.dart';
 import 'package:snowflake_client/common/controller/impl/audio.controller.dart';
 import 'package:snowflake_client/common/controller/impl/tts.controller.dart';
@@ -12,10 +13,14 @@ final audioControllerProvider = StateNotifierProvider<IAudioController, AudioSta
   (_) => AudioController(),
 );
 
-final systemServiceProvider = StateNotifierProvider<ISystemService, DateTime>(
-  (_) => SystemService(),
+final toastControllerProvider = Provider(
+  (_) => (String message) => Fluttertoast.showToast(msg: message),
 );
 
 final ttsControllerProvider = StateNotifierProvider<ITtsController, TtsModel?>(
   (_) => TtsController(),
+);
+
+final systemServiceProvider = StateNotifierProvider<ISystemService, DateTime>(
+  (_) => SystemService(),
 );

@@ -1,8 +1,8 @@
-import 'package:snowflake_client/auth/dto/sign-in.dto.dart';
+import 'package:snowflake_client/auth/dto/response/verify.response.dto.dart';
 import 'package:snowflake_client/auth/entity/auth_type.entity.dart';
 
 abstract class IAuthService {
-  Future<SignInDto?> signIn([bool isEntry = false]);
+  Future<VerifyResponseDto?> signIn();
 
   Future<void> setAuthType(AuthType? authType);
 
@@ -13,8 +13,6 @@ abstract class IAuthService {
   Future<void> setUid(String uid);
 
   Future<void> setEmail(String email);
-
-  Future<bool> register(String name);
 
   Future<void> signOut();
 

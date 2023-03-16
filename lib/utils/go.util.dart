@@ -18,5 +18,7 @@ class Go {
 
   void forcePop() => Navigator.of(context, rootNavigator: true).pop();
 
+  String get currentRouteName => ModalRoute.of(context)?.settings.name ?? '';
+
   bool get isCanPop => Navigator.canPop(context);
 }

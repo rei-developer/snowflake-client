@@ -49,6 +49,9 @@ PODS:
     - Flutter
   - flutter_tts (0.0.1):
     - Flutter
+  - fluttertoast (0.0.2):
+    - Flutter
+    - Toast
   - google_sign_in_ios (0.0.1):
     - Flutter
     - GoogleSignIn (~> 6.2)
@@ -84,6 +87,7 @@ PODS:
   - ReachabilitySwift (5.0.0)
   - sign_in_with_apple (0.0.1):
     - Flutter
+  - Toast (4.0.0)
 
 DEPENDENCIES:
   - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/ios`)
@@ -94,6 +98,7 @@ DEPENDENCIES:
   - flutter_facebook_auth (from `.symlinks/plugins/flutter_facebook_auth/ios`)
   - flutter_secure_storage (from `.symlinks/plugins/flutter_secure_storage/ios`)
   - flutter_tts (from `.symlinks/plugins/flutter_tts/ios`)
+  - fluttertoast (from `.symlinks/plugins/fluttertoast/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/ios`)
   - package_info_plus (from `.symlinks/plugins/package_info_plus/ios`)
   - path_provider_foundation (from `.symlinks/plugins/path_provider_foundation/ios`)
@@ -116,6 +121,7 @@ SPEC REPOS:
     - GTMSessionFetcher
     - PromisesObjC
     - ReachabilitySwift
+    - Toast
 
 EXTERNAL SOURCES:
   audioplayers_darwin:
@@ -134,6 +140,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/flutter_secure_storage/ios"
   flutter_tts:
     :path: ".symlinks/plugins/flutter_tts/ios"
+  fluttertoast:
+    :path: ".symlinks/plugins/fluttertoast/ios"
   google_sign_in_ios:
     :path: ".symlinks/plugins/google_sign_in_ios/ios"
   package_info_plus:
@@ -161,6 +169,7 @@ SPEC CHECKSUMS:
   flutter_facebook_auth: c69f4e643b1d9cc9063ec87c9411bd9ec268108f
   flutter_secure_storage: 23fc622d89d073675f2eaa109381aefbcf5a49be
   flutter_tts: 0f492aab6accf87059b72354fcb4ba934304771d
+  fluttertoast: eb263d302cc92e04176c053d2385237e9f43fad0
   google_sign_in_ios: 1256ff9d941db546373826966720b0c24804bcdd
   GoogleSignIn: 5651ce3a61e56ca864160e79b484cd9ed3f49b7a
   GoogleUtilities: bad72cb363809015b1f7f19beb1f1cd23c589f95
@@ -171,6 +180,7 @@ SPEC CHECKSUMS:
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
+  Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
 
 PODFILE CHECKSUM: 1f634a18643bc8f74f66ad61dc1d74e73334259e
 

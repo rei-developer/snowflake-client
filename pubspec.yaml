@@ -11,6 +11,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  fluttertoast: ^8.2.1
   flutter_facebook_auth: ^5.0.8
   flutter_hooks: ^0.18.6
   flutter_riverpod: ^2.1.0
