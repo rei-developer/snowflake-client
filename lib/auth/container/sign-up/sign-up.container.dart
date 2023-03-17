@@ -5,6 +5,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:snowflake_client/auth/dto/request/register.request.dto.dart';
 import 'package:snowflake_client/auth/provider/sign-up.provider.dart';
+import 'package:snowflake_client/common/component/custom_radio.component.dart';
+import 'package:snowflake_client/common/component/custom_text_field.component.dart';
+import 'package:snowflake_client/common/const/options.const.dart';
 import 'package:snowflake_client/common/container/moving_background.container.dart';
 import 'package:snowflake_client/common/provider/common.provider.dart';
 import 'package:snowflake_client/title/title.const.dart';
@@ -17,7 +20,9 @@ class SignUpContainer extends ConsumerStatefulWidget {
 }
 
 class _SignUpContainerState extends ConsumerState<SignUpContainer> {
-  String name = '';
+  String _name = '';
+  int _sex = 1;
+  int _nation = 1;
 
   @override
   Widget build(BuildContext context) => HookBuilder(
@@ -28,6 +33,7 @@ class _SignUpContainerState extends ConsumerState<SignUpContainer> {
             return audioCtrl.stopBGM;
           }, [audioCtrl]);
           final signUpCtrl = ref.read(signUpControllerProvider(context));
+          final toastCtrl = ref.read(toastControllerProvider);
           return WallpaperCarouselContainer(
             TitleBackgroundImage.values.map((e) => e.path).toList(),
             Container(
@@ -39,34 +45,20 @@ class _SignUpContainerState extends ConsumerState<SignUpContainer> {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TextField(
-                        decoration: InputDecoration(
-                          hintText: '캐릭터 이름을 입력하세요. (한글 2-6글자)',
-                          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10.r),
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(color: Colors.black),
-                            borderRadius: BorderRadius.circular(6.r),
-                          ),
-                          fillColor: Colors.white,
-                          filled: true,
-                        ),
+                      CustomTextField(
+                        hintText: '당신의 이름을 정하세요. (한글 2-6글자)',
                         autofocus: true,
                         onChanged: _setName,
                       ),
-                      SizedBox(height: 20.r),
+                      SizedBox(height: 10.r),
+                      CustomRadioComponent(sexOptions, defaultValue: _sex, onChanged: _setSex),
+                      SizedBox(height: 10.r),
                       MaterialButton(
                         color: Colors.pinkAccent,
                         child: const Text('Create new account'),
                         onPressed: () async {
-                          final toastCtrl = ref.read(toastControllerProvider);
                           try {
-                            await signUpCtrl.register(
-                              RegisterRequestDto(
-                                name,
-                                0,
-                                0,
-                              ),
-                            );
+                            await signUpCtrl.register(RegisterRequestDto(_name, _sex, _nation));
                           } on ArgumentError catch (err) {
                             print('SignUpContainer build error => $err');
                             _setName();
@@ -85,5 +77,9 @@ class _SignUpContainerState extends ConsumerState<SignUpContainer> {
         },
       );
 
-  void _setName([String text = '']) => setState(() => name = text);
+  void _setName([String value = '']) => setState(() => _name = value);
+
+  void _setSex([int value = 1]) => setState(() => _sex = value);
+
+  void _setNation([int value = 1]) => setState(() => _nation = value);
 }

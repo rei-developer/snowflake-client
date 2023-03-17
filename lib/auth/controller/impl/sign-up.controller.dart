@@ -25,11 +25,11 @@ class SignUpController extends ISignUpController {
       throw ArgumentError(
           'Name should be 2 to 6 characters long, and only alphabets or Korean characters are allowed.');
     }
-    final isValidSex = ref.read(minMaxValidationProvider)(registerDto.sex, min: 0, max: 1);
+    final isValidSex = ref.read(minMaxValidationProvider)(registerDto.sex, min: 1, max: 2);
     if (!isValidSex) {
       throw ArgumentError('isValidSex Invalid parameter.');
     }
-    final isValidNation = ref.read(minMaxValidationProvider)(registerDto.nation, min: 0, max: 19);
+    final isValidNation = ref.read(minMaxValidationProvider)(registerDto.nation, min: 1, max: 20);
     if (!isValidNation) {
       throw ArgumentError('isValidNation Invalid parameter.');
     }

@@ -5,11 +5,9 @@ class RegisterRequestDto {
   final int sex;
   final int nation;
 
-  Map<String, dynamic> toJson() {
-    return {
-      'name': name,
-      'sex': sex,
-      'nation': nation,
-    };
-  }
+  Map<String, dynamic> toJson() => {
+        'name': name,
+        'sex': sex,
+        'nation': nation,
+      };
 }
