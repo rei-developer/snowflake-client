@@ -45,4 +45,4 @@ app.*.map.json
 
 
 # generated files
-*.entity.g.dart
+*g.dart

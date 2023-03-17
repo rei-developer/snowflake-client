@@ -25,7 +25,7 @@ class _CustomTextFieldState extends State<CustomTextField> {
         controller: _textEditingController,
         decoration: InputDecoration(
           hintText: widget.hintText,
-          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 10.r),
+          contentPadding: EdgeInsets.symmetric(vertical: 0, horizontal: 20.r),
           border: OutlineInputBorder(borderRadius: BorderRadius.circular(10.r)),
           focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(10.r)),
           hintStyle: TextStyle(color: Colors.white.withOpacity(0.5)),

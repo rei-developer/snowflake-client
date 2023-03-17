@@ -54,14 +54,7 @@ class _CustomRadioComponentState extends State<CustomRadioComponent> {
                     ),
                   ),
                   SizedBox(width: 10.r),
-                  Expanded(
-                    child: Text(
-                      entry.key,
-                      style: TextStyle(
-                        fontWeight: isSelected ? FontWeight.w600 : null,
-                      ),
-                    ),
-                  ),
+                  Expanded(child: Text(entry.key, style: const TextStyle(color: Colors.white))),
                 ],
               ),
             ]),

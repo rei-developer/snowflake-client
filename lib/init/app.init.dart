@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:snowflake_client/app/main.app.dart';
 import 'package:snowflake_client/firebase_options.dart';
+import 'package:snowflake_client/i18n/strings.g.dart';
 import 'package:snowflake_client/init/hive.init.dart';
 
 class AppInit {
@@ -18,9 +19,10 @@ class AppInit {
     );
     await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
     await HiveInit.run();
+    LocaleSettings.useDeviceLocale();
     environment.call();
     runApp(
-      const ProviderScope(child: MainApp()),
+      ProviderScope(child: TranslationProvider(child: const MainApp())),
     );
   }
 }

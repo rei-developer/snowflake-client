@@ -33,6 +33,8 @@ dependencies:
   package_info_plus: ^3.0.3
   path_provider: ^2.0.12
   sign_in_with_apple: ^4.3.0
+  slang: ^3.14.0
+  slang_flutter: ^3.14.0
   tuple: ^2.0.1
 
 dev_dependencies:

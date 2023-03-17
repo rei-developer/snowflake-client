@@ -4,19 +4,19 @@ const sexOptions = {'male': 1, 'female': 2};
 
 const hairOptions = {
   'color': [
-    'white hair',
-    'brown hair',
-    'red hair',
-    'pink hair',
-    'orange hair',
-    'yellow hair',
-    'Blonde hair',
-    'light green hair',
-    'green hair',
-    'sky blue hair',
-    'blue hair',
-    'purple hair',
-    'black hair',
+    'white_hair',
+    'brown_hair',
+    'red_hair',
+    'pink_hair',
+    'orange_hair',
+    'yellow_hair',
+    'Blonde_hair',
+    'light_green_hair',
+    'green_hair',
+    'sky_blue_hair',
+    'blue_hair',
+    'purple_hair',
+    'black_hair',
   ],
   'shape': [
     'short_hair',
@@ -97,12 +97,7 @@ const faceOptions = [
   'pointed_face',
   'peanut_face',
   'round_face',
-  'egg-shaped_face',
-  'triangular_face',
-  'inverted_triangle_of_faces',
-  'squareface',
-  'diamond_face',
-  'hexagonal_face',
+  'egg_shaped_face',
 ];
 
 const eyesOptions = [
@@ -128,7 +123,7 @@ const noseOptions = [
   'slender_nose',
   'heavy_nose',
   'broad_nose',
-  'high-end_nose',
+  'high_end_nose',
   'wild_boogged_nose',
   'aquiline_nose',
 ];

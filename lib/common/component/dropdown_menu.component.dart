@@ -1,9 +1,12 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:snowflake_client/common/provider/common.provider.dart';
+import 'package:snowflake_client/i18n/strings.g.dart';
 
-class DropdownMenuComponent extends StatefulWidget {
+class DropdownMenuComponent extends ConsumerStatefulWidget {
   const DropdownMenuComponent(
     this.items, {
     this.hintText,
@@ -18,17 +21,19 @@ class DropdownMenuComponent extends StatefulWidget {
   final ValueChanged<String> onChanged;
 
   @override
-  State<DropdownMenuComponent> createState() => _DropdownMenuComponentState();
+  ConsumerState<DropdownMenuComponent> createState() => _DropdownMenuComponentState();
 }
 
-class _DropdownMenuComponentState extends State<DropdownMenuComponent> {
-  late String selectedItem;
+class _DropdownMenuComponentState extends ConsumerState<DropdownMenuComponent> {
+  late String? selectedItem;
   late ScrollController _scrollController;
+
+  StringsEn get t => ref.watch(translationProvider);
 
   @override
   void initState() {
     super.initState();
-    selectedItem = widget.defaultValue ?? widget.items.values.first;
+    selectedItem = widget.defaultValue;
     _scrollController = ScrollController();
   }
 
@@ -46,7 +51,7 @@ class _DropdownMenuComponentState extends State<DropdownMenuComponent> {
               constraints: BoxConstraints.tightFor(height: 48.r),
               child: Container(
                 width: double.maxFinite,
-                padding: EdgeInsets.symmetric(horizontal: 10.r),
+                padding: EdgeInsets.symmetric(horizontal: 20.r),
                 decoration: BoxDecoration(
                   color: Colors.black,
                   borderRadius: BorderRadius.all(Radius.circular(10.r)),
@@ -56,7 +61,9 @@ class _DropdownMenuComponentState extends State<DropdownMenuComponent> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
-                      _getLabel(_getSelectedIndex(selectedItem)),
+                      selectedItem == null
+                          ? widget.hintText ?? t.common.select
+                          : _getLabel(_getSelectedIndex(selectedItem!)),
                       style: TextStyle(fontSize: 14.r, color: Colors.white),
                     ),
                     Transform.rotate(
@@ -73,11 +80,11 @@ class _DropdownMenuComponentState extends State<DropdownMenuComponent> {
               builder: (BuildContext context) {
                 WidgetsBinding.instance.addPostFrameCallback(
                   (_) {
-                    if (!_scrollController.hasClients) {
+                    if (!_scrollController.hasClients || selectedItem == null) {
                       return;
                     }
                     _scrollController.animateTo(
-                      _getSelectedIndex(selectedItem) * 46.r,
+                      _getSelectedIndex(selectedItem!) * 46.r,
                       duration: const Duration(milliseconds: 300),
                       curve: Curves.easeOut,
                     );

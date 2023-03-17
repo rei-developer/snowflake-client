@@ -8,6 +8,7 @@ import 'package:snowflake_client/common/model/audio_state.model.dart';
 import 'package:snowflake_client/common/model/tts.model.dart';
 import 'package:snowflake_client/common/service/impl/system.service.dart';
 import 'package:snowflake_client/common/service/system.service.dart';
+import 'package:snowflake_client/i18n/strings.g.dart';
 
 final audioControllerProvider = StateNotifierProvider<IAudioController, AudioStateModel>(
   (_) => AudioController(),
@@ -23,4 +24,13 @@ final ttsControllerProvider = StateNotifierProvider<ITtsController, TtsModel?>(
 
 final systemServiceProvider = StateNotifierProvider<ISystemService, DateTime>(
   (_) => SystemService(),
+);
+
+final StateProvider<StringsEn> translationProvider = StateProvider<StringsEn>(
+  (ref) {
+    // TODO: lang
+    // final system = ref.watch(systemControllerProvider);
+    // system?.lang ?? 'ko'
+    return AppLocaleUtils.parse('ko').build();
+  },
 );
