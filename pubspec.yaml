@@ -20,6 +20,7 @@ dependencies:
   flutter_tts: ^3.6.3
   audioplayers: ^3.0.1
   animated_text_kit: ^4.2.2
+  cached_network_image: ^3.2.3
   connectivity_plus: ^3.0.3
   cupertino_icons: ^1.0.2
   dio: ^5.0.1

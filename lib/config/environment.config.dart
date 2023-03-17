@@ -5,8 +5,8 @@ enum BuildType {
   production,
 }
 
-class ServiceServer {
-  ServiceServer(this.host, this.port);
+class ServerConfig {
+  ServerConfig(this.host, this.port);
 
   final String host;
   final int port;
@@ -16,17 +16,27 @@ class Environment {
   factory Environment({
     required BuildType buildType,
     required String baseUrl,
-    required ServiceServer serviceServer,
+    required ServerConfig chatServer,
+    required ServerConfig mapServer,
+    required ServerConfig serviceServer,
   }) {
-    _instance = Environment._internal(buildType, baseUrl, serviceServer);
+    _instance = Environment._internal(buildType, baseUrl, chatServer, mapServer, serviceServer);
     return _instance;
   }
 
-  Environment._internal(this.buildType, this.baseUrl, this.serviceServer);
+  Environment._internal(
+    this.buildType,
+    this.baseUrl,
+    this.chatServer,
+    this.mapServer,
+    this.serviceServer,
+  );
 
   final BuildType buildType;
   final String baseUrl;
-  final ServiceServer serviceServer;
+  final ServerConfig chatServer;
+  final ServerConfig mapServer;
+  final ServerConfig serviceServer;
   static late final Environment _instance;
 
   static Environment get instance => _instance;

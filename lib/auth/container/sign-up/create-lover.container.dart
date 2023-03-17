@@ -1,10 +1,8 @@
-import 'package:dio/dio.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:snowflake_client/auth/dto/request/register.request.dto.dart';
-import 'package:snowflake_client/auth/provider/sign-up.provider.dart';
 import 'package:snowflake_client/common/component/content_box.component.dart';
 import 'package:snowflake_client/common/component/custom_radio.component.dart';
 import 'package:snowflake_client/common/component/custom_text_field.component.dart';
@@ -13,7 +11,10 @@ import 'package:snowflake_client/common/const/options.const.dart';
 import 'package:snowflake_client/common/container/moving_background.container.dart';
 import 'package:snowflake_client/common/provider/common.provider.dart';
 import 'package:snowflake_client/i18n/strings.g.dart';
+import 'package:snowflake_client/network/controller/network.controller.dart';
+import 'package:snowflake_client/network/provider/network.provider.dart';
 import 'package:snowflake_client/title/title.const.dart';
+import 'package:snowflake_client/utils/json_to_binary.util.dart';
 
 class CreateLoverContainer extends ConsumerStatefulWidget {
   const CreateLoverContainer({Key? key}) : super(key: key);
@@ -23,7 +24,7 @@ class CreateLoverContainer extends ConsumerStatefulWidget {
 }
 
 class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
-  String _name = '';
+  String _name = '안녕';
   int _race = 1;
   int _sex = 2;
   int _age = 18;
@@ -38,7 +39,14 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
   String _body = 'slender';
   String _breast = 'medium_breasts';
 
+  final test =
+      'https://f002.backblazeb2.com/file/yukki-studio/snowflake/generated-ai-image/7fd758b78b32bc017f41117b8e5642ada048820e87e21cedce9182b7a6254c2e837fe8e10938a037cba600806c9187a583e9db9e6862d15fa5f4017ed59690b9.webp';
+  final test2 = ''
+      'https://f002.backblazeb2.com/file/yukki-studio/snowflake/generated-ai-image/9a87d77e9530e3a95b67133e417bd67680fcb7956dba99abf53fa3dbb52a026de55957f555e08f831c01adef271de2552e708e72cce33e5f392815cd308e5bf4.webp';
+
   final TextEditingController controller = TextEditingController();
+
+  ITcpConnectionController get _serviceServer => ref.watch(serviceServerProvider.notifier);
 
   StringsEn get t => ref.watch(translationProvider);
 
@@ -47,20 +55,18 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
         builder: (_) {
           final audioCtrl = ref.read(audioControllerProvider.notifier);
           useEffect(() {
+            _generateLover();
             audioCtrl.playBGM('audio/bgm/fjordnosundakaze.mp3');
             return audioCtrl.stopBGM;
           }, [audioCtrl]);
-          final signUpCtrl = ref.read(signUpControllerProvider(context));
           final toastCtrl = ref.read(toastControllerProvider);
           return WallpaperCarouselContainer(
-            TitleBackgroundImage.values.map((e) => e.path).toList(),
+            [test, test2],
             ListView(
               physics: const BouncingScrollPhysics(),
               shrinkWrap: true,
               children: [
-                Container(
-                  height: MediaQuery.of(context).size.height * 1 / 1.8,
-                ),
+                Container(height: MediaQuery.of(context).size.height * 1 / 1.8),
                 ContentBoxComponent(
                   Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -97,7 +103,9 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
                                 item: t['common.options.hair.color.$item']
                             },
                             defaultValue: _hairColor,
-                            onChanged: _setHairColor,
+                            onChanged: (value) => _setValueAndGenerateLover(
+                              () => _setHairColor(value),
+                            ),
                           ),
                           SizedBox(height: 10.r),
                           DropdownMenuComponent(
@@ -165,25 +173,7 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
                           MaterialButton(
                             color: Colors.pinkAccent,
                             disabledColor: Colors.grey,
-                            onPressed: _name.isNotEmpty
-                                ? () async {
-                                    try {
-                                      await signUpCtrl.register(
-                                        RegisterRequestDto(
-                                          _name,
-                                          _sex,
-                                          _race,
-                                        ),
-                                      );
-                                    } on ArgumentError catch (err) {
-                                      await toastCtrl(err.message);
-                                    } on DioError catch (err) {
-                                      await toastCtrl(err.response?.data.toString() ?? '');
-                                    } catch (err) {
-                                      print('SignUpContainer build error => $err');
-                                    }
-                                  }
-                                : null,
+                            onPressed: _name.isNotEmpty ? () {} : null,
                             child: Text('${_name.isEmpty ? '소녀' : _name} 만나러 가기'),
                           ),
                         ],
@@ -194,6 +184,7 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
                 Container(height: 80.r),
               ],
             ),
+            isNetwork: true,
           );
         },
       );
@@ -225,4 +216,29 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
   void _setBody(String value) => setState(() => _body = value);
 
   void _setBreast(String value) => setState(() => _breast = value);
+
+  Future<void> _setValueAndGenerateLover(VoidCallback callback) async {
+    callback.call();
+    await _generateLover();
+  }
+
+  Future<void> _generateLover() => _serviceServer.sendMessage(
+        1,
+        jsonToBinary({
+          'name': _name,
+          'race': _race,
+          'sex': _sex,
+          'age': _age,
+          'hairColor': _hairColor,
+          'hairShape': _hairShape,
+          'hairStyle': _hairStyle,
+          'face': _face,
+          'eyes': _eyes,
+          'nose': _nose,
+          'mouth': _mouth,
+          'ears': _ears,
+          'body': _body,
+          'breast': _breast,
+        }),
+      );
 }

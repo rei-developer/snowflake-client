@@ -1,10 +1,17 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class WallpaperCarouselContainer extends StatefulWidget {
-  const WallpaperCarouselContainer(this.wallpapers, this.body, {Key? key}) : super(key: key);
+  const WallpaperCarouselContainer(
+    this.wallpapers,
+    this.body, {
+    this.isNetwork = false,
+    Key? key,
+  }) : super(key: key);
 
   final List<String> wallpapers;
+  final bool isNetwork;
   final Widget body;
 
   @override
@@ -65,12 +72,20 @@ class _WallpaperCarouselContainerState extends State<WallpaperCarouselContainer>
             bottom: 0,
             child: FadeTransition(
               opacity: _animation,
-              child: Image.asset(
-                'assets/${widget.wallpapers[_imageCount]}',
-                fit: BoxFit.cover,
-                width: double.infinity,
-                height: double.infinity,
-              ),
+              child: widget.isNetwork
+                  ? CachedNetworkImage(
+                      imageUrl: widget.wallpapers[_imageCount],
+                      placeholder: (context, url) => Container(color: Colors.black),
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                    )
+                  : Image.asset(
+                      'assets/${widget.wallpapers[_imageCount]}',
+                      width: double.infinity,
+                      height: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
             ),
           ),
           SafeArea(child: widget.body),

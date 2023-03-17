@@ -5,6 +5,8 @@ void main() => AppInit(
       () => Environment(
         buildType: BuildType.production,
         baseUrl: 'https://snowflake-login-api.yukki.app/v1',
-        serviceServer: ServiceServer('snowflake-service.yukki.app', 10004),
+        chatServer: ServerConfig('snowflake-chat.yukki.app', 10002),
+        mapServer: ServerConfig('snowflake-map.yukki.app', 10003),
+        serviceServer: ServerConfig('snowflake-service.yukki.app', 10004),
       ),
     ).run();

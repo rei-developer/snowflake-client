@@ -6,7 +6,10 @@ import 'package:snowflake_client/auth/repository/auth-local.repository.dart';
 import 'package:snowflake_client/auth/service/auth-custom.service.dart';
 import 'package:snowflake_client/auth/service/auth.service.dart';
 import 'package:snowflake_client/auth/service/sign-in.service.dart';
+import 'package:snowflake_client/network/controller/network.controller.dart';
+import 'package:snowflake_client/network/provider/network.provider.dart';
 import 'package:snowflake_client/title/title.route.dart';
+import 'package:snowflake_client/utils/json_to_binary.util.dart';
 
 class SignInService extends ISignInService {
   SignInService(this.ref);
@@ -19,6 +22,8 @@ class SignInService extends ISignInService {
       ref.read(authServiceProvider(ref.read(authLocalRepositoryProvider.notifier).authType));
 
   IAuthCustomService get _authCustomService => ref.read(authCustomServiceProvider);
+
+  ITcpConnectionController get _serviceServer => ref.watch(serviceServerProvider.notifier);
 
   @override
   Future<String> signIn([bool isEntry = false]) async {
@@ -34,6 +39,16 @@ class SignInService extends ISignInService {
         }
       }
       final signInResultDto = await _authCustomService.signIn();
+      final isConnected = await _serviceServer.connect();
+      if (!isConnected) {
+        print("not connected service server");
+        return AuthRoute.SIGN_IN.name;
+      }
+      print(_authLocalRepo.customToken);
+      await _serviceServer.sendMessage(
+        0,
+        jsonToBinary({'token': _authLocalRepo.customToken}),
+      );
       return _next(
         signInResultDto?.hasUser == true
             ? signInResultDto?.hasLover == true
