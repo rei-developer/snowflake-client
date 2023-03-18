@@ -8,12 +8,10 @@ import 'package:snowflake_client/common/component/custom_radio.component.dart';
 import 'package:snowflake_client/common/component/custom_text_field.component.dart';
 import 'package:snowflake_client/common/component/dropdown_menu.component.dart';
 import 'package:snowflake_client/common/const/options.const.dart';
-import 'package:snowflake_client/common/container/moving_background.container.dart';
 import 'package:snowflake_client/common/provider/common.provider.dart';
 import 'package:snowflake_client/i18n/strings.g.dart';
 import 'package:snowflake_client/network/controller/network.controller.dart';
 import 'package:snowflake_client/network/provider/network.provider.dart';
-import 'package:snowflake_client/title/title.const.dart';
 import 'package:snowflake_client/utils/json_to_binary.util.dart';
 
 class CreateLoverContainer extends ConsumerStatefulWidget {
@@ -24,7 +22,7 @@ class CreateLoverContainer extends ConsumerStatefulWidget {
 }
 
 class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
-  String _name = '안녕';
+  String _name = '';
   int _race = 1;
   int _sex = 2;
   int _age = 18;
@@ -60,133 +58,163 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
             return audioCtrl.stopBGM;
           }, [audioCtrl]);
           final toastCtrl = ref.read(toastControllerProvider);
-          return WallpaperCarouselContainer(
-            [test, test2],
-            ListView(
-              physics: const BouncingScrollPhysics(),
-              shrinkWrap: true,
-              children: [
-                Container(height: MediaQuery.of(context).size.height * 1 / 1.8),
-                ContentBoxComponent(
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          CustomTextField(
-                            hintText: t.signUp.createLover.form.name.hintText,
-                            autofocus: true,
-                            onChanged: _setName,
-                          ),
-                          SizedBox(height: 10.r),
-                          CustomRadioComponent(
-                            Map.from(raceOptions).map(
-                              (key, value) => MapEntry(t['common.options.race.$key'], value),
+          return Stack(
+            children: [
+              CachedNetworkImage(
+                imageUrl: test2,
+                placeholder: (context, url) => Container(color: Colors.black),
+                width: double.infinity,
+                height: double.infinity,
+                fit: BoxFit.cover,
+              ),
+              _renderName(),
+              ListView(
+                physics: const BouncingScrollPhysics(),
+                shrinkWrap: true,
+                children: [
+                  Container(height: MediaQuery.of(context).size.height * 1 / 1.5),
+                  ContentBoxComponent(
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            CustomTextField(
+                              hintText: t.common.form.name.hintText,
+                              autofocus: true,
+                              onChanged: _setName,
                             ),
-                            defaultValue: _race,
-                            onChanged: _setRace,
-                          ),
-                          SizedBox(height: 10.r),
-                          CustomRadioComponent(
-                            Map.from(sexOptions).map(
-                              (key, value) => MapEntry(t['common.options.sex.$key'], value),
+                            SizedBox(height: 10.r),
+                            CustomRadioComponent(
+                              Map.from(raceOptions).map(
+                                (key, value) => MapEntry(t['common.options.race.$key'], value),
+                              ),
+                              defaultValue: _race,
+                              onChanged: _setRace,
                             ),
-                            defaultValue: _sex,
-                            onChanged: _setSex,
-                          ),
-                          SizedBox(height: 10.r),
-                          DropdownMenuComponent(
-                            {
-                              for (final item in hairOptions['color']!)
-                                item: t['common.options.hair.color.$item']
-                            },
-                            defaultValue: _hairColor,
-                            onChanged: (value) => _setValueAndGenerateLover(
-                              () => _setHairColor(value),
+                            SizedBox(height: 10.r),
+                            // CustomRadioComponent(
+                            //   Map.from(sexOptions).map(
+                            //     (key, value) => MapEntry(t['common.options.sex.$key'], value),
+                            //   ),
+                            //   defaultValue: _sex,
+                            //   onChanged: _setSex,
+                            // ),
+                            // SizedBox(height: 10.r),
+                            DropdownMenuComponent(
+                              {
+                                for (final item in hairOptions['color']!)
+                                  item: t['common.options.hair.color.$item']
+                              },
+                              defaultValue: _hairColor,
+                              onChanged: (value) => _setValueAndGenerateLover(
+                                () => _setHairColor(value),
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 10.r),
-                          DropdownMenuComponent(
-                            {
-                              for (final item in hairOptions['shape']!)
-                                item: t['common.options.hair.shape.$item']
-                            },
-                            defaultValue: _hairShape,
-                            onChanged: _setHairShape,
-                          ),
-                          SizedBox(height: 10.r),
-                          DropdownMenuComponent(
-                            {
-                              for (final item in hairOptions['style']!)
-                                item: t['common.options.hair.style.$item']
-                            },
-                            defaultValue: _hairStyle,
-                            onChanged: _setHairStyle,
-                          ),
-                          SizedBox(height: 10.r),
-                          DropdownMenuComponent(
-                            {for (final item in faceOptions) item: t['common.options.face.$item']},
-                            hintText: t.common.form.face.hintText,
-                            onChanged: _setFace,
-                          ),
-                          SizedBox(height: 10.r),
-                          DropdownMenuComponent(
-                            {for (final item in eyesOptions) item: t['common.options.eyes.$item']},
-                            defaultValue: _eyes,
-                            hintText: t.common.form.eyes.hintText,
-                            onChanged: _setEyes,
-                          ),
-                          SizedBox(height: 10.r),
-                          DropdownMenuComponent(
-                            {for (final item in noseOptions) item: t['common.options.nose.$item']},
-                            hintText: t.common.form.nose.hintText,
-                            onChanged: _setNose,
-                          ),
-                          SizedBox(height: 10.r),
-                          DropdownMenuComponent(
-                            {
-                              for (final item in mouthOptions) item: t['common.options.mouth.$item']
-                            },
-                            hintText: t.common.form.mouth.hintText,
-                            onChanged: _setMouth,
-                          ),
-                          SizedBox(height: 10.r),
-                          DropdownMenuComponent(
-                            {for (final item in bodyOptions) item: t['common.options.body.$item']},
-                            defaultValue: _body,
-                            hintText: t.common.form.body.hintText,
-                            onChanged: _setBody,
-                          ),
-                          SizedBox(height: 10.r),
-                          DropdownMenuComponent(
-                            {
-                              for (final item in breastOptions)
-                                item: t['common.options.breast.$item']
-                            },
-                            defaultValue: _breast,
-                            hintText: t.common.form.breast.hintText,
-                            onChanged: _setBreast,
-                          ),
-                          SizedBox(height: 10.r),
-                          MaterialButton(
-                            color: Colors.pinkAccent,
-                            disabledColor: Colors.grey,
-                            onPressed: _name.isNotEmpty ? () {} : null,
-                            child: Text('${_name.isEmpty ? '소녀' : _name} 만나러 가기'),
-                          ),
-                        ],
-                      ),
-                    ],
+                            SizedBox(height: 10.r),
+                            DropdownMenuComponent(
+                              {
+                                for (final item in hairOptions['shape']!)
+                                  item: t['common.options.hair.shape.$item']
+                              },
+                              defaultValue: _hairShape,
+                              onChanged: _setHairShape,
+                            ),
+                            SizedBox(height: 10.r),
+                            DropdownMenuComponent(
+                              {
+                                for (final item in hairOptions['style']!)
+                                  item: t['common.options.hair.style.$item']
+                              },
+                              defaultValue: _hairStyle,
+                              onChanged: _setHairStyle,
+                            ),
+                            SizedBox(height: 10.r),
+                            DropdownMenuComponent(
+                              {
+                                for (final item in faceOptions) item: t['common.options.face.$item']
+                              },
+                              hintText: t.common.form.face.hintText,
+                              onChanged: _setFace,
+                            ),
+                            SizedBox(height: 10.r),
+                            DropdownMenuComponent(
+                              {
+                                for (final item in eyesOptions) item: t['common.options.eyes.$item']
+                              },
+                              defaultValue: _eyes,
+                              hintText: t.common.form.eyes.hintText,
+                              onChanged: _setEyes,
+                            ),
+                            SizedBox(height: 10.r),
+                            DropdownMenuComponent(
+                              {
+                                for (final item in noseOptions) item: t['common.options.nose.$item']
+                              },
+                              hintText: t.common.form.nose.hintText,
+                              onChanged: _setNose,
+                            ),
+                            SizedBox(height: 10.r),
+                            DropdownMenuComponent(
+                              {
+                                for (final item in mouthOptions)
+                                  item: t['common.options.mouth.$item']
+                              },
+                              hintText: t.common.form.mouth.hintText,
+                              onChanged: _setMouth,
+                            ),
+                            SizedBox(height: 10.r),
+                            DropdownMenuComponent(
+                              {
+                                for (final item in bodyOptions) item: t['common.options.body.$item']
+                              },
+                              defaultValue: _body,
+                              hintText: t.common.form.body.hintText,
+                              onChanged: _setBody,
+                            ),
+                            SizedBox(height: 10.r),
+                            DropdownMenuComponent(
+                              {
+                                for (final item in breastOptions)
+                                  item: t['common.options.breast.$item']
+                              },
+                              defaultValue: _breast,
+                              hintText: t.common.form.breast.hintText,
+                              onChanged: _setBreast,
+                            ),
+                            SizedBox(height: 10.r),
+                            MaterialButton(
+                              color: Colors.pinkAccent,
+                              disabledColor: Colors.grey,
+                              onPressed: _name.isNotEmpty ? () {} : null,
+                              child: Text('${_name.isEmpty ? '소녀' : _name} 만나러 가기'),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-                Container(height: 80.r),
-              ],
-            ),
-            isNetwork: true,
+                  Container(height: 80.r),
+                ],
+              ),
+            ],
           );
         },
+      );
+
+  Widget _renderName() => Positioned(
+        top: 80.r,
+        right: 10.r,
+        child: Text(
+          _name.isEmpty ? t.signUp.createLover.title : _name,
+          style: TextStyle(
+            color: const Color(0xFFffb7c5),
+            fontSize: 32.r,
+            fontWeight: FontWeight.w600,
+          ),
+        ),
       );
 
   void _setName(String value) => setState(() => _name = value);
