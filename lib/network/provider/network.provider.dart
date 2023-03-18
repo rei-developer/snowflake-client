@@ -5,5 +5,5 @@ import 'package:snowflake_client/config/environment.config.dart';
 import 'package:snowflake_client/network/controller/impl/network.controller.dart';
 
 final serviceServerProvider = StateNotifierProvider<TcpConnectionController, Socket?>(
-  (ref) => TcpConnectionController(Environment.instance.serviceServer),
+  (ref) => TcpConnectionController(ref, Environment.instance.serviceServer),
 );

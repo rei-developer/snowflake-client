@@ -3,4 +3,6 @@ import 'package:snowflake_client/auth/dto/response/sign-in-result.response.dto.d
 
 abstract class ISignUpService {
   Future<SignInResultResponseDto> register(RegisterRequestDto registerDto);
+
+  void setDrawFirstLoverHash(Map<String, dynamic> json);
 }

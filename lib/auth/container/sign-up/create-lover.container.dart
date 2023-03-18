@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:snowflake_client/auth/provider/sign-up.provider.dart';
+import 'package:snowflake_client/auth/repository/sign-up.repository.dart';
 import 'package:snowflake_client/common/component/content_box.component.dart';
 import 'package:snowflake_client/common/component/custom_radio.component.dart';
 import 'package:snowflake_client/common/component/custom_text_field.component.dart';
@@ -37,12 +39,9 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
   String _body = 'slender';
   String _breast = 'medium_breasts';
 
-  final test =
-      'https://f002.backblazeb2.com/file/yukki-studio/snowflake/generated-ai-image/7fd758b78b32bc017f41117b8e5642ada048820e87e21cedce9182b7a6254c2e837fe8e10938a037cba600806c9187a583e9db9e6862d15fa5f4017ed59690b9.webp';
-  final test2 = ''
-      'https://f002.backblazeb2.com/file/yukki-studio/snowflake/generated-ai-image/9a87d77e9530e3a95b67133e417bd67680fcb7956dba99abf53fa3dbb52a026de55957f555e08f831c01adef271de2552e708e72cce33e5f392815cd308e5bf4.webp';
-
   final TextEditingController controller = TextEditingController();
+
+  ISignUpRepository get _signUpStateRepo => ref.watch(signUpStateRepositoryProvider);
 
   ITcpConnectionController get _serviceServer => ref.watch(serviceServerProvider.notifier);
 
@@ -60,13 +59,15 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
           final toastCtrl = ref.read(toastControllerProvider);
           return Stack(
             children: [
-              CachedNetworkImage(
-                imageUrl: test2,
-                placeholder: (context, url) => Container(color: Colors.black),
-                width: double.infinity,
-                height: double.infinity,
-                fit: BoxFit.cover,
-              ),
+              if (_signUpStateRepo.drawFirstLoverHash != null)
+                CachedNetworkImage(
+                  imageUrl: _signUpStateRepo.drawFirstLoverHash!,
+                  placeholder: (context, url) => Container(color: Colors.black),
+                  errorWidget: (_, __, ___) => Container(color: Colors.black),
+                  width: double.infinity,
+                  height: double.infinity,
+                  fit: BoxFit.cover,
+                ),
               _renderName(),
               ListView(
                 physics: const BouncingScrollPhysics(),
@@ -81,6 +82,7 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
+                            Text(' >> ${_signUpStateRepo.drawFirstLoverHash}'),
                             CustomTextField(
                               hintText: t.common.form.name.hintText,
                               autofocus: true,
