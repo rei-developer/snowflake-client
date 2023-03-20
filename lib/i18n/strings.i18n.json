@@ -1,238 +1,251 @@
 {
-  "title": "Snowflake : 이세계 소녀 키우기",
+  "title": "Otherworldly Love",
+  "subTitle": "Snowflake",
+  "copyright": "ⓒ Yukki Studio 2023 - All rights reserved.",
   "common": {
-    "select": "선택",
+    "select": "Select",
     "options": {
       "race": {
-        "human": "인간",
-        "elf": "엘프"
+        "human": "Human",
+        "elf": "Elf"
       },
       "sex": {
-        "male": "남자",
-        "female": "여자"
+        "male": "Male",
+        "female": "Female"
       },
       "hair": {
         "color": {
-          "white_hair": "백발",
-          "brown_hair": "브라운 헤어",
-          "red_hair": "적발",
-          "pink_hair": "핑크 헤어",
-          "orange_hair": "오렌지 헤어",
-          "yellow_hair": "황발",
-          "Blonde_hair": "금발",
-          "light_green_hair": "연두색 헤어",
-          "green_hair": "녹발",
-          "sky_blue_hair": "하늘색 헤어",
-          "blue_hair": "청발",
-          "purple_hair": "보라색 헤어",
-          "black_hair": "흑발"
+          "white_hair": "White hair",
+          "brown_hair": "Brown hair",
+          "red_hair": "Red hair",
+          "pink_hair": "Pink hair",
+          "orange_hair": "Orange hair",
+          "yellow_hair": "Yellow hair",
+          "Blonde_hair": "Blonde hair",
+          "light_green_hair": "Light green hair",
+          "green_hair": "Green hair",
+          "sky_blue_hair": "Sky blue hair",
+          "blue_hair": "Blue hair",
+          "purple_hair": "Purple hair",
+          "black_hair": "Black hair"
         },
         "shape": {
-          "short_hair": "숏컷",
-          "very_short_hair": "매우 짧은 머리",
-          "absurdly_short_hair": "엄청 짧은 머리",
-          "medium_hair": "살짝 긴 머리",
-          "long_hair": "롱컷",
-          "very_long_hair": "매우 긴 머리",
-          "absurdly_long_hair": "엄청 긴 머리",
-          "straight_hair": "생머리",
-          "curly_hair": "곱슬머리",
-          "wavy_hair": "웨이브 헤어",
-          "spiked_hair": "날카로운 머리",
-          "flipped_hair": "뒤집힌 머리",
-          "bluntbangs": "뭉툭한 머리",
-          "pointy_hair": "뾰족한 머리",
-          "messy_hair": "헝클어진 머리",
-          "Blunt_bangs": "앞머리가 가지러한 머리",
-          "parted_bangs": "앞머리가 양쪽으로 갈라진 머리",
-          "crossed_bangs": "앞머리가 미간에서 교차한 머리",
-          "swept_bangs": "앞머리가 한쪽으로 몰린 머리",
-          "braided_bangs": "앞머리를 한쪽으로 땋은 머리",
-          "hair_over_one_eye": "앞머리가 한쪽 눈을 가린 머리",
-          "hair_over_eyes": "앞머리가 양쪽 눈을 가린 머리",
-          "hair_between_eyes": "앞머리가 눈 시야를 가린 머리",
-          "asymmetrical_bangs": "앞머리가 눈 사이를 가린 머리"
+          "short_hair": "Short hair",
+          "very_short_hair": "Very short hair",
+          "absurdly_short_hair": "Absurdly short hair",
+          "medium_hair": "Medium length hair",
+          "long_hair": "Long hair",
+          "very_long_hair": "Very long hair",
+          "absurdly_long_hair": "Absurdly long hair",
+          "straight_hair": "Straight hair",
+          "curly_hair": "Curly hair",
+          "wavy_hair": "Wavy hair",
+          "spiked_hair": "Spiked hair",
+          "flipped_hair": "Flipped hair",
+          "bluntbangs": "Blunt bangs",
+          "pointy_hair": "Pointy hair",
+          "messy_hair": "Messy hair",
+          "Blunt_bangs": "Blunt bangs",
+          "parted_bangs": "Parted bangs",
+          "crossed_bangs": "Crossed bangs",
+          "swept_bangs": "Swept bangs",
+          "braided_bangs": "Braided bangs",
+          "hair_over_one_eye": "Hair over one eye",
+          "hair_over_eyes": "Hair over eyes",
+          "hair_between_eyes": "Hair between eyes",
+          "asymmetrical_bangs": "Asymmetrical bangs"
         },
         "style": {
-          "pixie_cut": "픽시컷",
-          "undercut": "언더컷",
-          "cornrows": "콘로우",
-          "dreadlocks": "드레드",
-          "braid": "브레이드",
-          "braided_bangs": "브레이드 뱅",
-          "front_braid": "앞머리 브레이드",
-          "side_braid": "사이드 브레이드",
-          "french_braid": "프렌치 브레이드",
-          "crown_braid": "크라운 브레이드",
-          "single_braid": "싱글 브레이드",
-          "multiple_braids": "멀티 브레이드",
-          "twin_braids": "트윈 브레이드",
-          "tri_braids": "트라이 브레이드",
-          "quad_braids": "퀴드 브레이드",
-          "hair_bun": "롤빵",
-          "braided_bun": "묶은 롤빵",
-          "single_hair_bun": "싱글 롤빵",
-          "double_bun": "더블 롤빵",
-          "triple_bun": "트윈 롤빵",
-          "cone_hair_bun": "콘헤어 롤빵",
-          "doughnut_hair_bun": "도넛헤어 롤빵",
-          "heart_hair_bun": "하트헤어 롤빵",
-          "one_side_up": "원 사이드 업",
-          "two_side_up": "투 사이드 업",
-          "ponytail": "포니테일",
-          "folded_ponytail": "접힌 포니테일",
-          "front_ponytail": "앞머리 포니테일",
-          "high_ponytail": "높은 포니테일",
-          "short_ponytail": "낮은 포니테일",
-          "side_ponytail": "사이드 포니테일",
-          "split_ponytail": "스플릿 포니테일",
-          "twintails": "트윈테일",
-          "low_twintails": "낮은 트윈테일",
-          "short_twintails": "짧은 트윈테일",
-          "uneven_twintails": "험한 트윈테일",
-          "tri_tails": "트라이윈테일",
-          "quad_tails": "퀴드 테일",
-          "quin_tails": "퀸 테일"
+          "pixie_cut": "Pixie cut",
+          "undercut": "Undercut",
+          "cornrows": "Cornrows",
+          "dreadlocks": "Dreadlocks",
+          "braid": "Braid",
+          "braided_bangs": "Braided bangs",
+          "front_braid": "Front braid",
+          "side_braid": "Side braid",
+          "french_braid": "French braid",
+          "crown_braid": "Crown braid",
+          "single_braid": "Single braid",
+          "multiple_braids": "Multiple braids",
+          "twin_braids": "Twin braids",
+          "tri_braids": "Tri braids",
+          "quad_braids": "Quad braids",
+          "hair_bun": "Hair bun",
+          "braided_bun": "Braided bun",
+          "single_hair_bun": "Single hair bun",
+          "double_bun": "Double bun",
+          "triple_bun": "Triple bun",
+          "cone_hair_bun": "Cone hair bun",
+          "doughnut_hair_bun": "Doughnut hair bun",
+          "heart_hair_bun": "Heart hair bun",
+          "one_side_up": "One side up",
+          "two_side_up": "Two side up",
+          "ponytail": "Ponytail",
+          "folded_ponytail": "Folded ponytail",
+          "front_ponytail": "Front ponytail",
+          "high_ponytail": "High ponytail",
+          "short_ponytail": "Short ponytail",
+          "side_ponytail": "Side ponytail",
+          "split_ponytail": "Split ponytail",
+          "twintails": "Twintails",
+          "low_twintails": "Low twintails",
+          "short_twintails": "Short twintails",
+          "uneven_twintails": "Uneven twintails",
+          "tri_tails": "Tri tails",
+          "quad_tails": "Quad tails",
+          "quin_tails": "Quin tails"
         }
       },
       "face": {
-        "small_face": "작은 얼굴",
-        "small_medium_face": "살짝 작은 얼굴",
-        "medium_face": "평범한 얼굴",
-        "large_face": "큰 얼굴",
-        "huge_face": "매우 큰 얼굴",
-        "sharp_face": "날렵한 얼굴",
-        "pointed_face": "뾰족한 얼굴",
-        "peanut_face": "땅콩형 얼굴",
-        "round_face": "타원형 얼굴",
-        "egg_shaped_face": "계란형 얼굴"
+        "small_face": "Small face",
+        "small_medium_face": "Slightly small face",
+        "medium_face": "Average face",
+        "large_face": "Large face",
+        "huge_face": "Very large face",
+        "sharp_face": "Sharp face",
+        "pointed_face": "Pointed face",
+        "peanut_face": "Peanut-shaped face",
+        "round_face": "Round face",
+        "egg_shaped_face": "Egg-shaped face"
       },
       "eyes": {
-        "gray_eyes": "회색 눈",
-        "white_eyes": "백안",
-        "brown_eyes": "갈색 눈",
-        "red_eyes": "적안",
-        "pink_eyes": "핑크 눈",
-        "orange_eyes": "오렌지 눈",
-        "yellow_eyes": "황안",
-        "golden_eyes": "금안",
-        "light_green_eyes": "연두색 눈",
-        "green_eyes": "녹안",
-        "sky_blue_eyes": "하늘색 눈",
-        "blue_eyes": "청안",
-        "purple_eyes": "보라색 눈",
-        "black_eyes": "흑안"
+        "gray_eyes": "Gray eyes",
+        "white_eyes": "White eyes",
+        "brown_eyes": "Brown eyes",
+        "red_eyes": "Red eyes",
+        "pink_eyes": "Pink eyes",
+        "orange_eyes": "Orange eyes",
+        "yellow_eyes": "Yellow eyes",
+        "golden_eyes": "Golden eyes",
+        "light_green_eyes": "Light green eyes",
+        "green_eyes": "Green eyes",
+        "sky_blue_eyes": "Sky blue eyes",
+        "blue_eyes": "Blue eyes",
+        "purple_eyes": "Purple eyes",
+        "black_eyes": "Black eyes"
       },
       "nose": {
-        "small_nose": "작은 코",
-        "long_nose": "긴 코",
-        "slender_nose": "가늘은 코",
-        "heavy_nose": "두꺼운 코",
-        "broad_nose": "넓적한 코",
-        "high_end_nose": "코 끝만 높은 코",
-        "wild_boogged_nose": "들창코",
-        "aquiline_nose": "메부리코"
+        "small_nose": "Small nose",
+        "long_nose": "Long nose",
+        "slender_nose": "Slender nose",
+        "heavy_nose": "Heavy nose",
+        "broad_nose": "Broad nose",
+        "high_end_nose": "High-end nose",
+        "wild_boogged_nose": "Wild boogged nose",
+        "aquiline_nose": "Aquiline nose"
       },
       "mouth": {
-        "small_mouth": "작은 입",
-        "big_mouth": "큰 입",
-        "thin_lips": "얇은 입술",
-        "thick_lips": "두꺼운 입술"
+        "small_mouth": "Small mouth",
+        "big_mouth": "Big mouth",
+        "thin_lips": "Thin lips",
+        "thick_lips": "Thick lips"
       },
       "body": {
-        "slender": "슬렌더"
+        "slender": "Slender"
       },
       "breast": {
-        "flat_chest": "빨래판 가슴",
-        "small_breasts": "빈유",
-        "small_medium_breasts": "살짝 빈유",
-        "medium_breasts": "평범한 가슴",
-        "large_breasts": "거유",
-        "huge_breasts": "매우 큰 가슴",
-        "gigantic_breasts": "엄청 큰 가슴"
+        "flat_chest": "Flat chest",
+        "small_breasts": "Small breasts",
+        "small_medium_breasts": "Slightly small breasts",
+        "medium_breasts": "Average-sized breasts",
+        "large_breasts": "Large breasts",
+        "huge_breasts": "Very large breasts",
+        "gigantic_breasts": "Gigantic breasts"
       }
     },
     "form": {
       "name": {
-        "label": "이름",
-        "hintText": "이름을 입력하세요. (한글 2-6 또는 영문 2-12글자)",
+        "label": "Name",
+        "hintText": "Please enter a name. (2-6 Korean characters or 2-12 English characters)",
         "errorMessage": {
-          "invalidValue": "한글 2-6 또는 영문 2-12글자만 가능합니다.",
-          "notAllowedValue": "허용되지 않는 이름입니다.",
-          "alreadyExist": "이미 존재하는 이름입니다."
+          "invalidValue": "Only 2-6 Korean characters or 2-12 English characters are allowed.",
+          "notAllowedValue": "The name entered is not allowed.",
+          "alreadyExist": "The name already exists."
         }
       },
       "honorificTitle": {
-        "label": "경칭",
-        "hintText": "경칭을 입력하세요. (한글 2-12 또는 영문 2-12글자)",
+        "label": "Honorific title",
+        "hintText": "Please enter a honorific title. (2-12 Korean characters or 2-12 English characters)",
         "errorMessage": {
-          "invalidValue": "한글 2-6 또는 영문 2-12글자만 가능합니다.",
-          "notAllowedValue": "허용되지 않는 경칭입니다."
+          "invalidValue": "Only 2-12 Korean characters or 2-12 English characters are allowed.",
+          "notAllowedValue": "The honorific title entered is not allowed."
         }
       },
       "race": {
-        "label": "종족"
+        "label": "Race"
       },
       "sex": {
-        "label": "성별"
+        "label": "Gender"
       },
       "age": {
-        "label": "나이",
-        "hintText": "나이를 입력하세요. (18-25)",
+        "label": "Age",
+        "hintText": "Please enter a age. (18-25)",
         "errorMessage": {
-          "invalidValue": "나이는 18세부터 25세까지만 가능합니다.",
-          "notAllowedValue": "허용되지 않는 나이입니다."
+          "invalidValue": "Age must be between 18 and 25.",
+          "notAllowedValue": "The age entered is not allowed."
         }
       },
       "nation": {
-        "label": "국가",
-        "hintText": "국가를 선택하세요."
+        "label": "Nationality",
+        "hintText": "Please select a nationality."
       },
       "hairColor": {
-        "label": "헤어 컬러",
-        "hintText": "헤어 컬러를 선택하세요."
+        "label": "Hair color",
+        "hintText": "Please select a style for the girl's hair color."
       },
       "faceShape": {
-        "label": "헤어 길이/모양",
-        "hintText": "헤어 길이/모양을 선택하세요."
+        "label": "Facial hair length/shape",
+        "hintText": "Please select a style for the girl's facial hair length/shape."
       },
       "faceStyle": {
-        "label": "헤어 스타일",
-        "hintText": "헤어 스타일을 선택하세요."
+        "label": "Hairstyle",
+        "hintText": "Please select a style for the girl's hairstyle."
       },
       "face": {
-        "label": "얼굴",
-        "hintText": "얼굴을 선택하세요."
+        "label": "Face",
+        "hintText": "Please select a style for the girl's face type."
       },
       "eyes": {
-        "label": "눈",
-        "hintText": "눈을 선택하세요."
+        "label": "Eyes",
+        "hintText": "Please select a style for the girl's eye type."
       },
       "nose": {
-        "label": "코",
-        "hintText": "코를 선택하세요."
+        "label": "Nose",
+        "hintText": "Please select a style for the girl's nose type."
       },
       "mouth": {
-        "label": "입",
-        "hintText": "입을 선택하세요."
+        "label": "Mouth",
+        "hintText": "Please select a style for the girl's mouth type."
       },
       "ears": {
-        "label": "귀",
-        "hintText": "귀를 선택하세요."
+        "label": "Ears",
+        "hintText": "Please select a style for the girl's ear type."
       },
       "body": {
-        "label": "바디 스타일",
-        "hintText": "바디 스타일을 선택하세요."
+        "label": "Body type",
+        "hintText": "Please select a style for the girl's body type."
       },
       "breast": {
-        "label": "가슴 스타일",
-        "hintText": "가슴 스타일을 선택하세요."
+        "label": "Breast type",
+        "hintText": "Please select a style for the girl's breast type."
       }
     }
   },
   "signUp": {
+    "register": {
+      "form": {
+        "confirm": "Create an account"
+      }
+    },
     "createLover": {
-      "title": "소녀의 이름은?"
+      "title": "What's her name?",
+      "form": {
+        "confirm": "Go meet ${name}"
+      },
+      "alias": {
+        "defaultName": "a lover"
+      }
     }
   }
 }

@@ -10,6 +10,7 @@ import 'package:snowflake_client/auth/entity/auth_type.entity.dart';
 import 'package:snowflake_client/auth/provider/sign-in.provider.dart';
 import 'package:snowflake_client/common/container/moving_background.container.dart';
 import 'package:snowflake_client/common/provider/common.provider.dart';
+import 'package:snowflake_client/i18n/strings.g.dart';
 import 'package:snowflake_client/title/title.const.dart';
 import 'package:snowflake_client/utils/func.util.dart';
 import 'package:tuple/tuple.dart';
@@ -23,6 +24,8 @@ class SignInContainer extends ConsumerStatefulWidget {
 
 class _SignInContainerState extends ConsumerState<SignInContainer> {
   PackageInfo? _packageInfo;
+
+  StringsEn get t => ref.watch(translationProvider);
 
   @override
   void initState() {
@@ -65,7 +68,7 @@ class _SignInContainerState extends ConsumerState<SignInContainer> {
                     AnimatedTextKit(
                       animatedTexts: [
                         ColorizeAnimatedText(
-                          'Snowflake',
+                          t.subTitle,
                           colors: [Colors.blue, Colors.black, Colors.white],
                           textStyle: TextStyle(
                             fontSize: 60.r,
@@ -92,7 +95,7 @@ class _SignInContainerState extends ConsumerState<SignInContainer> {
                     ),
                     SizedBox(height: 80.r),
                     Text(
-                      'ⓒ Yukki Studio 2023 - All rights reserved.',
+                      t.copyright,
                       style: TextStyle(color: Colors.black, fontSize: 14.r),
                       textAlign: TextAlign.center,
                     ),

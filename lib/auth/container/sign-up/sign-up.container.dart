@@ -10,6 +10,7 @@ import 'package:snowflake_client/common/component/custom_text_field.component.da
 import 'package:snowflake_client/common/const/options.const.dart';
 import 'package:snowflake_client/common/container/moving_background.container.dart';
 import 'package:snowflake_client/common/provider/common.provider.dart';
+import 'package:snowflake_client/i18n/strings.g.dart';
 import 'package:snowflake_client/title/title.const.dart';
 
 class SignUpContainer extends ConsumerStatefulWidget {
@@ -23,6 +24,8 @@ class _SignUpContainerState extends ConsumerState<SignUpContainer> {
   String _name = '';
   int _sex = 1;
   int _nation = 1;
+
+  StringsEn get t => ref.watch(translationProvider);
 
   @override
   Widget build(BuildContext context) => HookBuilder(
@@ -46,7 +49,7 @@ class _SignUpContainerState extends ConsumerState<SignUpContainer> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       CustomTextField(
-                        hintText: '당신의 이름을 정하세요. (한글 2-6글자)',
+                        hintText: t.common.form.name.hintText,
                         autofocus: true,
                         onChanged: _setName,
                       ),
@@ -54,19 +57,23 @@ class _SignUpContainerState extends ConsumerState<SignUpContainer> {
                       CustomRadioComponent(sexOptions, defaultValue: _sex, onChanged: _setSex),
                       SizedBox(height: 10.r),
                       MaterialButton(
-                        color: Colors.pinkAccent,
-                        child: const Text('Create new account'),
-                        onPressed: () async {
-                          try {
-                            await signUpCtrl.register(RegisterRequestDto(_name, _sex, _nation));
-                          } on ArgumentError catch (err) {
-                            print('SignUpContainer build error => $err');
-                            _setName();
-                            await toastCtrl(err.message);
-                          } on DioError catch (err) {
-                            await toastCtrl(err.response?.data.toString() ?? '');
-                          }
-                        },
+                        color: const Color(0xFFffb7c5),
+                        disabledColor: Colors.grey,
+                        onPressed: _name.isNotEmpty
+                            ? () async {
+                                try {
+                                  await signUpCtrl
+                                      .register(RegisterRequestDto(_name, _sex, _nation));
+                                } on ArgumentError catch (err) {
+                                  print('SignUpContainer build error => $err');
+                                  _setName();
+                                  await toastCtrl(err.message);
+                                } on DioError catch (err) {
+                                  await toastCtrl(err.response?.data.toString() ?? '');
+                                }
+                              }
+                            : null,
+                        child: Text(t.signUp.register.form.confirm),
                       ),
                     ],
                   ),

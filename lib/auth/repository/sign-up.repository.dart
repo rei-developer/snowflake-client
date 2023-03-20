@@ -6,5 +6,5 @@ abstract class ISignUpRepository extends StateNotifier<SignUpModel> {
 
   void setDrawFirstLoverHash(String hash);
 
-  String? get drawFirstLoverHash;
+  String? get hash;
 }

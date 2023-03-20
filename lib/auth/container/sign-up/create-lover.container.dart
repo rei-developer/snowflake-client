@@ -4,7 +4,6 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:snowflake_client/auth/provider/sign-up.provider.dart';
-import 'package:snowflake_client/auth/repository/sign-up.repository.dart';
 import 'package:snowflake_client/common/component/content_box.component.dart';
 import 'package:snowflake_client/common/component/custom_radio.component.dart';
 import 'package:snowflake_client/common/component/custom_text_field.component.dart';
@@ -41,8 +40,6 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
 
   final TextEditingController controller = TextEditingController();
 
-  ISignUpRepository get _signUpStateRepo => ref.watch(signUpStateRepositoryProvider);
-
   ITcpConnectionController get _serviceServer => ref.watch(serviceServerProvider.notifier);
 
   StringsEn get t => ref.watch(translationProvider);
@@ -52,18 +49,26 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
         builder: (_) {
           final audioCtrl = ref.read(audioControllerProvider.notifier);
           useEffect(() {
-            _generateLover();
             audioCtrl.playBGM('audio/bgm/fjordnosundakaze.mp3');
+            _generateLover();
             return audioCtrl.stopBGM;
           }, [audioCtrl]);
           final toastCtrl = ref.read(toastControllerProvider);
+          final signUpStateRepo = ref.watch(signUpStateRepositoryProvider);
           return Stack(
             children: [
-              if (_signUpStateRepo.drawFirstLoverHash != null)
+              if (signUpStateRepo.drawFirstLoverHash.isEmpty)
+                Container(
+                  width: double.infinity,
+                  height: double.infinity,
+                  color: Colors.black,
+                )
+              else
                 CachedNetworkImage(
-                  imageUrl: _signUpStateRepo.drawFirstLoverHash!,
-                  placeholder: (context, url) => Container(color: Colors.black),
-                  errorWidget: (_, __, ___) => Container(color: Colors.black),
+                  imageUrl:
+                      'https://f002.backblazeb2.com/file/yukki-studio/snowflake/generated-ai-image/${signUpStateRepo.drawFirstLoverHash}.webp',
+                  placeholder: (context, url) => Container(color: const Color(0xFFffb7c5)),
+                  errorWidget: (_, __, ___) => Container(color: const Color(0xFFffb7c5)),
                   width: double.infinity,
                   height: double.infinity,
                   fit: BoxFit.cover,
@@ -82,7 +87,6 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(' >> ${_signUpStateRepo.drawFirstLoverHash}'),
                             CustomTextField(
                               hintText: t.common.form.name.hintText,
                               autofocus: true,
@@ -122,7 +126,9 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
                                   item: t['common.options.hair.shape.$item']
                               },
                               defaultValue: _hairShape,
-                              onChanged: _setHairShape,
+                              onChanged: (value) => _setValueAndGenerateLover(
+                                () => _setHairShape(value),
+                              ),
                             ),
                             SizedBox(height: 10.r),
                             DropdownMenuComponent(
@@ -131,7 +137,9 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
                                   item: t['common.options.hair.style.$item']
                               },
                               defaultValue: _hairStyle,
-                              onChanged: _setHairStyle,
+                              onChanged: (value) => _setValueAndGenerateLover(
+                                () => _setHairStyle(value),
+                              ),
                             ),
                             SizedBox(height: 10.r),
                             DropdownMenuComponent(
@@ -139,7 +147,9 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
                                 for (final item in faceOptions) item: t['common.options.face.$item']
                               },
                               hintText: t.common.form.face.hintText,
-                              onChanged: _setFace,
+                              onChanged: (value) => _setValueAndGenerateLover(
+                                () => _setFace(value),
+                              ),
                             ),
                             SizedBox(height: 10.r),
                             DropdownMenuComponent(
@@ -148,7 +158,9 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
                               },
                               defaultValue: _eyes,
                               hintText: t.common.form.eyes.hintText,
-                              onChanged: _setEyes,
+                              onChanged: (value) => _setValueAndGenerateLover(
+                                () => _setEyes(value),
+                              ),
                             ),
                             SizedBox(height: 10.r),
                             DropdownMenuComponent(
@@ -156,7 +168,9 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
                                 for (final item in noseOptions) item: t['common.options.nose.$item']
                               },
                               hintText: t.common.form.nose.hintText,
-                              onChanged: _setNose,
+                              onChanged: (value) => _setValueAndGenerateLover(
+                                () => _setNose(value),
+                              ),
                             ),
                             SizedBox(height: 10.r),
                             DropdownMenuComponent(
@@ -165,7 +179,9 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
                                   item: t['common.options.mouth.$item']
                               },
                               hintText: t.common.form.mouth.hintText,
-                              onChanged: _setMouth,
+                              onChanged: (value) => _setValueAndGenerateLover(
+                                () => _setMouth(value),
+                              ),
                             ),
                             SizedBox(height: 10.r),
                             DropdownMenuComponent(
@@ -174,7 +190,9 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
                               },
                               defaultValue: _body,
                               hintText: t.common.form.body.hintText,
-                              onChanged: _setBody,
+                              onChanged: (value) => _setValueAndGenerateLover(
+                                () => _setBody(value),
+                              ),
                             ),
                             SizedBox(height: 10.r),
                             DropdownMenuComponent(
@@ -184,14 +202,23 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
                               },
                               defaultValue: _breast,
                               hintText: t.common.form.breast.hintText,
-                              onChanged: _setBreast,
+                              onChanged: (value) => _setValueAndGenerateLover(
+                                () => _setBreast(value),
+                              ),
                             ),
                             SizedBox(height: 10.r),
+
                             MaterialButton(
-                              color: Colors.pinkAccent,
+                              color: const Color(0xFFffb7c5),
                               disabledColor: Colors.grey,
                               onPressed: _name.isNotEmpty ? () {} : null,
-                              child: Text('${_name.isEmpty ? '소녀' : _name} 만나러 가기'),
+                              child: Text(
+                                t.signUp.createLover.form.confirm(
+                                  name: _name.isEmpty
+                                      ? t.signUp.createLover.alias.defaultName
+                                      : _name,
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -253,7 +280,7 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
   }
 
   Future<void> _generateLover() => _serviceServer.sendMessage(
-        1,
+        2,
         jsonToBinary({
           'name': _name,
           'race': _race,

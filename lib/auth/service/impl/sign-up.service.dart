@@ -15,22 +15,13 @@ class SignUpService extends ISignUpService {
 
   IAuthRestRepository get _authRestRepo => ref.read(authRestRepositoryProvider);
 
-  ISignUpRepository get _signUpRepo => ref.read(signUpStateRepositoryProvider);
+  ISignUpRepository get _signUpRepo => ref.read(signUpStateRepositoryProvider.notifier);
 
   @override
   Future<SignInResultResponseDto> register(RegisterRequestDto registerDto) async =>
       SignInResultResponseDto.fromJson(await _authRestRepo.register(registerDto));
 
   @override
-  void setDrawFirstLoverHash(Map<String, dynamic> json) {
-
-final test = DrawFirstLoverDto.fromJson(json);
-
-print('test => $test');
-print('test => ${test.hash}');
-
-
-    _signUpRepo.setDrawFirstLoverHash(test.hash);
-
-  }
+  void setDrawFirstLoverHash(Map<String, dynamic> json) =>
+      _signUpRepo.setDrawFirstLoverHash(DrawFirstLoverDto.fromJson(json).hash);
 }

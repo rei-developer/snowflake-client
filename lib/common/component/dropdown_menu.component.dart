@@ -60,11 +60,17 @@ class _DropdownMenuComponentState extends ConsumerState<DropdownMenuComponent> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
-                      selectedItem == null
-                          ? widget.hintText ?? t.common.select
-                          : _getLabel(_getSelectedIndex(selectedItem!)),
-                      style: TextStyle(fontSize: 14.r, color: Colors.white),
+                    Expanded(
+                      child: Text(
+                        selectedItem == null
+                            ? widget.hintText ?? t.common.select
+                            : _getLabel(_getSelectedIndex(selectedItem!)),
+                        style: TextStyle(
+                          fontSize: 14.r,
+                          color: Colors.white.withOpacity(selectedItem == null ? 0.5 : 1),
+                        ),
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
                     Transform.rotate(
                       angle: -90 * math.pi / 180,

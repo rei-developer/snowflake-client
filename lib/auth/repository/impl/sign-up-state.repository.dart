@@ -8,7 +8,6 @@ class SignUpStateRepository extends ISignUpRepository {
   void setDrawFirstLoverHash(String hash) => state = state.copyWith(drawFirstLoverHash: hash);
 
   @override
-  String? get drawFirstLoverHash => state.drawFirstLoverHash.isNotEmpty
-      ? 'https://f002.backblazeb2.com/file/yukki-studio/snowflake/generated-ai-image/${state.drawFirstLoverHash}.webp'
-      : null;
+  String? get hash =>
+      'https://f002.backblazeb2.com/file/yukki-studio/snowflake/generated-ai-image/';
 }

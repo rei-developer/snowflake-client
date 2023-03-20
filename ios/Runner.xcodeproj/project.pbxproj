@@ -365,17 +365,17 @@
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 3885BKNMW7;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 0.0.1;
+				FLUTTER_BUILD_NAME = 0.0.3;
 				FLUTTER_BUILD_NUMBER = 3;
 				FLUTTER_TARGET = ./lib/app/main.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Snowflake : 소녀 키우기";
+				INFOPLIST_KEY_CFBundleDisplayName = "이세계 소녀 키우기";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.role-playing-games";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.1;
+				MARKETING_VERSION = 0.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = app.yukki.snowflake;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -510,17 +510,17 @@
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 3885BKNMW7;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 0.0.1;
+				FLUTTER_BUILD_NAME = 0.0.3;
 				FLUTTER_BUILD_NUMBER = 3;
 				FLUTTER_TARGET = ./lib/app/main.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Snowflake : 소녀 키우기";
+				INFOPLIST_KEY_CFBundleDisplayName = "이세계 소녀 키우기";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.role-playing-games";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.1;
+				MARKETING_VERSION = 0.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = app.yukki.snowflake;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -547,17 +547,17 @@
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = 3885BKNMW7;
 				ENABLE_BITCODE = NO;
-				FLUTTER_BUILD_NAME = 0.0.1;
+				FLUTTER_BUILD_NAME = 0.0.3;
 				FLUTTER_BUILD_NUMBER = 3;
 				FLUTTER_TARGET = ./lib/app/main.dart;
 				INFOPLIST_FILE = Runner/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = "Snowflake : 소녀 키우기";
+				INFOPLIST_KEY_CFBundleDisplayName = "이세계 소녀 키우기";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.role-playing-games";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 0.0.1;
+				MARKETING_VERSION = 0.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = app.yukki.snowflake;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";

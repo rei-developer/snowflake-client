@@ -46,7 +46,7 @@ class SignInService extends ISignInService {
       }
       print(_authLocalRepo.customToken);
       await _serviceServer.sendMessage(
-        0,
+        1,
         jsonToBinary({'token': _authLocalRepo.customToken}),
       );
       return _next(

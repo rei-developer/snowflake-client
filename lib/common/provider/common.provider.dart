@@ -31,6 +31,6 @@ final StateProvider<StringsEn> translationProvider = StateProvider<StringsEn>(
     // TODO: lang
     // final system = ref.watch(systemControllerProvider);
     // system?.lang ?? 'ko'
-    return AppLocaleUtils.parse('ko').build();
+    return AppLocaleUtils.parse('en').build();
   },
 );
