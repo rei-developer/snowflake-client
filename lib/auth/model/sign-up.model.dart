@@ -1,11 +1,11 @@
 class SignUpModel {
-  SignUpModel(this.drawFirstLoverHash);
+  SignUpModel(this.generatedLoverHash);
 
-  factory SignUpModel.initial({String? drawFirstLoverHash}) =>
-      SignUpModel(drawFirstLoverHash ?? '');
+  factory SignUpModel.initial({String? generatedLoverHash}) =>
+      SignUpModel(generatedLoverHash ?? '');
 
-  SignUpModel copyWith({String? drawFirstLoverHash}) =>
-      SignUpModel(drawFirstLoverHash ?? this.drawFirstLoverHash);
+  SignUpModel copyWith({String? generatedLoverHash}) =>
+      SignUpModel(generatedLoverHash ?? this.generatedLoverHash);
 
-  final String drawFirstLoverHash;
+  final String generatedLoverHash;
 }

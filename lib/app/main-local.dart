@@ -5,8 +5,20 @@ void main() => AppInit(
       () => Environment(
         buildType: BuildType.local,
         baseUrl: 'http://localhost:10000/v1',
-        chatServer: ServerConfig('localhost', 10002),
-        mapServer: ServerConfig('localhost', 10003),
-        serviceServer: ServerConfig('localhost', 10004),
+        chatServer: ServerConfig(
+          serverType: ServerType.chat,
+          host: 'localhost',
+          port: 10002,
+        ),
+        mapServer: ServerConfig(
+          serverType: ServerType.map,
+          host: 'localhost',
+          port: 10003,
+        ),
+        serviceServer: ServerConfig(
+          serverType: ServerType.service,
+          host: 'localhost',
+          port: 10004,
+        ),
       ),
     ).run();

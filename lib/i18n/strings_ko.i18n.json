@@ -238,7 +238,7 @@
         "confirm": "계정 만들기"
       }
     },
-    "createLover": {
+    "generateLover": {
       "title": "소녀의 이름은?",
       "form": {
         "confirm": "${name} 만나러 가기"
@@ -246,6 +246,13 @@
       "alias": {
         "defaultName": "소녀"
       }
+    }
+  },
+  "api": {
+    "errorMessage": {
+      "INVALID_PARAMETER": "잘못된 매개변수입니다.",
+      "DOES_NOT_EXIST": "존재하지 않습니다.",
+      "ALREADY_EXIST": "이미 존재합니다."
     }
   }
 }

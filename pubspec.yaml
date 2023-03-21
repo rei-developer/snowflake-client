@@ -31,8 +31,11 @@ dependencies:
   google_sign_in: ^6.0.2
   hive: ^2.2.3
   hive_flutter: ^1.1.0
+  http: ^0.13.5
+  image_gallery_saver: ^1.7.1
+  image_picker: ^0.8.7
   package_info_plus: ^3.0.3
-  path_provider: ^2.0.12
+  path_provider: ^2.0.14
   sign_in_with_apple: ^4.3.0
   slang: ^3.14.0
   slang_flutter: ^3.14.0

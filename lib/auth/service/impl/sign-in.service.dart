@@ -1,15 +1,16 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:snowflake_client/auth/auth.route.dart';
 import 'package:snowflake_client/auth/const/sign-in.const.dart';
+import 'package:snowflake_client/auth/dto/request/verify_token.request.dto.dart';
 import 'package:snowflake_client/auth/provider/auth.provider.dart';
 import 'package:snowflake_client/auth/repository/auth-local.repository.dart';
 import 'package:snowflake_client/auth/service/auth-custom.service.dart';
 import 'package:snowflake_client/auth/service/auth.service.dart';
 import 'package:snowflake_client/auth/service/sign-in.service.dart';
-import 'package:snowflake_client/network/controller/network.controller.dart';
+import 'package:snowflake_client/network/const/service-server/request_packet.const.dart';
+import 'package:snowflake_client/network/controller/tcp_connection.controller.dart';
 import 'package:snowflake_client/network/provider/network.provider.dart';
 import 'package:snowflake_client/title/title.route.dart';
-import 'package:snowflake_client/utils/json_to_binary.util.dart';
 
 class SignInService extends ISignInService {
   SignInService(this.ref);
@@ -44,11 +45,13 @@ class SignInService extends ISignInService {
         print("not connected service server");
         return AuthRoute.SIGN_IN.name;
       }
-      print(_authLocalRepo.customToken);
-      await _serviceServer.sendMessage(
-        1,
-        jsonToBinary({'token': _authLocalRepo.customToken}),
-      );
+      final token = _authLocalRepo.customToken;
+      if (token != null) {
+        await _serviceServer.sendMessage(
+          ServiceServerRequestPacket.verifyToken.id,
+          VerifyTokenRequestDto(token).toBinary(),
+        );
+      }
       return _next(
         signInResultDto?.hasUser == true
             ? signInResultDto?.hasLover == true
@@ -68,7 +71,7 @@ class SignInService extends ISignInService {
       case SignInResult.unregistered:
         return AuthRoute.SIGN_UP.name;
       case SignInResult.uncreated:
-        return AuthRoute.CREATE_LOVER.name;
+        return AuthRoute.GENERATE_LOVER.name;
       case SignInResult.completed:
         return TitleRoute.TITLE.name;
       default:

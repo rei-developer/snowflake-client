@@ -14,7 +14,7 @@ import 'package:snowflake_client/dictionary/entity/word.entity.dart';
 import 'package:snowflake_client/dictionary/model/word_matching.model.dart';
 import 'package:snowflake_client/dictionary/provider/word_matching.provider.dart';
 import 'package:snowflake_client/dictionary/service/word_matching.service.dart';
-import 'package:snowflake_client/utils/go.util.dart';
+import 'package:snowflake_client/util/go.util.dart';
 
 class WordMatchingController extends IWordMatchingController {
   WordMatchingController(this.ref)

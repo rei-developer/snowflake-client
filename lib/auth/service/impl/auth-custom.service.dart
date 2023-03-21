@@ -1,6 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:snowflake_client/auth/dto/response/sign-in-result.response.dto.dart';
+import 'package:snowflake_client/auth/dto/response/sign-in_result.response.dto.dart';
 import 'package:snowflake_client/auth/provider/auth.provider.dart';
 import 'package:snowflake_client/auth/repository/auth-local.repository.dart';
 import 'package:snowflake_client/auth/repository/auth-rest.repository.dart';

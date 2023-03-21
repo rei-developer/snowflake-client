@@ -56,6 +56,7 @@ android {
 
     defaultConfig {
         applicationId "app.yukki.snowflake"
+        missingDimensionStrategy 'react-native-camera', 'general'
         minSdkVersion flutter.minSdkVersion
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()

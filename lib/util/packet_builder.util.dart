@@ -1,6 +1,6 @@
 import 'dart:typed_data';
 
-import 'package:snowflake_client/utils/header_builder.util.dart';
+import 'package:snowflake_client/util/header_builder.util.dart';
 
 class PacketBuilder {
   static Uint8List buildPacket(int packetId, Uint8List data) {

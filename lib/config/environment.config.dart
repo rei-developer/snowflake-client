@@ -5,38 +5,29 @@ enum BuildType {
   production,
 }
 
-class ServerConfig {
-  ServerConfig(this.host, this.port);
+enum ServerType {
+  chat,
+  map,
+  service,
+}
 
+class ServerConfig {
+  ServerConfig({required this.serverType, required this.host, required this.port});
+
+  final ServerType serverType;
   final String host;
   final int port;
 }
 
 class Environment {
-  factory Environment({
-    required BuildType buildType,
-    required String baseUrl,
-    required ServerConfig chatServer,
-    required ServerConfig mapServer,
-    required ServerConfig serviceServer,
-  }) {
-    _instance = Environment._internal(buildType, baseUrl, chatServer, mapServer, serviceServer);
-    return _instance;
-  }
+  Environment._({
+    required this.buildType,
+    required this.baseUrl,
+    required this.chatServer,
+    required this.mapServer,
+    required this.serviceServer,
+  });
 
-  Environment._internal(
-    this.buildType,
-    this.baseUrl,
-    this.chatServer,
-    this.mapServer,
-    this.serviceServer,
-  );
-
-  final BuildType buildType;
-  final String baseUrl;
-  final ServerConfig chatServer;
-  final ServerConfig mapServer;
-  final ServerConfig serviceServer;
   static late final Environment _instance;
 
   static Environment get instance => _instance;
@@ -48,4 +39,27 @@ class Environment {
   static bool get isDev => instance.buildType == BuildType.development;
 
   static bool get isProd => instance.buildType == BuildType.production;
+
+  factory Environment({
+    required BuildType buildType,
+    required String baseUrl,
+    required ServerConfig chatServer,
+    required ServerConfig mapServer,
+    required ServerConfig serviceServer,
+  }) {
+    _instance = Environment._(
+      buildType: buildType,
+      baseUrl: baseUrl,
+      chatServer: chatServer,
+      mapServer: mapServer,
+      serviceServer: serviceServer,
+    );
+    return _instance;
+  }
+
+  final BuildType buildType;
+  final String baseUrl;
+  final ServerConfig chatServer;
+  final ServerConfig mapServer;
+  final ServerConfig serviceServer;
 }

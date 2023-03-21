@@ -238,7 +238,7 @@
         "confirm": "Create an account"
       }
     },
-    "createLover": {
+    "generateLover": {
       "title": "What's her name?",
       "form": {
         "confirm": "Go meet ${name}"
@@ -246,6 +246,13 @@
       "alias": {
         "defaultName": "a lover"
       }
+    }
+  },
+  "api": {
+    "errorMessage": {
+      "INVALID_PARAMETER": "Invalid parameter",
+      "DOES_NOT_EXIST": "Does not exist.",
+      "ALREADY_EXIST": "Already exists."
     }
   }
 }

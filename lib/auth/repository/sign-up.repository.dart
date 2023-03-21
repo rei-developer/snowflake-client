@@ -4,7 +4,5 @@ import 'package:snowflake_client/auth/model/sign-up.model.dart';
 abstract class ISignUpRepository extends StateNotifier<SignUpModel> {
   ISignUpRepository(super.state);
 
-  void setDrawFirstLoverHash(String hash);
-
-  String? get hash;
+  void setGeneratedLoverHash(String generatedLoverHash);
 }

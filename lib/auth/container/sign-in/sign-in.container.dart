@@ -4,15 +4,16 @@ import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:snowflake_client/auth/component/sign-in/sign-in_button.component.dart';
 import 'package:snowflake_client/auth/controller/sign-in.controller.dart';
 import 'package:snowflake_client/auth/entity/auth_type.entity.dart';
 import 'package:snowflake_client/auth/provider/sign-in.provider.dart';
+import 'package:snowflake_client/common/component/custom_small_button.component.dart';
 import 'package:snowflake_client/common/container/moving_background.container.dart';
 import 'package:snowflake_client/common/provider/common.provider.dart';
 import 'package:snowflake_client/i18n/strings.g.dart';
 import 'package:snowflake_client/title/title.const.dart';
-import 'package:snowflake_client/utils/func.util.dart';
+import 'package:snowflake_client/util/asset_loader.dart';
+import 'package:snowflake_client/util/func.util.dart';
 import 'package:tuple/tuple.dart';
 
 class SignInContainer extends ConsumerStatefulWidget {
@@ -88,7 +89,10 @@ class _SignInContainerState extends ConsumerState<SignInContainer> {
                       children: [
                         ...<Widget>[
                           ..._authTypes.map(
-                            (e) => SignInButtonComponent(e, callback: signInCtrl(e).signIn),
+                            (e) => CustomSmallButtonComponent(
+                              AssetLoader('image/icon/auth/${e.name}.svg').image(),
+                              callback: signInCtrl(e).signIn,
+                            ),
                           ),
                         ].superJoin(SizedBox(width: 20.r)).toList(),
                       ],

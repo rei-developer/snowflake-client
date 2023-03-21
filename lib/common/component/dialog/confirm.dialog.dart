@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:snowflake_client/utils/go.util.dart';
+import 'package:snowflake_client/util/go.util.dart';
 
 Future<bool> showConfirmDialog(
   BuildContext context, {

@@ -1,7 +1,7 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:snowflake_client/auth/dto/request/register.request.dto.dart';
-import 'package:snowflake_client/auth/dto/response/draw_first_lover.dto.dart';
-import 'package:snowflake_client/auth/dto/response/sign-in-result.response.dto.dart';
+import 'package:snowflake_client/auth/dto/response/generate_lover.response.dto.dart';
+import 'package:snowflake_client/auth/dto/response/sign-in_result.response.dto.dart';
 import 'package:snowflake_client/auth/provider/auth.provider.dart';
 import 'package:snowflake_client/auth/provider/sign-up.provider.dart';
 import 'package:snowflake_client/auth/repository/auth-rest.repository.dart';
@@ -22,6 +22,6 @@ class SignUpService extends ISignUpService {
       SignInResultResponseDto.fromJson(await _authRestRepo.register(registerDto));
 
   @override
-  void setDrawFirstLoverHash(Map<String, dynamic> json) =>
-      _signUpRepo.setDrawFirstLoverHash(DrawFirstLoverDto.fromJson(json).hash);
+  void setGeneratedLoverHash(Map<String, dynamic> json) =>
+      _signUpRepo.setGeneratedLoverHash(GenerateLoverResponseDto.fromJson(json).hash);
 }

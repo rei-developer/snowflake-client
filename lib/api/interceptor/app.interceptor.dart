@@ -1,10 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:snowflake_client/api/exception/bad-request.exception.dart';
+import 'package:snowflake_client/api/exception/bad_request.exception.dart';
 import 'package:snowflake_client/api/exception/conflict.exception.dart';
-import 'package:snowflake_client/api/exception/deadline-exceeded.exception.dart';
-import 'package:snowflake_client/api/exception/internal-server-error.exception.dart';
-import 'package:snowflake_client/api/exception/no-internet-connection.exception.dart';
-import 'package:snowflake_client/api/exception/not-found.exception.dart';
+import 'package:snowflake_client/api/exception/deadline_exceeded.exception.dart';
+import 'package:snowflake_client/api/exception/forbidden.exception.dart';
+import 'package:snowflake_client/api/exception/internal_server_error.exception.dart';
+import 'package:snowflake_client/api/exception/no_internet_connection.exception.dart';
+import 'package:snowflake_client/api/exception/not_found.exception.dart';
 import 'package:snowflake_client/api/exception/unauthrized.exception.dart';
 
 class AppInterceptor extends Interceptor {
@@ -21,6 +22,8 @@ class AppInterceptor extends Interceptor {
             throw BadRequestException(err.requestOptions);
           case 401:
             throw UnauthorizedException(err.requestOptions);
+          case 403:
+            throw ForbiddenException(err);
           case 404:
             throw NotFoundException(err.requestOptions);
           case 409:

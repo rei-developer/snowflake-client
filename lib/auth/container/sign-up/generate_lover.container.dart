@@ -3,26 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:snowflake_client/auth/dto/request/generate_lover.request.dto.dart';
 import 'package:snowflake_client/auth/provider/sign-up.provider.dart';
 import 'package:snowflake_client/common/component/content_box.component.dart';
 import 'package:snowflake_client/common/component/custom_radio.component.dart';
+import 'package:snowflake_client/common/component/custom_small_button.component.dart';
 import 'package:snowflake_client/common/component/custom_text_field.component.dart';
 import 'package:snowflake_client/common/component/dropdown_menu.component.dart';
 import 'package:snowflake_client/common/const/options.const.dart';
 import 'package:snowflake_client/common/provider/common.provider.dart';
 import 'package:snowflake_client/i18n/strings.g.dart';
-import 'package:snowflake_client/network/controller/network.controller.dart';
+import 'package:snowflake_client/network/const/service-server/request_packet.const.dart';
+import 'package:snowflake_client/network/controller/tcp_connection.controller.dart';
 import 'package:snowflake_client/network/provider/network.provider.dart';
-import 'package:snowflake_client/utils/json_to_binary.util.dart';
+import 'package:snowflake_client/util/save_image_to_gallery.util.dart';
 
-class CreateLoverContainer extends ConsumerStatefulWidget {
-  const CreateLoverContainer({Key? key}) : super(key: key);
+class GenerateLoverContainer extends ConsumerStatefulWidget {
+  const GenerateLoverContainer({Key? key}) : super(key: key);
 
   @override
-  ConsumerState<CreateLoverContainer> createState() => _CreateLoverContainerState();
+  ConsumerState<GenerateLoverContainer> createState() => _GenerateLoverContainerState();
 }
 
-class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
+class _GenerateLoverContainerState extends ConsumerState<GenerateLoverContainer> {
   String _name = '';
   int _race = 1;
   int _sex = 2;
@@ -49,15 +52,14 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
         builder: (_) {
           final audioCtrl = ref.read(audioControllerProvider.notifier);
           useEffect(() {
-            audioCtrl.playBGM('audio/bgm/fjordnosundakaze.mp3');
+            audioCtrl.playBGM('audio/bgm/trance2.mp3');
             _generateLover();
             return audioCtrl.stopBGM;
           }, [audioCtrl]);
-          final toastCtrl = ref.read(toastControllerProvider);
           final signUpStateRepo = ref.watch(signUpStateRepositoryProvider);
           return Stack(
             children: [
-              if (signUpStateRepo.drawFirstLoverHash.isEmpty)
+              if (signUpStateRepo.generatedLoverHash.isEmpty)
                 Container(
                   width: double.infinity,
                   height: double.infinity,
@@ -65,8 +67,7 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
                 )
               else
                 CachedNetworkImage(
-                  imageUrl:
-                      'https://f002.backblazeb2.com/file/yukki-studio/snowflake/generated-ai-image/${signUpStateRepo.drawFirstLoverHash}.webp',
+                  imageUrl: _getGeneratedLoverImageUrl(signUpStateRepo.generatedLoverHash),
                   placeholder: (context, url) => Container(color: const Color(0xFFffb7c5)),
                   errorWidget: (_, __, ___) => Container(color: const Color(0xFFffb7c5)),
                   width: double.infinity,
@@ -79,6 +80,7 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
                 shrinkWrap: true,
                 children: [
                   Container(height: MediaQuery.of(context).size.height * 1 / 1.5),
+                  _renderFeatures(signUpStateRepo.generatedLoverHash),
                   ContentBoxComponent(
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -213,9 +215,9 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
                               disabledColor: Colors.grey,
                               onPressed: _name.isNotEmpty ? () {} : null,
                               child: Text(
-                                t.signUp.createLover.form.confirm(
+                                t.signUp.generateLover.form.confirm(
                                   name: _name.isEmpty
-                                      ? t.signUp.createLover.alias.defaultName
+                                      ? t.signUp.generateLover.alias.defaultName
                                       : _name,
                                 ),
                               ),
@@ -237,7 +239,7 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
         top: 80.r,
         right: 10.r,
         child: Text(
-          _name.isEmpty ? t.signUp.createLover.title : _name,
+          _name.isEmpty ? t.signUp.generateLover.title : _name,
           style: TextStyle(
             color: const Color(0xFFffb7c5),
             fontSize: 32.r,
@@ -245,6 +247,25 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
           ),
         ),
       );
+
+  Widget _renderFeatures(String hash) => Padding(
+        padding: EdgeInsets.symmetric(horizontal: 10.r),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+            if (hash.isNotEmpty)
+              CustomSmallButtonComponent(
+                const Icon(Icons.camera_alt, color: Colors.white),
+                callback: () => saveImageToGallery(
+                  _getGeneratedLoverImageUrl(hash),
+                ),
+              )
+          ],
+        ),
+      );
+
+  String _getGeneratedLoverImageUrl(String hash) =>
+      'https://f002.backblazeb2.com/file/yukki-studio/snowflake/generated-ai-image/$hash.webp';
 
   void _setName(String value) => setState(() => _name = value);
 
@@ -280,22 +301,22 @@ class _CreateLoverContainerState extends ConsumerState<CreateLoverContainer> {
   }
 
   Future<void> _generateLover() => _serviceServer.sendMessage(
-        2,
-        jsonToBinary({
-          'name': _name,
-          'race': _race,
-          'sex': _sex,
-          'age': _age,
-          'hairColor': _hairColor,
-          'hairShape': _hairShape,
-          'hairStyle': _hairStyle,
-          'face': _face,
-          'eyes': _eyes,
-          'nose': _nose,
-          'mouth': _mouth,
-          'ears': _ears,
-          'body': _body,
-          'breast': _breast,
-        }),
+        ServiceServerRequestPacket.generateLover.id,
+        GenerateLoverRequestDto(
+          _name,
+          _race,
+          _sex,
+          _age,
+          _hairColor,
+          _hairShape,
+          _hairStyle,
+          _face,
+          _eyes,
+          _nose,
+          _mouth,
+          _ears,
+          _body,
+          _breast,
+        ).toBinary(),
       );
 }

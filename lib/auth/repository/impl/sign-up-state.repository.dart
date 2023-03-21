@@ -5,9 +5,6 @@ class SignUpStateRepository extends ISignUpRepository {
   SignUpStateRepository() : super(SignUpModel.initial());
 
   @override
-  void setDrawFirstLoverHash(String hash) => state = state.copyWith(drawFirstLoverHash: hash);
-
-  @override
-  String? get hash =>
-      'https://f002.backblazeb2.com/file/yukki-studio/snowflake/generated-ai-image/';
+  void setGeneratedLoverHash(String generatedLoverHash) =>
+      state = state.copyWith(generatedLoverHash: generatedLoverHash);
 }

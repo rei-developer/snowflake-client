@@ -5,7 +5,7 @@ import 'package:snowflake_client/dictionary/dictionary.route.dart';
 import 'package:snowflake_client/dictionary/entity/dictionary.entity.dart';
 import 'package:snowflake_client/dictionary/provider/dictionary.provider.dart';
 import 'package:snowflake_client/dictionary/service/dictionary.service.dart';
-import 'package:snowflake_client/utils/go.util.dart';
+import 'package:snowflake_client/util/go.util.dart';
 
 class DictionaryController extends IDictionaryController {
   DictionaryController(this.ref, this.context) : _dictionaryService = ref.read(dictionaryServiceProvider);

@@ -6,7 +6,7 @@ import 'package:snowflake_client/common/component/dialog/confirm.dialog.dart';
 import 'package:snowflake_client/common/provider/common.provider.dart';
 import 'package:snowflake_client/common/service/system.service.dart';
 import 'package:snowflake_client/entry/controller/entry.controller.dart';
-import 'package:snowflake_client/utils/go.util.dart';
+import 'package:snowflake_client/util/go.util.dart';
 
 class EntryController extends IEntryController {
   EntryController(this.ref, this.context)

@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -36,7 +35,6 @@ class _SignUpContainerState extends ConsumerState<SignUpContainer> {
             return audioCtrl.stopBGM;
           }, [audioCtrl]);
           final signUpCtrl = ref.read(signUpControllerProvider(context));
-          final toastCtrl = ref.read(toastControllerProvider);
           return WallpaperCarouselContainer(
             TitleBackgroundImage.values.map((e) => e.path).toList(),
             Container(
@@ -60,18 +58,7 @@ class _SignUpContainerState extends ConsumerState<SignUpContainer> {
                         color: const Color(0xFFffb7c5),
                         disabledColor: Colors.grey,
                         onPressed: _name.isNotEmpty
-                            ? () async {
-                                try {
-                                  await signUpCtrl
-                                      .register(RegisterRequestDto(_name, _sex, _nation));
-                                } on ArgumentError catch (err) {
-                                  print('SignUpContainer build error => $err');
-                                  _setName();
-                                  await toastCtrl(err.message);
-                                } on DioError catch (err) {
-                                  await toastCtrl(err.response?.data.toString() ?? '');
-                                }
-                              }
+                            ? () => signUpCtrl.register(RegisterRequestDto(_name, _sex, _nation))
                             : null,
                         child: Text(t.signUp.register.form.confirm),
                       ),

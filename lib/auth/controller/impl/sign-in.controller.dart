@@ -7,7 +7,7 @@ import 'package:snowflake_client/auth/provider/sign-in.provider.dart';
 import 'package:snowflake_client/auth/service/auth.service.dart';
 import 'package:snowflake_client/auth/service/sign-in.service.dart';
 import 'package:snowflake_client/common/component/loading_indicator.component.dart';
-import 'package:snowflake_client/utils/go.util.dart';
+import 'package:snowflake_client/util/go.util.dart';
 
 class SignInController extends ISignInController {
   SignInController(this.ref, this.context, this.authType);

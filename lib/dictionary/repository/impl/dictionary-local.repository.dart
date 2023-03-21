@@ -2,7 +2,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:snowflake_client/config/hive.config.dart';
 import 'package:snowflake_client/dictionary/entity/dictionary.entity.dart';
 import 'package:snowflake_client/dictionary/repository/dictionary-local.repository.dart';
-import 'package:snowflake_client/utils/func.util.dart';
+import 'package:snowflake_client/util/func.util.dart';
 
 class DictionaryLocalRepository extends IDictionaryLocalRepository {
   DictionaryLocalRepository()
