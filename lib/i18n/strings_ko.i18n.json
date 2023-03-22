@@ -230,6 +230,15 @@
         "label": "가슴 스타일",
         "hintText": "가슴 스타일을 선택하세요."
       }
+    },
+    "infoMessage": {
+      "download": {
+        "succeed": "이미지 다운로드를 성공했습니다.",
+        "failed": "이미지 다운로드를 실패했습니다."
+      }
+    },
+    "errorMessage": {
+      "unimplemented": "This feature is not yet implemented."
     }
   },
   "signUp": {
@@ -240,12 +249,13 @@
     },
     "generateLover": {
       "title": "소녀의 이름은?",
+      "alias": {
+        "defaultName": "소녀"
+      },
       "form": {
         "confirm": "${name} 만나러 가기"
       },
-      "alias": {
-        "defaultName": "소녀"
-      }
+      "loadingMessage": "이미지를 렌더링하고 있습니다.\n잠시만 기다려 주세요."
     }
   },
   "api": {

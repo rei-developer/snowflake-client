@@ -1,3 +1,5 @@
+import 'package:snowflake_client/util/load_yaml.util.dart';
+
 enum BuildType {
   local,
   development,
@@ -26,9 +28,17 @@ class Environment {
     required this.chatServer,
     required this.mapServer,
     required this.serviceServer,
+    required this.config,
   });
 
-  static late final Environment _instance;
+  static Environment _instance = Environment._(
+    buildType: BuildType.local,
+    baseUrl: '',
+    chatServer: ServerConfig(serverType: ServerType.chat, host: '', port: 0),
+    mapServer: ServerConfig(serverType: ServerType.map, host: '', port: 0),
+    serviceServer: ServerConfig(serverType: ServerType.service, host: '', port: 0),
+    config: {},
+  );
 
   static Environment get instance => _instance;
 
@@ -40,20 +50,30 @@ class Environment {
 
   static bool get isProd => instance.buildType == BuildType.production;
 
-  factory Environment({
-    required BuildType buildType,
-    required String baseUrl,
-    required ServerConfig chatServer,
-    required ServerConfig mapServer,
-    required ServerConfig serviceServer,
-  }) {
-    _instance = Environment._(
-      buildType: buildType,
-      baseUrl: baseUrl,
-      chatServer: chatServer,
-      mapServer: mapServer,
-      serviceServer: serviceServer,
-    );
+  factory Environment({required BuildType buildType}) {
+    Future(() async {
+      final config = (await loadConfig())[buildType.name];
+      _instance = Environment._(
+        buildType: buildType,
+        baseUrl: config['baseUrl'],
+        chatServer: ServerConfig(
+          serverType: ServerType.chat,
+          host: config['chat']['host'],
+          port: config['chat']['port'],
+        ),
+        mapServer: ServerConfig(
+          serverType: ServerType.map,
+          host: config['map']['host'],
+          port: config['map']['port'],
+        ),
+        serviceServer: ServerConfig(
+          serverType: ServerType.service,
+          host: config['service']['host'],
+          port: config['service']['port'],
+        ),
+        config: config,
+      );
+    });
     return _instance;
   }
 
@@ -62,4 +82,5 @@ class Environment {
   final ServerConfig chatServer;
   final ServerConfig mapServer;
   final ServerConfig serviceServer;
+  final dynamic config;
 }

@@ -1,44 +1,23 @@
-import 'dart:io';
-import 'package:flutter/services.dart';
+import 'dart:typed_data';
+import 'package:dio/dio.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
-import 'package:path_provider/path_provider.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 
-Future<void> saveImageToGallery(String url) async {
+Future<bool> saveImageToGallery(String url) async {
   try {
-    final http.Response response = await http.get(Uri.parse(url));
+    final response = await Dio().get(url, options: Options(responseType: ResponseType.bytes));
     if (response.statusCode == 200) {
-      final bytes = response.bodyBytes;
-      final result = await saveImageToDevice(bytes);
-      print('File saved to gallery: $result');
-    } else {
-      throw Exception('Failed to download image');
+      final bytes = response.data;
+      final result = await ImageGallerySaver.saveImage(
+        Uint8List.fromList(bytes),
+        quality: 100,
+        name: 'snowflake-${DateTime.now().millisecondsSinceEpoch}.webp',
+      );
+      return result['isSuccess'] as bool;
     }
   } catch (err) {
     print('saveImageToGallery error => $err');
     Fluttertoast.showToast(msg: err.toString());
   }
+  return false;
 }
-
-Future<bool> saveImageToDevice(Uint8List bytes) async {
-  if (Platform.isAndroid) {
-    final Directory appDir = await getApplicationDocumentsDirectory();
-    final String appDirPath = appDir.path;
-    final String filePath = '$appDirPath/snowflake-${DateTime.now().millisecondsSinceEpoch}.webp';
-    final File file = File(filePath);
-    await file.writeAsBytes(bytes);
-    return await ImageGallerySaver.saveFile(filePath);
-  } else if (Platform.isIOS) {
-    return await saveImageToPhotos(bytes);
-  } else {
-    Fluttertoast.showToast(msg: 'unsupported platform');
-    throw Exception('Unsupported platform');
-  }
-}
-
-Future<bool> saveImageToPhotos(Uint8List bytes) async =>
-    await const MethodChannel('image_gallery_saver').invokeMethod(
-      'saveImageToPhotos',
-      {'bytes': bytes},
-    );

@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:snowflake_client/entry/provider/entry.provider.dart';
 import 'package:snowflake_client/title/title.const.dart';
-import 'package:snowflake_client/util/asset_loader.dart';
+import 'package:snowflake_client/util/asset_loader.util.dart';
 
 class EntryContainer extends ConsumerStatefulWidget {
   const EntryContainer({Key? key}) : super(key: key);

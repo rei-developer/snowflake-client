@@ -5,7 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:snowflake_client/common/provider/common.provider.dart';
 import 'package:snowflake_client/dictionary/provider/dictionary.provider.dart';
 import 'package:snowflake_client/title/title.const.dart';
-import 'package:snowflake_client/util/asset_loader.dart';
+import 'package:snowflake_client/util/asset_loader.util.dart';
 
 class TitleContainer extends ConsumerStatefulWidget {
   const TitleContainer({Key? key}) : super(key: key);

@@ -6,7 +6,6 @@ import 'package:snowflake_client/app/main.app.dart';
 import 'package:snowflake_client/firebase_options.dart';
 import 'package:snowflake_client/i18n/strings.g.dart';
 import 'package:snowflake_client/init/hive.init.dart';
-import 'package:snowflake_client/network/provider/network.provider.dart';
 
 class AppInit {
   AppInit(this.environment);

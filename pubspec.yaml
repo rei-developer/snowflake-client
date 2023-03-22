@@ -3,7 +3,7 @@ description: Snowflake client project.
 
 publish_to: 'none'
 
-version: 0.0.5+5
+version: 0.0.6+6
 
 environment:
   sdk: '>=2.19.2 <3.0.0'
@@ -40,6 +40,7 @@ dependencies:
   slang: ^3.14.0
   slang_flutter: ^3.14.0
   tuple: ^2.0.1
+  yaml: ^3.1.1
 
 dev_dependencies:
   flutter_test:
@@ -61,6 +62,7 @@ flutter:
     - assets/image/icon/auth/
     - assets/image/background/
     - assets/image/common/
+    - assets/config.yaml
 
   fonts:
     - family: AnastasiaScript

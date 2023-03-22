@@ -5,4 +5,6 @@ abstract class ISignUpRepository extends StateNotifier<SignUpModel> {
   ISignUpRepository(super.state);
 
   void setGeneratedLoverHash(String generatedLoverHash);
+
+  void setLock(bool lock);
 }

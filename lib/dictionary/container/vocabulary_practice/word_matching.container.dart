@@ -6,7 +6,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:snowflake_client/dictionary/provider/word_matching.provider.dart';
 import 'package:snowflake_client/title/title.const.dart';
-import 'package:snowflake_client/util/asset_loader.dart';
+import 'package:snowflake_client/util/asset_loader.util.dart';
 import 'package:snowflake_client/util/func.util.dart';
 import 'package:snowflake_client/util/russian_alphabet.util.dart';
 

@@ -22,6 +22,11 @@ class SignUpService extends ISignUpService {
       SignInResultResponseDto.fromJson(await _authRestRepo.register(registerDto));
 
   @override
-  void setGeneratedLoverHash(Map<String, dynamic> json) =>
-      _signUpRepo.setGeneratedLoverHash(GenerateLoverResponseDto.fromJson(json).hash);
+  void setGeneratedLoverHash(Map<String, dynamic> json) {
+    _signUpRepo.setGeneratedLoverHash(GenerateLoverResponseDto.fromJson(json).hash);
+    setLock();
+  }
+
+  @override
+  void setLock([bool lock = false]) => _signUpRepo.setLock(lock);
 }

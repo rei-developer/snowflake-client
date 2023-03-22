@@ -11,6 +11,7 @@ class DropdownMenuComponent extends ConsumerStatefulWidget {
     this.items, {
     this.hintText,
     this.defaultValue,
+    this.isDisabled = false,
     required this.onChanged,
     Key? key,
   }) : super(key: key);
@@ -18,13 +19,14 @@ class DropdownMenuComponent extends ConsumerStatefulWidget {
   final Map<String, String> items;
   final String? hintText;
   final String? defaultValue;
-  final ValueChanged<String> onChanged;
+  final bool isDisabled;
+  final Function(String? prev, String next) onChanged;
 
   @override
-  ConsumerState<DropdownMenuComponent> createState() => _DropdownMenuComponentState();
+  ConsumerState<DropdownMenuComponent> createState() => DropdownMenuComponentState();
 }
 
-class _DropdownMenuComponentState extends ConsumerState<DropdownMenuComponent> {
+class DropdownMenuComponentState extends ConsumerState<DropdownMenuComponent> {
   late String? selectedItem;
   late ScrollController _scrollController;
 
@@ -37,9 +39,15 @@ class _DropdownMenuComponentState extends ConsumerState<DropdownMenuComponent> {
     _scrollController = ScrollController();
   }
 
+  void setSelectedItem(String key) => setState(() => selectedItem = key);
+
+  void setSelectedItemByValue(String value) => setSelectedItem(_getKeyByValue(value));
+
   int _getSelectedIndex(String key) => widget.items.keys.toList().indexOf(key);
 
   String _getKey(int index) => widget.items.keys.toList()[index];
+
+  String _getKeyByValue(String value) => widget.items.keys.where((e) => e == value).first;
 
   String _getLabel(int index) => widget.items.values.toList()[index];
 
@@ -67,7 +75,9 @@ class _DropdownMenuComponentState extends ConsumerState<DropdownMenuComponent> {
                             : _getLabel(_getSelectedIndex(selectedItem!)),
                         style: TextStyle(
                           fontSize: 14.r,
-                          color: Colors.white.withOpacity(selectedItem == null ? 0.5 : 1),
+                          color: Colors.white.withOpacity(
+                            widget.isDisabled || selectedItem == null ? 0.5 : 1,
+                          ),
                         ),
                         overflow: TextOverflow.ellipsis,
                       ),
@@ -80,81 +90,91 @@ class _DropdownMenuComponentState extends ConsumerState<DropdownMenuComponent> {
                 ),
               ),
             ),
-            onTap: () => showModalBottomSheet(
-              context: context,
-              backgroundColor: Colors.transparent,
-              builder: (BuildContext context) {
-                WidgetsBinding.instance.addPostFrameCallback(
-                  (_) {
-                    if (!_scrollController.hasClients || selectedItem == null) {
-                      return;
-                    }
-                    _scrollController.animateTo(
-                      _getSelectedIndex(selectedItem!) * 46.r,
-                      duration: const Duration(milliseconds: 300),
-                      curve: Curves.easeOut,
-                    );
-                  },
-                );
-                return Container(
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.only(
-                      topLeft: Radius.circular(20.r),
-                      topRight: Radius.circular(20.r),
-                    ),
-                  ),
-                  child: Column(
-                    children: [
-                      Container(
-                        margin: EdgeInsets.only(top: 20.r),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(20.r),
-                        ),
-                        width: 60.r,
-                        height: 5.r,
+            onTap: () {
+              if (widget.isDisabled) {
+                return;
+              }
+              showModalBottomSheet(
+                context: context,
+                backgroundColor: Colors.transparent,
+                builder: (BuildContext context) {
+                  WidgetsBinding.instance.addPostFrameCallback(
+                    (_) {
+                      if (!_scrollController.hasClients || selectedItem == null) {
+                        return;
+                      }
+                      _scrollController.animateTo(
+                        _getSelectedIndex(selectedItem!) * 46.r,
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeOut,
+                      );
+                    },
+                  );
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(20.r),
+                        topRight: Radius.circular(20.r),
                       ),
-                      Expanded(
-                        child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 20.r, horizontal: 10.r),
-                          child: ListView.separated(
-                            controller: _scrollController,
-                            separatorBuilder: (context, index) => Container(height: 10.r),
-                            itemBuilder: (context, index) {
-                              final isSelected = selectedItem == _getKey(index);
-                              return InkWell(
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(vertical: 10.r, horizontal: 10.r),
-                                  decoration: BoxDecoration(
-                                    color: isSelected ? const Color(0xFFffb7c5) : null,
-                                    borderRadius: BorderRadius.all(Radius.circular(10.r)),
-                                  ),
-                                  child: Text(
-                                    _getLabel(index),
-                                    style: TextStyle(
-                                      color: isSelected ? Colors.black : Colors.white,
-                                      fontSize: 14.r,
-                                      fontWeight: isSelected ? FontWeight.w600 : null,
+                    ),
+                    child: Column(
+                      children: [
+                        Container(
+                          margin: EdgeInsets.only(top: 20.r),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.2),
+                            borderRadius: BorderRadius.circular(20.r),
+                          ),
+                          width: 60.r,
+                          height: 5.r,
+                        ),
+                        Expanded(
+                          child: Container(
+                            padding: EdgeInsets.symmetric(vertical: 20.r, horizontal: 10.r),
+                            child: ListView.separated(
+                              controller: _scrollController,
+                              separatorBuilder: (context, index) => Container(height: 10.r),
+                              itemBuilder: (context, index) {
+                                final isSelected = selectedItem == _getKey(index);
+                                return InkWell(
+                                  child: Container(
+                                    padding: EdgeInsets.symmetric(vertical: 10.r, horizontal: 10.r),
+                                    decoration: BoxDecoration(
+                                      color: isSelected ? const Color(0xFFffb7c5) : null,
+                                      borderRadius: BorderRadius.all(Radius.circular(10.r)),
+                                    ),
+                                    child: Text(
+                                      _getLabel(index),
+                                      style: TextStyle(
+                                        color: isSelected ? Colors.black : Colors.white,
+                                        fontSize: 14.r,
+                                        fontWeight: isSelected ? FontWeight.w600 : null,
+                                      ),
                                     ),
                                   ),
-                                ),
-                                onTap: () {
-                                  widget.onChanged(_getKey(index));
-                                  setState(() => selectedItem = _getKey(index));
-                                  Navigator.pop(context);
-                                },
-                              );
-                            },
-                            itemCount: widget.items.length,
+                                  onTap: () {
+                                    if (widget.isDisabled) {
+                                      return;
+                                    }
+                                    final prev = selectedItem;
+                                    final next = _getKey(index);
+                                    widget.onChanged(prev, next);
+                                    setSelectedItem(next);
+                                    Navigator.pop(context);
+                                  },
+                                );
+                              },
+                              itemCount: widget.items.length,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                );
-              },
-            ),
+                      ],
+                    ),
+                  );
+                },
+              );
+            },
           ),
         ],
       );

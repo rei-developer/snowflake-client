@@ -5,4 +5,6 @@ abstract class ISignUpService {
   Future<SignInResultResponseDto> register(RegisterRequestDto registerDto);
 
   void setGeneratedLoverHash(Map<String, dynamic> json);
+
+  void setLock([bool lock = false]);
 }

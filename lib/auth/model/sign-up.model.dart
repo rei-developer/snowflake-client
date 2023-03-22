@@ -1,11 +1,12 @@
 class SignUpModel {
-  SignUpModel(this.generatedLoverHash);
+  SignUpModel(this.generatedLoverHash, this.isLock);
 
-  factory SignUpModel.initial({String? generatedLoverHash}) =>
-      SignUpModel(generatedLoverHash ?? '');
+  factory SignUpModel.initial({String? generatedLoverHash, bool? isLock}) =>
+      SignUpModel(generatedLoverHash ?? '', isLock ?? false);
 
-  SignUpModel copyWith({String? generatedLoverHash}) =>
-      SignUpModel(generatedLoverHash ?? this.generatedLoverHash);
+  SignUpModel copyWith({String? generatedLoverHash, bool? isLock}) =>
+      SignUpModel(generatedLoverHash ?? this.generatedLoverHash, isLock ?? this.isLock);
 
   final String generatedLoverHash;
+  final bool isLock;
 }

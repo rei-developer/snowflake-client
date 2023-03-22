@@ -230,6 +230,15 @@
         "label": "Breast type",
         "hintText": "Please select a style for the girl's breast type."
       }
+    },
+    "infoMessage": {
+      "download": {
+        "succeed": "Image download succeeded.",
+        "failed": "Image download failed."
+      }
+    },
+    "errorMessage": {
+      "unimplemented": "This feature is not yet implemented."
     }
   },
   "signUp": {
@@ -240,12 +249,13 @@
     },
     "generateLover": {
       "title": "What's her name?",
+      "alias": {
+        "defaultName": "a lover"
+      },
       "form": {
         "confirm": "Go meet ${name}"
       },
-      "alias": {
-        "defaultName": "a lover"
-      }
+      "loadingMessage": "Rendering the image.\nPlease wait a moment."
     }
   },
   "api": {

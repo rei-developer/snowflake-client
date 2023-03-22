@@ -7,4 +7,7 @@ class SignUpStateRepository extends ISignUpRepository {
   @override
   void setGeneratedLoverHash(String generatedLoverHash) =>
       state = state.copyWith(generatedLoverHash: generatedLoverHash);
+
+  @override
+  void setLock(bool lock) => state = state.copyWith(isLock: lock);
 }

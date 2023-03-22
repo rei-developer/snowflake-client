@@ -12,7 +12,7 @@ import 'package:snowflake_client/common/container/moving_background.container.da
 import 'package:snowflake_client/common/provider/common.provider.dart';
 import 'package:snowflake_client/i18n/strings.g.dart';
 import 'package:snowflake_client/title/title.const.dart';
-import 'package:snowflake_client/util/asset_loader.dart';
+import 'package:snowflake_client/util/asset_loader.util.dart';
 import 'package:snowflake_client/util/func.util.dart';
 import 'package:tuple/tuple.dart';
 

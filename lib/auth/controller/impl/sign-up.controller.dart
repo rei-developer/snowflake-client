@@ -57,4 +57,7 @@ class SignUpController extends ISignUpController {
       await _toastCtrl(t['api.errorMessage.$err']);
     }
   }
+
+  @override
+  void setLock(bool lock) => _signUpService.setLock(lock);
 }

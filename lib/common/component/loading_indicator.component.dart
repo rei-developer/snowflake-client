@@ -3,7 +3,7 @@ import 'dart:math' as math;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:snowflake_client/util/asset_loader.dart';
+import 'package:snowflake_client/util/asset_loader.util.dart';
 
 void showLoadingIndicator(BuildContext context, {String? message}) => showDialog(
       context: context,
