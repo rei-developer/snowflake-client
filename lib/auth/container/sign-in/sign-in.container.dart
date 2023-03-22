@@ -39,7 +39,7 @@ class _SignInContainerState extends ConsumerState<SignInContainer> {
         builder: (_) {
           final audioCtrl = ref.read(audioControllerProvider.notifier);
           useEffect(() {
-            audioCtrl.playBGM('audio/bgm/fjordnosundakaze.mp3');
+            audioCtrl.setBGM('bgm/fjordnosundakaze.mp3');
             return audioCtrl.stopBGM;
           }, [audioCtrl]);
           ISignInController signInCtrl(e) => ref.read(signInControllerProvider(Tuple2(context, e)));

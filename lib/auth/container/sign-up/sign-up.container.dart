@@ -31,7 +31,7 @@ class _SignUpContainerState extends ConsumerState<SignUpContainer> {
         builder: (_) {
           final audioCtrl = ref.read(audioControllerProvider.notifier);
           useEffect(() {
-            audioCtrl.playBGM('audio/bgm/fjordnosundakaze.mp3');
+            audioCtrl.setBGM('bgm/fjordnosundakaze.mp3');
             return audioCtrl.stopBGM;
           }, [audioCtrl]);
           final signUpCtrl = ref.read(signUpControllerProvider(context));

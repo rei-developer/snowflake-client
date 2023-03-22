@@ -54,7 +54,7 @@ class _GenerateLoverContainerState extends ConsumerState<GenerateLoverContainer>
         builder: (_) {
           final audioCtrl = ref.read(audioControllerProvider.notifier);
           useEffect(() {
-            audioCtrl.playBGM('audio/bgm/trance2.mp3');
+            audioCtrl.setBGM('bgm/trance2.mp3');
             _generateLover();
             return audioCtrl.stopBGM;
           }, [audioCtrl]);

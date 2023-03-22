@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:flutter/services.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:path_provider/path_provider.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
@@ -14,8 +15,9 @@ Future<void> saveImageToGallery(String url) async {
     } else {
       throw Exception('Failed to download image');
     }
-  } catch (e) {
-    print('Error while saving image to gallery: $e');
+  } catch (err) {
+    print('saveImageToGallery error => $err');
+    Fluttertoast.showToast(msg: err.toString());
   }
 }
 
@@ -26,20 +28,17 @@ Future<bool> saveImageToDevice(Uint8List bytes) async {
     final String filePath = '$appDirPath/snowflake-${DateTime.now().millisecondsSinceEpoch}.webp';
     final File file = File(filePath);
     await file.writeAsBytes(bytes);
-    final result = await ImageGallerySaver.saveFile(filePath);
-    return result;
+    return await ImageGallerySaver.saveFile(filePath);
   } else if (Platform.isIOS) {
-    final result = await saveImageToPhotos(bytes);
-    return result;
+    return await saveImageToPhotos(bytes);
   } else {
+    Fluttertoast.showToast(msg: 'unsupported platform');
     throw Exception('Unsupported platform');
   }
 }
 
-Future<bool> saveImageToPhotos(Uint8List bytes) async {
-  final result = await const MethodChannel('image_gallery_saver').invokeMethod(
-    'saveImageToPhotos',
-    {'bytes': bytes},
-  );
-  return result;
-}
+Future<bool> saveImageToPhotos(Uint8List bytes) async =>
+    await const MethodChannel('image_gallery_saver').invokeMethod(
+      'saveImageToPhotos',
+      {'bytes': bytes},
+    );

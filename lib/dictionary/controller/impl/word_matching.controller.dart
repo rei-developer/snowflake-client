@@ -56,11 +56,11 @@ class WordMatchingController extends IWordMatchingController {
   @override
   Future<void> judgment(BuildContext context, WordEntity candidate) async {
     if (question == candidate) {
-      _audioCtrl.playSE('audio/se/correct.mp3');
+      _audioCtrl.setSE('se/correct.mp3');
       showImageIndicator(context, message: 'Good!');
       _addScore();
     } else {
-      _audioCtrl.playSE('audio/se/wrong.mp3');
+      _audioCtrl.setSE('se/wrong.mp3');
       showImageIndicator(context, message: 'Bad...');
       _subLife();
       if (state.life < 1) {
@@ -107,7 +107,7 @@ class WordMatchingController extends IWordMatchingController {
   Future<void> _next([bool isTimedOut = true]) async {
     _setGameState(WordMatchingGameState.PENDING);
     if (isTimedOut) {
-      _audioCtrl.playSE('audio/se/wrong.mp3');
+      _audioCtrl.setSE('se/wrong.mp3');
       _subLife();
     }
     // await _ttsCtrl.speak(question?.word);

@@ -21,7 +21,7 @@ class _TitleContainerState extends ConsumerState<TitleContainer> {
           final dictionaryCtrl = ref.read(dictionaryControllerProvider(context));
           final audioCtrl = ref.read(audioControllerProvider.notifier);
           useEffect(() {
-            audioCtrl.playBGM('audio/bgm/tohikioku.mp3');
+            audioCtrl.setBGM('bgm/tohikioku.mp3');
             return audioCtrl.stopBGM;
           }, [audioCtrl]);
           return Container(

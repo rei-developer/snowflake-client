@@ -4,14 +4,16 @@ import 'package:snowflake_client/common/controller/audio.controller.dart';
 import 'package:snowflake_client/common/controller/impl/audio.controller.dart';
 import 'package:snowflake_client/common/controller/impl/tts.controller.dart';
 import 'package:snowflake_client/common/controller/tts.controller.dart';
-import 'package:snowflake_client/common/model/audio_state.model.dart';
+import 'package:snowflake_client/common/model/audio.model.dart';
 import 'package:snowflake_client/common/model/tts.model.dart';
+import 'package:snowflake_client/common/service/audio.service.dart';
+import 'package:snowflake_client/common/service/impl/audio.service.dart';
 import 'package:snowflake_client/common/service/impl/system.service.dart';
 import 'package:snowflake_client/common/service/system.service.dart';
 import 'package:snowflake_client/i18n/strings.g.dart';
 
-final audioControllerProvider = StateNotifierProvider<IAudioController, AudioStateModel>(
-  (_) => AudioController(),
+final audioControllerProvider = StateNotifierProvider<IAudioController, AudioModel>(
+  (ref) => AudioController(ref.watch(audioServiceProvider)),
 );
 
 final toastControllerProvider = Provider(
@@ -21,6 +23,8 @@ final toastControllerProvider = Provider(
 final ttsControllerProvider = StateNotifierProvider<ITtsController, TtsModel?>(
   (_) => TtsController(),
 );
+
+final audioServiceProvider = Provider<IAudioService>((_) => AudioService());
 
 final systemServiceProvider = StateNotifierProvider<ISystemService, DateTime>(
   (_) => SystemService(),
